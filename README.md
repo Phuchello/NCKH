@@ -2,18 +2,19 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G3%20Active-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G3.1%20Closure-informational?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-111%2F111%20passing-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-134%2F134%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![G4](https://img.shields.io/badge/G4-Locked-orange?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
 
 ## What is Intel OS?
 
-**Intel OS** is a long-term research intelligence platform for turning papers, technical sources, reports, and future research data into a durable, provenance-aware research memory.
+**Intel OS** is a long-term research intelligence platform for turning papers, technical sources, reports, and future research data into durable, provenance-aware research memory.
 
 It is not intended to be another RSS reader, bookmark manager, or one-shot AI summarizer.
 
@@ -57,7 +58,7 @@ Academic / Technical Sources
    Living Research Handbook
 ```
 
-A long-term provenance target is:
+Long-term provenance target:
 
 ```text
 Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot → Document → Source
@@ -68,7 +69,7 @@ Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot
 ## Current verified progress
 
 ### G0 — Foundation & Architecture
-**Approved.** Established the modular-monolith direction, provenance-first data model, cloud-first storage model, epistemic model, security principles, retention strategy, and gate-based engineering workflow.
+**Approved.** Established the modular-monolith direction, provenance-first data model, epistemic model, security principles, retention strategy, and gate-based engineering workflow.
 
 ### G1 — Database Foundation & Backend Scaffold
 **Approved after real PostgreSQL hardening.**
@@ -83,54 +84,57 @@ Mentor decision                  APPROVED (~96/100)
 ### G2 — Academic Metadata Ingestion & Connector Framework
 **Approved after three adversarial hardening passes.**
 
-Publicly reportable scope includes:
-
-- arXiv, Crossref, OpenAlex, and Semantic Scholar metadata ingestion;
-- provider-neutral discovery records;
-- DOI/arXiv/provider-identity reconciliation;
-- conservative false-merge policy and explicit identity-conflict handling;
-- multi-provider provenance;
-- resilient async HTTP transport, bounded retries and per-provider rate control;
-- network-safety / SSRF-oriented defenses;
-- background-job idempotency and whole-attempt transaction semantics;
-- real PostgreSQL concurrency testing.
-
-Final G2 verification:
+Publicly reportable capability includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; conservative scholarly identity reconciliation; multi-provider provenance; bounded async networking; job idempotency; whole-attempt transactions; and real PostgreSQL concurrency testing.
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
-Alembic upgrade/downgrade/up     PASS
 Private automated suite         111 / 111 PASS
-Failed / skipped                0 / 0
 Coverage                        86%
 Real PG concurrency suite       PASS
-G1 regression surface           PASS
 Mentor decision                 APPROVED (~98/100)
 ```
 
 See **[G2 Final Gate Report](docs/G2_FINAL_REPORT.md)**.
 
 ### G3 — Full-Text Parsing & Quote-Grounded Extraction
-**Active.** G3 is building the first source-grounded full-text pipeline:
+**Implemented; mentor review = REVISE. G3.1 closure is active.**
+
+The private core now contains the first end-to-end source-grounding pipeline:
 
 ```text
 Fetched representation
 → immutable snapshot
-→ layout-aware parse
+→ deterministic parsing
 → sections / chunks
 → claim candidate
-→ exact quote verification
-→ evidence record
+→ quote verification
+→ snapshot-pinned evidence
 ```
 
-No G4 work is authorized until G3 passes mentor review.
+Latest verified checkpoint:
+
+```text
+PostgreSQL 16.15 + pgvector      PASS
+Alembic upgrade/downgrade/up     PASS
+Private automated suite         134 / 134 PASS
+Failed / skipped                0 / 0
+Coverage                        87%
+G1/G2 regression surface        PASS
+Mentor decision                 REVISE (~88/100)
+```
+
+The closure focuses on true transfer-time resource bounds, character-exact quote semantics, version-safe reruns, controlled multi-column parser evaluation, reproducible extraction provenance, and safe quarantine of ungrounded evidence.
+
+See **[G3 Mentor Review Checkpoint](docs/G3_REVIEW_REPORT.md)**.
+
+**G4 remains locked until G3 receives final mentor approval.**
 
 ---
 
 ## Engineering principles
 
 - **Provenance before cleverness.** Important outputs should remain traceable to source evidence.
-- **Grounding is not truth.** A quote existing in a paper does not make the scientific claim correct.
+- **Grounding is not truth.** A paper containing a statement does not make that statement scientifically correct.
 - **False merge is worse than temporary duplication.** Scholarly identity reconciliation stays conservative.
 - **Metadata first.** Discovering a paper does not imply permanently storing its raw file.
 - **Cloud-first data, local-first development.** The laptop is not the authoritative research-memory store.
@@ -178,7 +182,7 @@ PUBLIC SHOWCASE
 | G0 | Product & architecture foundation | ✅ Approved |
 | G1 | Database foundation & backend scaffold | ✅ Approved |
 | G2 | Academic ingestion & connector framework | ✅ Approved |
-| G3 | Full-text parsing & quote-grounded extraction | 🚧 Active |
+| G3 | Full-text parsing & quote-grounded extraction | 🛠 G3.1 closure |
 | G4 | Intelligence Lake / memory storage & embeddings | 🔒 Locked |
 | G5 | Research gaps / opportunities / idea lineage | Planned |
 | G6 | Hybrid search, retrieval & synthesis | Planned |
@@ -193,6 +197,7 @@ PUBLIC SHOWCASE
 
 - [Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md)
 - [G2 Final Gate Report](docs/G2_FINAL_REPORT.md)
+- [G3 Mentor Review Checkpoint](docs/G3_REVIEW_REPORT.md)
 - [Product Specification](docs/PRODUCT_SPEC.md)
 - [Architecture](ARCHITECTURE.md)
 - [Detailed Architecture](docs/ARCHITECTURE_DETAILED.md)
