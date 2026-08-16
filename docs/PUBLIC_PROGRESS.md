@@ -13,7 +13,7 @@ This page is the public milestone mirror for Intel OS / NCKH. It reports verifie
 | Private-core transition | ✅ Validated |
 | G2 — Academic Ingestion & Connector Framework | ✅ Approved |
 | G3 — Full-Text Parsing & Quote-Grounded Extraction | ✅ Approved |
-| G4 — Intelligence Lake & Personal Research Memory | 🛠 G4.1 integrity closure |
+| G4 — Intelligence Lake & Personal Research Memory | 🛠 G4.2 micro-closure |
 | G5 — Opportunity / Idea Lineage | 🔒 Locked |
 
 The public repository remains an active showcase, verified-results surface, and research/publication hub. The authoritative G2+ implementation remains private.
@@ -21,8 +21,6 @@ The public repository remains an active showcase, verified-results surface, and 
 ---
 
 ## G0 — Foundation & Architecture
-
-G0 established the architectural and research principles used by later gates: modular-monolith V1 architecture, provenance-first data model, Intelligence Lake / Personal Research Memory / Research Opportunity Memory concepts, cloud-first authoritative storage, metadata-first retention, replaceable reasoning models, and gate-based engineering.
 
 ```text
 G0 initial review       77/100 — REVISE
@@ -42,8 +40,6 @@ Coverage                           91%
 Mentor assessment                  ~96/100 — APPROVED
 ```
 
-Publicly reportable capabilities include FastAPI, SQLAlchemy 2 async + asyncpg, seven foundation tables, multi-provider provenance, normalized URL idempotency, versioned snapshots, bounded local cache, and PostgreSQL-backed CI.
-
 ---
 
 ## G2 — Academic Metadata Ingestion & Connector Framework
@@ -56,7 +52,7 @@ G2.2                    107 / 107 PASS  → NEAR PASS
 G2.3 final              111 / 111 PASS  → APPROVED (~98/100)
 ```
 
-Verified scope includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; conservative identity reconciliation; provider provenance; bounded async networking; explicit job/transaction semantics; and real PostgreSQL concurrency testing.
+Verified scope includes scholarly metadata ingestion, conservative identity reconciliation, provider provenance, bounded async networking, explicit job/transaction semantics and real PostgreSQL concurrency testing.
 
 Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
 
@@ -73,7 +69,7 @@ G3.2          149 / 149 PASS   → NEAR PASS (~97/100)
 G3.3 final    156 / 156 PASS   → APPROVED (~99/100)
 ```
 
-Verified scope includes streamed representation bounds, immutable snapshots, deterministic PDF/HTML parsing, versioned chunks, provider-neutral extraction contracts, character-exact quote grounding, ungrounded-evidence quarantine, extraction-run provenance/idempotency and PostgreSQL history-preservation tests.
+Verified scope includes streamed representation bounds, immutable snapshots, deterministic parsing, versioned chunks, provider-neutral extraction contracts, character-exact quote grounding, ungrounded-evidence quarantine and reproducible extraction history.
 
 Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
 
@@ -81,45 +77,48 @@ Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
 
 ## G4 — Intelligence Lake & Personal Research Memory
 
-**Implementation checkpoint verified; first mentor decision: REVISE (~84/100).**
-
-### Verified G4 checkpoint
+### Review progression
 
 ```text
-Private CI run                    31936122041
+G4 initial   184 / 184 PASS   → REVISE (~84/100)
+G4.1         215 / 215 PASS   → NEAR PASS (~95/100)
+G4.2         active           → final sign-off pending
+```
+
+### Latest verified G4.1 evidence
+
+```text
+Private CI run                    31941431543
 PostgreSQL 16.15 + pgvector       PASS
-Alembic 0001 -> 0005              PASS
+Alembic 0001 -> 0006              PASS
 Downgrade base / second upgrade   PASS
-Full automated suite              184 / 184 PASS
+Full automated suite              215 / 215 PASS
 Failed / skipped                  0 / 0
-Coverage                          87%
-G1/G2/G3 regression surface       PASS
-Mentor assessment                 REVISE (~84/100)
+Coverage                          88%
+Protected regression surface      PASS
+Mentor assessment                 NEAR PASS (~95/100)
 ```
 
 ### Publicly reportable capability
 
-- 768-dimensional vector storage for existing G4 entities (`document_chunks`, `claims`);
-- PostgreSQL pgvector + HNSW cosine index validation;
-- deterministic offline embedding gateway used in CI;
-- Personal Research Memory `user_notes` storage with bounded content and optional-link preservation;
-- generic claim relationships with self-link rejection, duplicate-edge idempotency and no automatic scientific-status mutation;
-- artifact key safety, deterministic retained-object naming and signed-URL redaction;
-- retention promotion happy path/idempotency and hash/size/upload-failure checks;
-- all approved G1–G3 regressions preserved.
+- S3-compatible retained-artifact storage boundary with offline adapter validation;
+- explicit compensation/reconciliation semantics for cross-store retention rather than distributed-atomicity claims;
+- immutable historical embedding provenance plus a separate active pgvector/HNSW projection;
+- exact source-text identity and version-sensitive embedding history;
+- embedding dimension/cardinality/input/batch/partial-failure protections;
+- Personal Research Memory notes with optional-link preservation semantics;
+- conservative claim relationships without automatic scientific-status mutation;
+- all approved G1–G3 regression behavior preserved.
 
-### Why G4.1 is required
+### G4.2 final micro-closure
 
-The first mentor audit found several contracts that the 184-test suite does not yet prove:
+The remaining reviewed work is deliberately narrow:
 
-- a concrete deployment-ready S3-compatible adapter is still missing from the reviewed code surface;
-- cross-store compensation must cover the real **upload succeeds → DB commit fails** boundary, not only an earlier flush error;
-- embedding model/config changes must preserve historical vector provenance rather than overwrite it;
-- embedding provenance must pin the exact source-text identity used to produce each vector;
-- provider response cardinality and storage/embedding resource bounds need stronger adversarial validation;
-- missing tests include commit-failure recovery, changed-config embedding history, embedding timeout/no-partial-corruption and linked-claim note preservation.
+- enforce object-download limits while bytes are being read rather than after full buffering;
+- strengthen durable post-upload object verification/reconciliation before the database claims retention success;
+- enforce at the database layer that an immutable embedding-provenance row's declared entity type matches its actual foreign-key target.
 
-This is an integrity closure, not a reset of G4. **G5 remains locked.**
+**G5 remains locked until final G4 approval.**
 
 Full checkpoint: **[G4 Mentor Review Checkpoint](G4_REVIEW_REPORT.md)**.
 
@@ -143,14 +142,14 @@ Green CI is necessary, but not sufficient, for gate approval.
 
 ## Public reporting policy
 
-For future gates, this repository publishes milestone objective, safe architecture, verified test/evaluation evidence, known limitations, mentor decision, real demos/screenshots, selected benchmarks, and public research outputs when disclosure permits.
+The public repository reports milestone objective, safe architecture, verified test/evaluation evidence, known limitations, mentor decision, real demos/screenshots, selected benchmarks and research outputs when disclosure permits.
 
-No fabricated benchmark, placeholder screenshot, or private-core implementation is published merely for appearance.
+No fabricated benchmark, placeholder screenshot or private-core implementation is published merely for appearance.
 
 ---
 
 ## Disclosure note
 
-This repository is **source-available/proprietary, not open source**. Public reporting keeps the project assessable and professionally presentable while preserving its private core and research/IP boundary.
+This repository is **source-available/proprietary, not open source**. Public reporting keeps the project assessable while preserving its private core and research/IP boundary.
 
 See [`IP_POLICY.md`](IP_POLICY.md) and the root [`LICENSE`](../LICENSE).
