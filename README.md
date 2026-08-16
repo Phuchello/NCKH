@@ -2,10 +2,10 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G3.2%20Micro--Closure-informational?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G3.3%20Output--Contract%20Closure-informational?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-141%2F141%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-149%2F149%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G4](https://img.shields.io/badge/G4-Locked-orange?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
@@ -88,16 +88,16 @@ Publicly reportable capability includes arXiv, Crossref, OpenAlex and Semantic S
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
-Private automated suite         111 / 111 PASS
-Coverage                        86%
-Real PG concurrency suite       PASS
-Mentor decision                 APPROVED (~98/100)
+Private automated suite          111 / 111 PASS
+Coverage                         86%
+Real PG concurrency suite        PASS
+Mentor decision                  APPROVED (~98/100)
 ```
 
 See **[G2 Final Gate Report](docs/G2_FINAL_REPORT.md)**.
 
 ### G3 — Full-Text Parsing & Quote-Grounded Extraction
-**Implemented. G3.1 passed private CI and is now NEAR PASS; G3.2 final micro-closure is active.**
+**Implemented. G3.2 passed private CI and is NEAR PASS; one final bounded-output/reproducibility closure remains.**
 
 The private core contains the first end-to-end source-grounding pipeline:
 
@@ -117,14 +117,14 @@ Latest verified checkpoint:
 ```text
 PostgreSQL 16.15 + pgvector      PASS
 Alembic upgrade/downgrade/up     PASS
-Private automated suite         141 / 141 PASS
-Failed / skipped                0 / 0
-Coverage                        88%
-G1/G2 regression surface        PASS
-Mentor decision                 NEAR PASS (~96/100)
+Private automated suite          149 / 149 PASS
+Failed / skipped                 0 / 0
+Coverage                         87%
+G1/G2 regression surface         PASS
+Mentor decision                  NEAR PASS (~97/100)
 ```
 
-G3.1 closed true streamed size enforcement, multi-column parser proof, ungrounded-evidence quarantine, extraction-run provenance/idempotency, versioned chunk lineage and snapshot/source consistency. The remaining G3.2 work is a small contract/invariant pass around exact quote edges, enforced LLM bounds and explicit version-history semantics.
+G3.2 closed exact quote-edge semantics, typed LLM wall-clock timeout, same-configuration rerun consistency, extraction-run timestamp semantics, parser/extraction history proofs and document/snapshot provenance guards. The remaining closure is limited to making the provider-neutral LLM output budget fully enforceable and including effective extraction bounds in reproducibility fingerprints.
 
 See **[G3 Mentor Review Checkpoint](docs/G3_REVIEW_REPORT.md)**.
 
@@ -183,7 +183,7 @@ PUBLIC SHOWCASE
 | G0 | Product & architecture foundation | ✅ Approved |
 | G1 | Database foundation & backend scaffold | ✅ Approved |
 | G2 | Academic ingestion & connector framework | ✅ Approved |
-| G3 | Full-text parsing & quote-grounded extraction | 🛠 G3.2 final micro-closure |
+| G3 | Full-text parsing & quote-grounded extraction | 🛠 Final output-contract closure |
 | G4 | Intelligence Lake / memory storage & embeddings | 🔒 Locked |
 | G5 | Research gaps / opportunities / idea lineage | Planned |
 | G6 | Hybrid search, retrieval & synthesis | Planned |
