@@ -13,7 +13,8 @@ This page is the public milestone mirror for Intel OS / NCKH. It reports verifie
 | Private-core transition | ✅ Validated |
 | G2 — Academic Ingestion & Connector Framework | ✅ Approved |
 | G3 — Full-Text Parsing & Quote-Grounded Extraction | ✅ Approved |
-| G4 — Intelligence Lake & Personal Research Memory | 🚧 Active |
+| G4 — Intelligence Lake & Personal Research Memory | 🛠 G4.1 integrity closure |
+| G5 — Opportunity / Idea Lineage | 🔒 Locked |
 
 The public repository remains an active showcase, verified-results surface, and research/publication hub. The authoritative G2+ implementation remains private.
 
@@ -33,14 +34,11 @@ G0.2                    APPROVED
 
 ## G1 — Database Foundation & Backend Scaffold
 
-Verified baseline:
-
 ```text
 PostgreSQL 16 + pgvector           PASS
 Alembic upgrade/downgrade/up       PASS
 G1 automated suite                 49 / 49 PASS
 Coverage                           91%
-GitHub Actions                     PASS
 Mentor assessment                  ~96/100 — APPROVED
 ```
 
@@ -48,66 +46,17 @@ Publicly reportable capabilities include FastAPI, SQLAlchemy 2 async + asyncpg, 
 
 ---
 
-## Private-core transition
-
-The project uses a **Public Showcase + Private Core** model.
-
-```text
-PRIVATE CORE
-    authoritative implementation
-    proprietary logic
-    private data / research memory
-    unpublished methods & experiments
-
-PUBLIC SHOWCASE
-    architecture overview
-    verified progress
-    milestone outcomes
-    demos / screenshots
-    selected benchmark summaries
-    papers / posters / presentations
-```
-
-After the split, the backend was revalidated rather than assuming migration preserved behavior:
-
-```text
-PostgreSQL 16.15 + pgvector       PASS
-Alembic lifecycle                 PASS
-Private migration suite           83 / 83 PASS
-Coverage                           86%
-Original G1 regression surface     PASS
-```
-
----
-
 ## G2 — Academic Metadata Ingestion & Connector Framework
 
 **Final decision: APPROVED.**
 
-Publicly reportable scope includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; provider-neutral discovery; conservative scholarly identity reconciliation; provider provenance; async HTTP resilience; job idempotency; whole-attempt transaction semantics; and real PostgreSQL concurrency testing.
-
-### Review progression
-
 ```text
-Private split baseline   83 / 83 PASS
 G2.1                     92 / 92 PASS   → REVISE
 G2.2                    107 / 107 PASS  → NEAR PASS
-G2.3 final              111 / 111 PASS  → APPROVED
+G2.3 final              111 / 111 PASS  → APPROVED (~98/100)
 ```
 
-### Final verified G2 evidence
-
-```text
-PostgreSQL 16.15 + pgvector       PASS
-Alembic upgrade/downgrade/up      PASS
-Full automated suite              111 / 111 PASS
-Failed / skipped                  0 / 0
-Coverage                          86%
-Real PostgreSQL concurrency       PASS
-Original G1 regression surface    PASS
-Private GitHub Actions            PASS
-Mentor assessment                 ~98/100 — APPROVED
-```
+Verified scope includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; conservative identity reconciliation; provider provenance; bounded async networking; explicit job/transaction semantics; and real PostgreSQL concurrency testing.
 
 Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
 
@@ -117,23 +66,6 @@ Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
 
 **Final decision: APPROVED.**
 
-G3 turns selected document representations into versioned, source-grounded research objects while keeping grounding separate from scientific truth.
-
-Public pipeline:
-
-```text
-Fetched representation
-→ immutable snapshot identity
-→ deterministic parsing
-→ versioned sections/chunks
-→ typed claim candidate
-→ character-exact quote verification
-→ snapshot-pinned evidence
-→ immutable extraction-run provenance
-```
-
-### Review progression
-
 ```text
 G3 initial    134 / 134 PASS   → REVISE (~88/100)
 G3.1          141 / 141 PASS   → NEAR PASS (~96/100)
@@ -141,34 +73,7 @@ G3.2          149 / 149 PASS   → NEAR PASS (~97/100)
 G3.3 final    156 / 156 PASS   → APPROVED (~99/100)
 ```
 
-### Final verified G3 evidence
-
-```text
-Private checkpoint                f1379a909d24832446893f1f54afbaae8da288ab
-Private CI run                    31927755688
-PostgreSQL 16.15 + pgvector       PASS
-Alembic 0001 -> 0004              PASS
-Downgrade base / second upgrade   PASS
-Full automated suite              156 / 156 PASS
-Failed / skipped                  0 / 0
-Coverage                          88%
-G1/G2 regression surface          PASS
-Mentor assessment                 ~99/100 — APPROVED
-```
-
-### Publicly reportable capability
-
-- true streamed PDF/HTML representation bounds and content hashing;
-- immutable snapshot/source provenance;
-- deterministic parser and controlled two-column fixture;
-- parser-version-aware chunk history;
-- provider-neutral typed extraction interface with deterministic CI mocks;
-- character-exact `VERBATIM_MATCH` quote grounding;
-- ungrounded-evidence quarantine;
-- immutable extraction-run provenance and same-config idempotency;
-- bounded extraction input, timeout, claim count, token budget, aggregate response size and reported token usage;
-- configuration-sensitive extraction fingerprints and PostgreSQL history coexistence;
-- all machine-extracted claims default to `UNASSESSED`.
+Verified scope includes streamed representation bounds, immutable snapshots, deterministic PDF/HTML parsing, versioned chunks, provider-neutral extraction contracts, character-exact quote grounding, ungrounded-evidence quarantine, extraction-run provenance/idempotency and PostgreSQL history-preservation tests.
 
 Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
 
@@ -176,22 +81,47 @@ Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
 
 ## G4 — Intelligence Lake & Personal Research Memory
 
-**Status: AUTHORIZED / ACTIVE.**
+**Implementation checkpoint verified; first mentor decision: REVISE (~84/100).**
 
-G4 moves the project from grounded extraction into durable memory/storage primitives. Publicly reportable target architecture is:
+### Verified G4 checkpoint
 
 ```text
-Retained artifact bytes
-→ immutable snapshot storage pointer
-→ versioned semantic embeddings
-→ pgvector claim/chunk index
-→ user-authored research notes
-→ conservative claim relationships
+Private CI run                    31936122041
+PostgreSQL 16.15 + pgvector       PASS
+Alembic 0001 -> 0005              PASS
+Downgrade base / second upgrade   PASS
+Full automated suite              184 / 184 PASS
+Failed / skipped                  0 / 0
+Coverage                          87%
+G1/G2/G3 regression surface       PASS
+Mentor assessment                 REVISE (~84/100)
 ```
 
-G4 implementation remains private. Public updates will report only reviewed outcomes such as storage semantics, vector/index validation, deterministic test metrics, sanitized diagrams/screenshots, and known limitations.
+### Publicly reportable capability
 
-G4 explicitly does **not** yet implement research-gap mining, contradiction detection, opportunity/idea generation, idea lineage, final hybrid retrieval/RRF, synthesis, or frontend work.
+- 768-dimensional vector storage for existing G4 entities (`document_chunks`, `claims`);
+- PostgreSQL pgvector + HNSW cosine index validation;
+- deterministic offline embedding gateway used in CI;
+- Personal Research Memory `user_notes` storage with bounded content and optional-link preservation;
+- generic claim relationships with self-link rejection, duplicate-edge idempotency and no automatic scientific-status mutation;
+- artifact key safety, deterministic retained-object naming and signed-URL redaction;
+- retention promotion happy path/idempotency and hash/size/upload-failure checks;
+- all approved G1–G3 regressions preserved.
+
+### Why G4.1 is required
+
+The first mentor audit found several contracts that the 184-test suite does not yet prove:
+
+- a concrete deployment-ready S3-compatible adapter is still missing from the reviewed code surface;
+- cross-store compensation must cover the real **upload succeeds → DB commit fails** boundary, not only an earlier flush error;
+- embedding model/config changes must preserve historical vector provenance rather than overwrite it;
+- embedding provenance must pin the exact source-text identity used to produce each vector;
+- provider response cardinality and storage/embedding resource bounds need stronger adversarial validation;
+- missing tests include commit-failure recovery, changed-config embedding history, embedding timeout/no-partial-corruption and linked-claim note preservation.
+
+This is an integrity closure, not a reset of G4. **G5 remains locked.**
+
+Full checkpoint: **[G4 Mentor Review Checkpoint](G4_REVIEW_REPORT.md)**.
 
 ---
 
