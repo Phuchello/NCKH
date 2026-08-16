@@ -1,162 +1,125 @@
-# Intel OS / NCKH Intelligence Platform — Project State & Safety Checkpoint
+# Intel OS / NCKH — Public Project State
 
-## 1. Milestone Tracking
+## Current status
 
-* **Current Milestone**: **Gate 2 (G2) — Academic Ingestion & Connector Framework**
-* **Previous Milestones**:
-  * **Gate 0 (G0)**: Score 77/100 | Status: REVISE
-  * **Gate 0.1 (G0.1)**: Score 88/100 | Status: NEAR PASS
-  * **Gate 0.2 (G0.2)**: APPROVED by External Mentor
-  * **Gate 1 (G1)**: Initial score 82/100 | Revised through G1.1/G1.2
-  * **Gate 1 Final**: APPROVED by External Mentor (~96/100)
-  * **Gate 1.1**: Local PostgreSQL 16 hardening & URL idempotency completed
-  * **Gate 1.2**: GitHub Actions green, unused UUID extension removed, state harmonized
-* **G1 Completion Percentage**: **100% — APPROVED**
-* **G2 Engineering Authorization**: **AUTHORIZED**
-* **G2 Repository Authorization**: **PRIVATE CORE ONLY — PUBLIC REPO HOLD**
-* **Active Public Repository**: `https://github.com/Phuchello/NCKH`
-* **Public Repository Role**: **Public Showcase / Source-Available Proprietary**
-* **Status**: **G2 PAUSED IN PUBLIC REPO UNTIL PRIVATE CORE REPOSITORY IS ESTABLISHED**
+- **Public repository**: `Phuchello/NCKH`
+- **Role**: public showcase / verified progress mirror / research-publication surface
+- **Authoritative implementation**: private core
+- **G0**: APPROVED
+- **G1**: APPROVED
+- **Private-core migration**: VALIDATED
+- **G2**: IMPLEMENTED IN PRIVATE CORE — MENTOR AUDIT IN PROGRESS
+- **G3**: LOCKED until G2 approval
 
 ---
 
-## 2. Intellectual Property Boundary
+## Verified engineering baseline
 
-Effective 2026-08-16, the project follows a **Public Showcase + Private Core** model.
+### G1
 
-### Public repository — `Phuchello/NCKH`
+The approved G1 baseline established:
 
-Intended for:
+- FastAPI + typed Python backend foundation;
+- SQLAlchemy 2.x async + asyncpg;
+- PostgreSQL 16 + pgvector;
+- staged Alembic migrations;
+- 7 foundation tables;
+- multi-provider observation provenance;
+- normalized URL idempotency;
+- document snapshot/version provenance;
+- bounded local cache;
+- health/status endpoints;
+- PostgreSQL integration tests;
+- GitHub Actions CI.
 
-- product vision and high-level architecture;
-- milestone/status information;
+Final G1 verification:
+
+```text
+PostgreSQL 16 + pgvector     PASS
+Alembic upgrade/downgrade    PASS
+49 / 49 G1 tests             PASS
+Coverage                     91%
+G1 final gate                APPROVED (~96/100)
+```
+
+### Private-core migration regression
+
+The project was revalidated after moving authoritative G2+ engineering into the private core.
+
+```text
+PostgreSQL                    16.15 + pgvector
+Alembic lifecycle             PASS
+Full suite                    83 / 83 PASS
+Failed                        0
+Coverage                      86%
+Original G1 regression        PASS
+Private GitHub Actions        PASS
+```
+
+---
+
+## G2 public progress mirror
+
+G2 covers the academic metadata ingestion and source-connector foundation.
+
+Publicly reportable scope:
+
+- arXiv metadata connector;
+- Crossref metadata connector;
+- OpenAlex metadata connector;
+- Semantic Scholar Academic Graph connector;
+- provider-neutral normalized discovery representation;
+- identifier/URL normalization;
+- conservative multi-provider reconciliation;
+- provider provenance preservation;
+- bounded async ingestion;
+- retry/backoff and provider-aware rate control;
+- SSRF-oriented network checks;
+- background-job telemetry;
+- deterministic connector tests;
+- real PostgreSQL multi-provider reconciliation test.
+
+G2 implementation is complete but **not yet mentor-approved**. Current review focuses on identity conflicts, concurrency, transaction failure recovery, job idempotency, HTTP/SSRF edge cases, and current provider-policy correctness.
+
+Full public report: [`docs/PUBLIC_PROGRESS.md`](docs/PUBLIC_PROGRESS.md)
+
+---
+
+## Public / private boundary
+
+The public repository remains an active, maintained project front page.
+
+### Public by default
+
+- product vision;
+- high-level architecture;
+- milestone outcomes;
+- verified metrics and test summaries;
+- screenshots and demos;
+- sanitized examples;
 - public research outputs;
-- sanitized documentation and demonstrations;
-- selected public results and benchmarks;
-- intentionally disclosed non-sensitive artifacts.
+- papers, posters, presentations and selected benchmark summaries;
+- intentionally released artifacts.
 
-This repository is **not open source**. See:
+### Private by default
 
-- `LICENSE`
-- `NOTICE.md`
-- `docs/IP_POLICY.md`
+- authoritative G2+ source implementation;
+- proprietary reasoning/scoring internals;
+- private prompts;
+- Research Memory / Opportunity Memory data;
+- unpublished research ideas and experiments;
+- private datasets/corpora;
+- secrets and deployment configuration;
+- potentially patent-sensitive methods before disclosure review.
 
-### Private core repository
-
-Required for authoritative G2+ proprietary implementation, including:
-
-- ingestion/reconciliation internals;
-- proprietary intelligence/scoring/reasoning logic;
-- prompt libraries;
-- Research Memory / Opportunity Memory private data;
-- unpublished research ideas, experiments, and datasets;
-- future novel algorithms and commercially sensitive implementation.
-
-**G0/G1 history was already publicly disclosed and must be treated as disclosed. Do not rewrite history to imply otherwise.**
-
-Public Issue #3 is now only the public G2 milestone mirror. Public Issue #5 tracks private-core setup.
+See [`docs/IP_POLICY.md`](docs/IP_POLICY.md).
 
 ---
 
-## 3. What Exists — Approved G1 Baseline
+## Next actions
 
-1. **Executable Backend Architecture (`backend/intel_os`)**:
-   * FastAPI application foundation and lifecycle management.
-   * Strongly typed Pydantic settings and structured logging.
-   * Conservative deterministic URL normalization.
-   * SQLAlchemy 2.x async engine/session lifecycle.
-   * Exactly 7 G1 foundation tables:
-     * `topics`
-     * `sources`
-     * `documents`
-     * `document_topics`
-     * `document_sources`
-     * `document_snapshots`
-     * `background_jobs`
-   * Provider observation idempotency using normalized URLs and partial unique indexes.
-   * Snapshot provenance protection with `ON DELETE RESTRICT`.
-   * Alembic migration lifecycle verified on PostgreSQL 16.
-   * Bounded local cache manager.
-   * `/api/v1/health` and `/api/v1/status`.
-   * Docker Compose PostgreSQL 16 + pgvector development environment.
-   * GitHub Actions PostgreSQL 16 + pgvector CI pipeline.
-
-2. **Automated Test Suite**:
-   * 49 tests passed / 0 failed.
-   * 91% backend coverage.
-   * SQLite fast unit tests retained where useful.
-   * Real PostgreSQL 16 integration/contract tests included.
-
-3. **Architecture Decision Records**:
-   * ADR-0014: partial unique indexes for provider observation idempotency.
-   * ADR-0015: snapshot-to-observation provenance protection.
-   * ADR-0016: PostgreSQL native arrays + `gen_random_uuid()` schema reconciliation.
-   * ADR-0017: deterministic URL normalization and observation idempotency keying.
-
----
-
-## 4. What Does NOT Exist Yet
-
-The following remain intentionally deferred:
-
-* no authoritative G2 academic connector implementation in the public repository;
-* no live crawler fleet;
-* no LLM extraction runners;
-* no vector embedding generation pipeline;
-* no R2/object-storage production client;
-* no research gap mining or automated hypothesis generation;
-* no hybrid search/RRF reranking;
-* no research handbook generation engine;
-* no frontend product implementation;
-* no custom model training/fine-tuning pipeline.
-
----
-
-## 5. Verification Baseline
-
-### PostgreSQL 16 & Alembic
-
-* PostgreSQL 16 + pgvector verified.
-* Exactly 7 application tables + `alembic_version`.
-* `alembic upgrade head` succeeded.
-* `alembic downgrade base` succeeded with zero enum-type leaks.
-* second `alembic upgrade head` succeeded.
-
-### Tests
-
-* **49 passed / 0 failed**.
-* **91% backend coverage**.
-
-### GitHub Actions
-
-* Workflow: `Backend CI`
-* Verified green run: `31920328660` on final state-update HEAD, with actual PostgreSQL 16 + pgvector job execution.
-* Migration lifecycle step: success.
-* Full unit + PostgreSQL integration suite: success.
-
----
-
-## 6. Checkpoints
-
-* **G0 Baseline**: `dbb55ac148771a80c565f544fe229dd9cd618fc6`
-* **G0.1 Corrected**: `60abdbe65b88b2dd61e28d5419655b50c5fd94cb`
-* **G0.2 Hardened**: `f95ddb8`
-* **G1 Implementation**: `e07286b`
-* **G1.1 Hardened**: `3f6e771`
-* **G1.2 Final Engineering Checkpoint**: `d164b3f`
-* **G1 Final State Update**: `52e7300`
-* **Public IP Boundary Merge**: `cc0a436`
-
----
-
-## 7. Exact Next Action
-
-1. Create a **private** repository under `Phuchello` for the authoritative core (recommended working name: `NCKH-core-private`).
-2. Verify the repository is PRIVATE before migrating/adding G2 implementation.
-3. Seed the private repository from the approved G1 baseline as appropriate.
-4. Carry over proprietary license/IP governance and secret exclusions.
-5. Move/mirror the detailed G2 engineering task into the private repository.
-6. Resume Gemini/Antigravity G2 implementation **only in the private core repository**.
-7. Keep `Phuchello/NCKH` as the public showcase/documentation surface.
-
-**DO NOT START G2 CORE IMPLEMENTATION IN THE PUBLIC REPOSITORY.**
+1. Complete G2 mentor/adversarial review in the private core.
+2. Publish the resulting **sanitized G2 gate report** here, including final decision, verified metrics, limitations, and safe architecture changes.
+3. If G2 passes, update the public roadmap to `G2 APPROVED / G3 AUTHORIZED`.
+4. Add screenshots/demos only when real product UI/output exists; do not add fabricated placeholders.
+5. Continue updating this public repository at every major gate and research/publication milestone.
