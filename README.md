@@ -2,12 +2,12 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G3.3%20Output--Contract%20Closure-informational?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G4%20Active-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-149%2F149%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![G3](https://img.shields.io/badge/G3-Approved-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-156%2F156%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![G4](https://img.shields.io/badge/G4-Locked-orange?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
@@ -16,7 +16,7 @@
 
 **Intel OS** is a long-term research intelligence platform for turning papers, technical sources, reports, and future research data into durable, provenance-aware research memory.
 
-It is not intended to be another RSS reader, bookmark manager, or one-shot AI summarizer.
+It is not intended to be another RSS reader, bookmark manager, one-shot AI summarizer, or generic LLM wrapper.
 
 ```text
 Collect → Filter → Verify → Connect → Analyze → Remember → Synthesize → Act
@@ -30,7 +30,7 @@ The first application domain is scientific research / NCKH, with emphasis on net
 
 Intel OS is built around three long-lived assets:
 
-- **Intelligence Lake** — discovered sources and selectively retained evidence.
+- **Intelligence Lake** — discovered sources and selectively retained evidence/artifacts.
 - **Personal Research Memory** — claims, notes, relationships, analyses, and evolving understanding.
 - **Research Opportunity Memory** — gaps, contradictions, hypotheses, opportunities, and idea lineage.
 
@@ -97,9 +97,9 @@ Mentor decision                  APPROVED (~98/100)
 See **[G2 Final Gate Report](docs/G2_FINAL_REPORT.md)**.
 
 ### G3 — Full-Text Parsing & Quote-Grounded Extraction
-**Implemented. G3.2 passed private CI and is NEAR PASS; one final bounded-output/reproducibility closure remains.**
+**Approved after progressive integrity hardening.**
 
-The private core contains the first end-to-end source-grounding pipeline:
+The private core now contains the first end-to-end source-grounding pipeline:
 
 ```text
 Fetched representation
@@ -109,26 +109,40 @@ Fetched representation
 → claim candidate
 → character-exact quote verification
 → snapshot-pinned evidence
-→ extraction-run provenance
+→ immutable extraction-run provenance
 ```
 
-Latest verified checkpoint:
+Final verified G3 checkpoint:
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
 Alembic upgrade/downgrade/up     PASS
-Private automated suite          149 / 149 PASS
+Private automated suite          156 / 156 PASS
 Failed / skipped                 0 / 0
-Coverage                         87%
+Coverage                         88%
 G1/G2 regression surface         PASS
-Mentor decision                  NEAR PASS (~97/100)
+Mentor decision                  APPROVED (~99/100)
 ```
 
-G3.2 closed exact quote-edge semantics, typed LLM wall-clock timeout, same-configuration rerun consistency, extraction-run timestamp semantics, parser/extraction history proofs and document/snapshot provenance guards. The remaining closure is limited to making the provider-neutral LLM output budget fully enforceable and including effective extraction bounds in reproducibility fingerprints.
+G3 verifies exact source grounding without confusing quotation presence with scientific truth. It also preserves parser/extraction version history, quarantines ungrounded evidence, and enforces bounded extraction contracts.
 
-See **[G3 Mentor Review Checkpoint](docs/G3_REVIEW_REPORT.md)**.
+See **[G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)**.
 
-**G4 remains locked until G3 receives final mentor approval.**
+### G4 — Intelligence Lake & Personal Research Memory
+**Authorized / active.**
+
+G4 is building the durable storage layer behind the research-memory system:
+
+```text
+Retained artifact bytes
+→ immutable snapshot storage pointer
+→ versioned semantic embeddings
+→ pgvector claim/chunk index
+→ user-authored research notes
+→ conservative claim relationships
+```
+
+Implementation remains private. Public results, verified metrics, architecture diagrams, and sanitized demos will be mirrored here after each reviewed G4 checkpoint.
 
 ---
 
@@ -138,6 +152,7 @@ See **[G3 Mentor Review Checkpoint](docs/G3_REVIEW_REPORT.md)**.
 - **Grounding is not truth.** A paper containing a statement does not make that statement scientifically correct.
 - **False merge is worse than temporary duplication.** Scholarly identity reconciliation stays conservative.
 - **Metadata first.** Discovering a paper does not imply permanently storing its raw file.
+- **Selective retention.** Raw artifacts are retained only when value, provenance, or research use justifies it.
 - **Cloud-first data, local-first development.** The laptop is not the authoritative research-memory store.
 - **No premature custom-LLM training.** Retrieval and structured memory come first.
 - **Gate-based development.** Green CI is necessary, but not sufficient, for approval.
@@ -169,6 +184,7 @@ PUBLIC SHOWCASE
 - authoritative G2+ source implementation;
 - proprietary reasoning/scoring internals;
 - private research memory and datasets;
+- raw retained artifacts not licensed for redistribution;
 - unpublished experiments and ideas;
 - sensitive prompts/rules and credentials.
 
@@ -183,8 +199,8 @@ PUBLIC SHOWCASE
 | G0 | Product & architecture foundation | ✅ Approved |
 | G1 | Database foundation & backend scaffold | ✅ Approved |
 | G2 | Academic ingestion & connector framework | ✅ Approved |
-| G3 | Full-text parsing & quote-grounded extraction | 🛠 Final output-contract closure |
-| G4 | Intelligence Lake / memory storage & embeddings | 🔒 Locked |
+| G3 | Full-text parsing & quote-grounded extraction | ✅ Approved |
+| G4 | Intelligence Lake / memory storage & embeddings | 🚧 Active |
 | G5 | Research gaps / opportunities / idea lineage | Planned |
 | G6 | Hybrid search, retrieval & synthesis | Planned |
 | G7 | Living handbook / research outputs | Planned |
@@ -198,7 +214,7 @@ PUBLIC SHOWCASE
 
 - [Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md)
 - [G2 Final Gate Report](docs/G2_FINAL_REPORT.md)
-- [G3 Mentor Review Checkpoint](docs/G3_REVIEW_REPORT.md)
+- [G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)
 - [Product Specification](docs/PRODUCT_SPEC.md)
 - [Architecture](ARCHITECTURE.md)
 - [Detailed Architecture](docs/ARCHITECTURE_DETAILED.md)
