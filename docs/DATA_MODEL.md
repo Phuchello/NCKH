@@ -163,7 +163,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- 1. Topics (Research Areas & Domains)                           [G1 MIGRATION]
 -- =============================================================================
 CREATE TABLE topics (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL UNIQUE,
     slug VARCHAR(255) NOT NULL UNIQUE,
     description TEXT,
@@ -177,7 +177,7 @@ CREATE TABLE topics (
 -- 2. Sources (Globally Reusable Ingestion Providers)             [G1 MIGRATION]
 -- =============================================================================
 CREATE TABLE sources (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL UNIQUE,
     source_type VARCHAR(50) NOT NULL, -- 'ARXIV', 'CROSSREF', 'SEMANTIC_SCHOLAR', 'OPENALEX', 'WEB'
     base_url TEXT NOT NULL,
@@ -193,11 +193,11 @@ CREATE TABLE sources (
 -- 3. Documents (Logical Scientific Works / Papers)               [G1 MIGRATION]
 -- =============================================================================
 CREATE TABLE documents (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     doi VARCHAR(255) UNIQUE,
     arxiv_id VARCHAR(100) UNIQUE,
     canonical_url TEXT NOT NULL,
-    metadata_fingerprint VARCHAR(64) NOT NULL, -- SHA-256 of normalized (title + authors + venue + year)
+    metadata_fingerprint VARCHAR(64) NOT NULL, -- SHA-256 candidate reconciliation signal, NOT globally unique
     title TEXT NOT NULL,
     authors TEXT[] NOT NULL DEFAULT '{}',
     publication_venue VARCHAR(255),
@@ -220,7 +220,7 @@ CREATE INDEX idx_documents_retention_tier ON documents(retention_tier);
 -- 4. Document Topics (M:N Document <-> Topic)                    [G1 MIGRATION]
 -- =============================================================================
 CREATE TABLE document_topics (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     topic_id UUID NOT NULL REFERENCES topics(id) ON DELETE CASCADE,
     relevance_score FLOAT NOT NULL DEFAULT 0.0,
@@ -236,11 +236,12 @@ CREATE INDEX idx_document_topics_topic ON document_topics(topic_id);
 -- 5. Document Sources (Multi-Provider Observation Provenance)    [G1 MIGRATION]
 -- =============================================================================
 CREATE TABLE document_sources (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     source_id UUID NOT NULL REFERENCES sources(id) ON DELETE CASCADE,
-    provider_doc_id VARCHAR(255), -- ID in the provider system (may be NULL for web crawls)
-    observed_url TEXT NOT NULL,
+    provider_doc_id VARCHAR(255), -- ID in provider system (e.g. arXiv ID, Crossref DOI, NULL for web crawls)
+    observed_url TEXT NOT NULL, -- Verbatim observed URL for provenance
+    normalized_observed_url TEXT NOT NULL, -- Deterministic normalized identity key
     observed_metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
     match_method VARCHAR(50) NOT NULL DEFAULT 'MANUAL', -- 'DOI_EXACT', 'ARXIV_ID_EXACT', 'CANONICAL_URL', 'METADATA_FINGERPRINT', 'MANUAL'
     match_confidence FLOAT NOT NULL DEFAULT 1.0, -- 1.0 for hard identity, 0.7-0.9 for candidate signals
@@ -254,15 +255,15 @@ CREATE INDEX idx_document_sources_source ON document_sources(source_id);
 CREATE UNIQUE INDEX uq_doc_sources_provider ON document_sources (document_id, source_id, provider_doc_id)
 WHERE provider_doc_id IS NOT NULL;
 
--- Idempotency Rule 2: NULL provider_doc_id uniqueness per (document, source, observed_url)
-CREATE UNIQUE INDEX uq_doc_sources_url_null_provider ON document_sources (document_id, source_id, observed_url)
+-- Idempotency Rule 2: NULL provider_doc_id uniqueness per (document, source, normalized_observed_url)
+CREATE UNIQUE INDEX uq_doc_sources_url_null_provider ON document_sources (document_id, source_id, normalized_observed_url)
 WHERE provider_doc_id IS NULL;
 
 -- =============================================================================
 -- 6. Document Snapshots (Fetched Representations / Versions)     [G1 MIGRATION]
 -- =============================================================================
 CREATE TABLE document_snapshots (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     document_source_id UUID REFERENCES document_sources(id) ON DELETE RESTRICT, -- Provenance protected: cannot drop source observation while snapshots depend on it
     version_identifier VARCHAR(50) NOT NULL DEFAULT 'v1', -- e.g. 'arxiv_v1', 'arxiv_v2'
@@ -288,7 +289,7 @@ CREATE INDEX idx_snapshots_document_source ON document_snapshots(document_source
 -- 7. Background Jobs (Async Task Execution & Telemetry)          [G1 MIGRATION]
 -- =============================================================================
 CREATE TABLE background_jobs (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     job_type VARCHAR(100) NOT NULL,
     idempotency_key VARCHAR(128) NOT NULL UNIQUE,
     status job_status NOT NULL DEFAULT 'PENDING',

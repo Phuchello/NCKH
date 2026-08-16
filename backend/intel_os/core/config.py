@@ -27,7 +27,7 @@ class Settings(BaseSettings):
 
     # Database configuration
     DATABASE_URL: str = Field(
-        default="postgresql+asyncpg://postgres:postgres@localhost:5432/intel_os",
+        default="postgresql+asyncpg://postgres:postgrespassword@localhost:5432/intel_os",
         description="Async PostgreSQL connection URI",
     )
     DATABASE_POOL_SIZE: int = Field(default=10, ge=1, le=100)

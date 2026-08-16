@@ -128,3 +128,42 @@ async def test_case_c_same_doc_same_source_null_provider_different_url_allowed(d
 
     assert obs_page1.id != obs_page2.id
     assert obs_page1.observed_url != obs_page2.observed_url
+
+
+@pytest.mark.asyncio
+async def test_case_d_tracking_url_normalized_to_same_identity_rejected(db_session: AsyncSession):
+    """TEST D: URLs differing only in tracking query parameters normalize to the same identity -> rejected."""
+    doc = Document(
+        canonical_url="https://site.com/p4",
+        metadata_fingerprint="fp4",
+        title="Tracking Param Paper",
+        authors=["Author 4"],
+    )
+    src = Source(
+        name="Tracking Crawler",
+        source_type="WEB",
+        base_url="https://site.com",
+    )
+    db_session.add_all([doc, src])
+    await db_session.flush()
+
+    obs1 = DocumentSource(
+        document_id=doc.id,
+        source_id=src.id,
+        provider_doc_id=None,
+        observed_url="https://site.com/p4",
+    )
+    db_session.add(obs1)
+    await db_session.flush()
+
+    obs2 = DocumentSource(
+        document_id=doc.id,
+        source_id=src.id,
+        provider_doc_id=None,
+        observed_url="https://site.com/p4?utm_source=twitter&ref=newsletter",
+    )
+    db_session.add(obs2)
+    with pytest.raises(IntegrityError):
+        await db_session.flush()
+    await db_session.rollback()
+

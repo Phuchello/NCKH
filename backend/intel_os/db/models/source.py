@@ -4,7 +4,7 @@ from datetime import datetime
 import uuid
 from typing import TYPE_CHECKING, List, Optional
 
-from sqlalchemy import Boolean, DateTime, String, Text
+from sqlalchemy import Boolean, DateTime, String, Text, func, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import JSON
@@ -34,7 +34,7 @@ class Source(Base):
     source_type: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
-    )  # e.g., 'ARXIV', 'CROSSREF', 'SEMANTIC_SCHOLAR', 'OPENALEX', 'WEB'
+    )
     base_url: Mapped[str] = mapped_column(
         Text,
         nullable=False,
@@ -52,6 +52,7 @@ class Source(Base):
         Boolean,
         nullable=False,
         default=True,
+        server_default=text("true"),
     )
     last_crawled_at: Mapped[Optional[datetime]] = mapped_column(
         DateTime(timezone=True),
@@ -61,12 +62,14 @@ class Source(Base):
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
         onupdate=utc_now,
+        server_default=func.now(),
     )
 
     # Relationships

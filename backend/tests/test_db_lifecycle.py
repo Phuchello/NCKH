@@ -4,7 +4,15 @@ import pytest
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from intel_os.db.session import check_db_connectivity, get_db_context, get_engine
+from intel_os.db.session import check_db_connectivity, close_db, get_db_context, get_engine
+
+
+@pytest.fixture(autouse=True)
+async def cleanup_engine():
+    """Ensures clean engine lifecycle per test."""
+    await close_db()
+    yield
+    await close_db()
 
 
 @pytest.mark.asyncio

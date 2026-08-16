@@ -4,8 +4,7 @@ from datetime import datetime
 import uuid
 from typing import TYPE_CHECKING, List, Optional
 
-from sqlalchemy import Boolean, DateTime, String, Text
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import ARRAY, Boolean, DateTime, String, Text, func, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import JSON
 
@@ -41,8 +40,8 @@ class Topic(Base):
         Text,
         nullable=True,
     )
-    keywords: Mapped[list] = mapped_column(
-        JSON().with_variant(JSONB, "postgresql"),
+    keywords: Mapped[list[str]] = mapped_column(
+        ARRAY(String).with_variant(JSON, "sqlite"),
         nullable=False,
         default=list,
     )
@@ -50,17 +49,20 @@ class Topic(Base):
         Boolean,
         nullable=False,
         default=True,
+        server_default=text("true"),
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
         onupdate=utc_now,
+        server_default=func.now(),
     )
 
     # Relationships

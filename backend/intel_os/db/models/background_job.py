@@ -4,7 +4,7 @@ from datetime import datetime
 import uuid
 from typing import Optional
 
-from sqlalchemy import DateTime, Enum, Float, Integer, String, Text
+from sqlalchemy import DateTime, Enum, Float, Integer, String, Text, func, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import JSON
@@ -34,7 +34,12 @@ class BackgroundJob(Base):
         index=True,
     )
     status: Mapped[JobStatus] = mapped_column(
-        Enum(JobStatus, native_enum=True, values_callable=lambda x: [e.value for e in x]),
+        Enum(
+            JobStatus,
+            name="job_status",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         nullable=False,
         default=JobStatus.PENDING,
         index=True,
@@ -43,6 +48,7 @@ class BackgroundJob(Base):
         Float,
         nullable=False,
         default=0.0,
+        server_default=text("0.0"),
     )
     payload: Mapped[dict] = mapped_column(
         JSON().with_variant(JSONB, "postgresql"),
@@ -61,11 +67,13 @@ class BackgroundJob(Base):
         Integer,
         nullable=False,
         default=0,
+        server_default=text("0"),
     )
     max_attempts: Mapped[int] = mapped_column(
         Integer,
         nullable=False,
         default=3,
+        server_default=text("3"),
     )
     started_at: Mapped[Optional[datetime]] = mapped_column(
         DateTime(timezone=True),
@@ -79,6 +87,7 @@ class BackgroundJob(Base):
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
 
     def __repr__(self) -> str:

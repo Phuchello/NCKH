@@ -16,7 +16,35 @@ Each entry must record:
 
 ---
 
-## Entries
+### [2026-08-16 01:45:00 UTC] — Gate 1.1 (G1.1) PostgreSQL Reality Check & Schema Alignment
+* **Milestone**: Gate 1.1 (G1.1)
+* **Agent Role**: Antigravity (Gemini)
+* **Action Summary**:
+  * Connected to and verified real PostgreSQL 16 + pgvector container (`intel_os_postgres` / `intel_os_test`) using standard Docker CLI.
+  * Audited and fixed PostgreSQL ENUM lifecycle for `retention_tier` and `job_status` to prevent duplicate type creation errors and guarantee zero type leaks on downgrade.
+  * Reconciled silent schema drift: aligned `topics.keywords` and `documents.authors` as native PostgreSQL `TEXT[]` (`ARRAY(String)`) and adopted built-in `gen_random_uuid()` defaults (`DOCS == ORM == ALEMBIC == ACTUAL POSTGRES SCHEMA`).
+  * Implemented conservative, deterministic URL normalization helper (`normalize_url`) in `intel_os.core.url` and separated verbatim `observed_url` from canonical `normalized_observed_url`.
+  * Added safety guard in test suite refusing destructive operations against non-test databases.
+  * Authored comprehensive PostgreSQL schema contract tests, real PostgreSQL idempotency tests (Scenarios A, B, C, D), snapshot provenance tests (`ON DELETE RESTRICT`), and URL normalizer tests.
+  * Added minimal GitHub Actions backend CI workflow (`.github/workflows/backend-ci.yml`).
+  * Verified 100% test pass rate across 49 tests (SQLite unit + real PostgreSQL 16 integration) with 91% code coverage.
+* **Files Created**:
+  * `backend/intel_os/core/url.py`
+  * `backend/tests/test_url_normalization.py`, `backend/tests/test_postgres_contract.py`, `backend/tests/test_postgres_idempotency.py`, `backend/tests/test_postgres_snapshots.py`
+  * `.github/workflows/backend-ci.yml`
+* **Files Modified**:
+  * `backend/intel_os/core/__init__.py`, `backend/intel_os/core/config.py`
+  * `backend/intel_os/db/models/topic.py`, `source.py`, `document.py`, `document_topic.py`, `document_source.py`, `document_snapshot.py`, `background_job.py`
+  * `backend/intel_os/db/migrations/versions/20260816_0001_g1_foundation.py`
+  * `backend/tests/conftest.py`, `test_db_lifecycle.py`, `test_document_sources_idempotency.py`
+  * `docs/DATA_MODEL.md`, `DECISIONS.md` (ADR-0016, ADR-0017), `TODO.md`, `PROJECT_STATE.md`
+* **Verification**:
+  * 49/49 automated pytest tests passing (100% pass rate, 91% code coverage).
+  * Real PostgreSQL 16 `alembic upgrade head` -> `alembic downgrade base` -> `alembic upgrade head` verified.
+  * Introspected actual PostgreSQL database verifying 7 tables + `alembic_version`, ENUM types, `TEXT[]` arrays, and JSONB columns.
+* **Status**: G1.1 Completed. Checkpoint ready for mentor review.
+
+---
 
 ### [2026-08-16 01:30:00 UTC] — Gate 1 (G1) Database Foundation & Backend Scaffolding
 * **Milestone**: Gate 1 (G1)

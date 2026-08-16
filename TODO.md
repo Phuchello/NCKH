@@ -34,6 +34,31 @@
 
 ---
 
+## Gate 1.1: PostgreSQL Reality Check & Schema Alignment [COMPLETED]
+- [x] Real PostgreSQL 16 Testing:
+  - [x] Boots PostgreSQL 16 + pgvector container via standard `docker compose up -d`.
+  - [x] Created isolated test database (`intel_os_test`) with safety guard refusing execution against non-test databases.
+  - [x] Executed and verified real PostgreSQL Alembic upgrade/downgrade/upgrade cycle (`upgrade head` -> `downgrade base` -> `upgrade head`).
+- [x] Enum Lifecycle Fix:
+  - [x] Controlled ENUM type creation on PostgreSQL for `retention_tier` and `job_status` with zero duplicate type collisions or leaks.
+- [x] Schema & Docs Reconciliation:
+  - [x] Standardized `topics.keywords` and `documents.authors` as native PostgreSQL `TEXT[]` (`ARRAY(String)`) with SQLite `JSON` fallback.
+  - [x] Adopted built-in `gen_random_uuid()` database server defaults and application-level `uuid.uuid4`.
+  - [x] Guaranteed complete alignment: `DOCS == ORM == ALEMBIC == ACTUAL POSTGRES SCHEMA`.
+- [x] Normalized Observed URL & Idempotency:
+  - [x] Implemented conservative deterministic URL normalizer (`intel_os.core.url.normalize_url`).
+  - [x] Separated verbatim `observed_url` from canonical `normalized_observed_url`.
+  - [x] Verified partial unique index `uq_doc_sources_url_null_provider` on real PostgreSQL with scenarios A, B, C, D.
+- [x] Contract & Provenance Test Suite:
+  - [x] Added PostgreSQL database introspection and contract tests (`test_postgres_contract.py`).
+  - [x] Added PostgreSQL idempotency tests (`test_postgres_idempotency.py`).
+  - [x] Added PostgreSQL snapshot provenance and representation tests (`test_postgres_snapshots.py`).
+  - [x] Added URL normalizer unit tests (`test_url_normalization.py`).
+  - [x] Added minimal GitHub Actions CI workflow (`.github/workflows/backend-ci.yml`).
+  - [x] Total test suite: 49 passing tests (100% pass rate, 91% code coverage).
+
+---
+
 ## Gate 2: Ingestion Engine & Source Connector Framework
 - [ ] Ingestion Architecture:
   - [ ] Base connector interface (`BaseConnector`) with rate limiting and retry logic.

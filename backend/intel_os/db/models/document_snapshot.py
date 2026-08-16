@@ -4,7 +4,7 @@ from datetime import datetime
 import uuid
 from typing import TYPE_CHECKING, Optional
 
-from sqlalchemy import BigInteger, DateTime, Enum, ForeignKey, Index, String, Text, UniqueConstraint
+from sqlalchemy import BigInteger, DateTime, Enum, ForeignKey, String, Text, UniqueConstraint, func, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from intel_os.db.base import Base, GUID, utc_now
@@ -35,6 +35,7 @@ class DocumentSnapshot(Base):
         GUID,
         primary_key=True,
         default=uuid.uuid4,
+        server_default=text("gen_random_uuid()"),
     )
     document_id: Mapped[uuid.UUID] = mapped_column(
         GUID,
@@ -52,7 +53,8 @@ class DocumentSnapshot(Base):
     version_identifier: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
-        default="v1",  # e.g., 'arxiv_v1', 'arxiv_v2', 'camera_ready'
+        default="v1",
+        server_default="v1",
     )
     mime_type: Mapped[str] = mapped_column(
         String(100),
@@ -76,7 +78,12 @@ class DocumentSnapshot(Base):
         nullable=True,
     )
     retention_tier: Mapped[RetentionTier] = mapped_column(
-        Enum(RetentionTier, native_enum=True, values_callable=lambda x: [e.value for e in x]),
+        Enum(
+            RetentionTier,
+            name="retention_tier",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         nullable=False,
         default=RetentionTier.INDEXED,
     )
@@ -92,11 +99,13 @@ class DocumentSnapshot(Base):
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
 
     # Relationships

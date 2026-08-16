@@ -4,7 +4,7 @@ from datetime import date, datetime
 import uuid
 from typing import TYPE_CHECKING, List, Optional
 
-from sqlalchemy import Date, DateTime, Enum, Float, Index, String, Text
+from sqlalchemy import ARRAY, Date, DateTime, Enum, Float, String, Text, func, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import JSON
@@ -44,7 +44,6 @@ class Document(Base):
         Text,
         nullable=False,
     )
-    # Important: metadata_fingerprint is a candidate reconciliation signal, NOT globally unique!
     metadata_fingerprint: Mapped[str] = mapped_column(
         String(64),
         nullable=False,
@@ -54,8 +53,8 @@ class Document(Base):
         Text,
         nullable=False,
     )
-    authors: Mapped[list] = mapped_column(
-        JSON().with_variant(JSONB, "postgresql"),
+    authors: Mapped[list[str]] = mapped_column(
+        ARRAY(String).with_variant(JSON, "sqlite"),
         nullable=False,
         default=list,
     )
@@ -72,7 +71,12 @@ class Document(Base):
         nullable=True,
     )
     retention_tier: Mapped[RetentionTier] = mapped_column(
-        Enum(RetentionTier, native_enum=True, values_callable=lambda x: [e.value for e in x]),
+        Enum(
+            RetentionTier,
+            name="retention_tier",
+            native_enum=True,
+            values_callable=lambda x: [e.value for e in x],
+        ),
         nullable=False,
         default=RetentionTier.DISCOVERED,
         index=True,
@@ -81,13 +85,14 @@ class Document(Base):
         Float,
         nullable=False,
         default=0.0,
+        server_default=text("0.0"),
     )
     credibility_prior: Mapped[float] = mapped_column(
         Float,
         nullable=False,
         default=0.0,
+        server_default=text("0.0"),
     )
-    # Mapped as doc_metadata to avoid conflict with Base.metadata
     doc_metadata: Mapped[dict] = mapped_column(
         "metadata",
         JSON().with_variant(JSONB, "postgresql"),
@@ -98,12 +103,14 @@ class Document(Base):
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
         onupdate=utc_now,
+        server_default=func.now(),
     )
 
     # Relationships

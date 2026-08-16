@@ -227,3 +227,40 @@ This document records the foundational architectural decisions for **Intel OS / 
   * *Positive*: Bulletproof provenance retention; source observations cannot be deleted while dependent snapshots exist.
   * *Negative*: Deleting an observation requires explicitly deleting or migrating its dependent snapshots first.
 
+---
+
+## ADR-0016: PostgreSQL Native TEXT[] Arrays and Built-in gen_random_uuid() Schema Reconciliation
+
+* **Status**: Accepted
+* **Date**: 2026-08-16
+* **Context**: During the G1.1 PostgreSQL reality check, silent schema drift was identified where `topics.keywords` and `documents.authors` were represented as `JSONB` in the initial ORM implementation while `docs/DATA_MODEL.md` specified native PostgreSQL `TEXT[]` arrays. Furthermore, UUID generation relied on the legacy `uuid-ossp` extension's `uuid_generate_v4()`.
+* **Decision**:
+  1. Standardize `topics.keywords` and `documents.authors` as native PostgreSQL `TEXT[]` (`ARRAY(String)`) with SQLite `JSON` fallback for fast unit tests.
+  2. Use PostgreSQL 13+ native `gen_random_uuid()` for database server defaults and Python `uuid.uuid4` for application-level entity instantiation.
+  3. Ensure absolute alignment across `DOCS == ORM == ALEMBIC == ACTUAL POSTGRES SCHEMA`.
+* **Consequences**:
+  * *Positive*: Native array indexing (e.g. `ANY()`, `@>`) and native PostgreSQL JSONB/ARRAY operations without impedance mismatch. Zero extra extension dependencies for UUIDs.
+  * *Negative*: Cross-dialect unit testing on SQLite requires SQLAlchemy's `.with_variant(JSON, "sqlite")`.
+
+---
+
+## ADR-0017: Deterministic URL Normalization & Idempotency Keying for Document Sources
+
+* **Status**: Accepted
+* **Date**: 2026-08-16
+* **Context**: Web-crawled document observations (`provider_doc_id = NULL`) require deduplication. However, raw observed URLs may vary trivially due to tracking parameters (e.g. `utm_source`, `ref`), default ports, or trailing slashes, while arbitrary aggressive normalization might destroy semantic query parameters necessary to identify unique online documents.
+* **Decision**:
+  1. Separate `observed_url` (verbatim raw provider URL for historical provenance) from `normalized_observed_url` (canonical identity key).
+  2. Implement conservative, deterministic URL normalization in `intel_os.core.url.normalize_url`:
+     - Lowercase scheme and host.
+     - Remove standard default scheme ports (80/443).
+     - Strip URL fragments (`#...`).
+     - Strip trailing slashes on non-root paths.
+     - Strip known analytics/tracking parameters (`utm_*`, `ref`, `fbclid`, `gclid`, etc.).
+     - Sort remaining semantic query parameters deterministically.
+  3. Enforce uniqueness on `(document_id, source_id, normalized_observed_url)` when `provider_doc_id IS NULL`.
+* **Consequences**:
+  * *Positive*: Prevents duplicate observation records from tracking URLs while preserving complete verbatim provenance in `observed_url`.
+  * *Negative*: Requires storing both `observed_url` and `normalized_observed_url` in `document_sources`.
+
+

@@ -2,13 +2,14 @@
 
 from datetime import datetime
 import uuid
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
 
-from sqlalchemy import DateTime, Float, ForeignKey, Index, String, Text, text
+from sqlalchemy import DateTime, Float, ForeignKey, Index, String, Text, func, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import JSON
 
+from intel_os.core.url import normalize_url
 from intel_os.db.base import Base, GUID, utc_now
 
 if TYPE_CHECKING:
@@ -20,7 +21,7 @@ if TYPE_CHECKING:
 class DocumentSource(Base):
     """Represents a discrete provider observation of a document.
 
-    Handles idempotency across both provider-assigned identifiers and direct web URLs.
+    Handles idempotency across both provider-assigned identifiers and normalized web URLs.
     """
 
     __tablename__ = "document_sources"
@@ -35,12 +36,12 @@ class DocumentSource(Base):
             postgresql_where=text("provider_doc_id IS NOT NULL"),
             sqlite_where=text("provider_doc_id IS NOT NULL"),
         ),
-        # Idempotency Rule 2: When provider_doc_id is NULL (e.g. web crawls), (document_id, source_id, observed_url) is unique
+        # Idempotency Rule 2: When provider_doc_id is NULL, (document_id, source_id, normalized_observed_url) is unique
         Index(
             "uq_doc_sources_url_null_provider",
             "document_id",
             "source_id",
-            "observed_url",
+            "normalized_observed_url",
             unique=True,
             postgresql_where=text("provider_doc_id IS NULL"),
             sqlite_where=text("provider_doc_id IS NULL"),
@@ -72,6 +73,10 @@ class DocumentSource(Base):
         Text,
         nullable=False,
     )
+    normalized_observed_url: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
     observed_metadata: Mapped[dict] = mapped_column(
         JSON().with_variant(JSONB, "postgresql"),
         nullable=False,
@@ -80,17 +85,19 @@ class DocumentSource(Base):
     match_method: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
-        default="MANUAL",  # 'DOI_EXACT', 'ARXIV_ID_EXACT', 'CANONICAL_URL', 'METADATA_FINGERPRINT', 'MANUAL'
+        default="MANUAL",
     )
     match_confidence: Mapped[float] = mapped_column(
         Float,
         nullable=False,
-        default=1.0,  # 1.0 for hard identity, 0.7-0.9 for candidate signals
+        default=1.0,
+        server_default=text("1.0"),
     )
     observed_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
 
     # Relationships
@@ -107,6 +114,11 @@ class DocumentSource(Base):
         back_populates="document_source",
         passive_deletes=True,
     )
+
+    def __init__(self, **kwargs: Any) -> None:
+        if "observed_url" in kwargs and "normalized_observed_url" not in kwargs:
+            kwargs["normalized_observed_url"] = normalize_url(kwargs["observed_url"])
+        super().__init__(**kwargs)
 
     def __repr__(self) -> str:
         return f"<DocumentSource(id={self.id}, doc_id={self.document_id}, source_id={self.source_id}, provider_id='{self.provider_doc_id}')>"

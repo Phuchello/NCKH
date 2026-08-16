@@ -4,7 +4,7 @@ from datetime import datetime
 import uuid
 from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, Float, ForeignKey, String, UniqueConstraint
+from sqlalchemy import DateTime, Float, ForeignKey, String, UniqueConstraint, func, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from intel_os.db.base import Base, GUID, utc_now
@@ -43,16 +43,18 @@ class DocumentTopic(Base):
         Float,
         nullable=False,
         default=0.0,
+        server_default=text("0.0"),
     )
     assignment_method: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
-        default="MANUAL",  # 'KEYWORD_MATCH', 'SEMANTIC_SIMILARITY', 'MANUAL', 'CLASSIFIER'
+        default="MANUAL",
     )
     assigned_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         default=utc_now,
+        server_default=func.now(),
     )
 
     # Relationships
