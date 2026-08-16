@@ -2,11 +2,11 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G4.1%20Integrity%20Closure-informational?style=flat-square)](docs/G4_REVIEW_REPORT.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G4.2%20Micro--Closure-informational?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
 [![G3](https://img.shields.io/badge/G3-Approved-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-184%2F184%20passing-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-215%2F215%20passing-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G5](https://img.shields.io/badge/G5-Locked-orange?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
@@ -93,8 +93,6 @@ Real PG concurrency suite        PASS
 Mentor decision                  APPROVED (~98/100)
 ```
 
-Publicly reportable capability includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; conservative scholarly identity reconciliation; multi-provider provenance; bounded async networking; job idempotency; whole-attempt transactions; and PostgreSQL concurrency testing.
-
 See **[G2 Final Gate Report](docs/G2_FINAL_REPORT.md)**.
 
 ### G3 — Full-Text Parsing & Quote-Grounded Extraction
@@ -107,43 +105,46 @@ Coverage                         88%
 Mentor decision                  APPROVED (~99/100)
 ```
 
-G3 provides streamed representation bounds, immutable snapshot/version provenance, deterministic parsing, versioned chunks, character-exact quote verification, ungrounded-evidence quarantine, immutable extraction-run provenance and bounded provider-neutral extraction contracts.
+G3 provides immutable snapshot/version provenance, deterministic parsing, versioned chunks, character-exact quote grounding, ungrounded-evidence quarantine and reproducible extraction runs.
 
 > **Grounding is not truth.** A verified quote proves that a source contains a statement; it does not prove the statement is scientifically correct.
 
 See **[G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)**.
 
 ### G4 — Intelligence Lake & Personal Research Memory
-**Implemented; first mentor review = REVISE. G4.1 integrity closure is active.**
+**G4.1 reviewed as NEAR PASS; G4.2 micro-closure is active.**
 
 Latest verified checkpoint:
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
-Alembic upgrade/downgrade/up     PASS
-Private automated suite          184 / 184 PASS
+Alembic 0001 -> 0006             PASS
+Upgrade / downgrade / upgrade    PASS
+Private automated suite          215 / 215 PASS
 Failed / skipped                 0 / 0
-Coverage                         87%
-G1/G2/G3 regression surface      PASS
-Mentor decision                  REVISE (~84/100)
+Coverage                         88%
+Protected regression surface     PASS
+Mentor decision                  NEAR PASS (~95/100)
 ```
 
-The private core now contains the first memory/vector foundation:
+At a disclosure-safe level, G4.1 now establishes:
 
 ```text
-Grounded snapshot / chunk / claim
-→ selective retained-artifact workflow
-→ 768-dimension semantic vectors
-→ pgvector / HNSW indexing
-→ user-authored research notes
+Grounded research objects
+→ selectively retained artifacts
+→ S3-compatible storage boundary
+→ compensated/reconcilable retention
+→ immutable embedding provenance
+→ active pgvector/HNSW semantic index
+→ user-authored notes
 → conservative claim relationships
 ```
 
-The remaining G4.1 closure is focused on cross-store durability and historical reproducibility: concrete S3-compatible deployment adapter, commit-failure compensation/recovery, version-preserving embedding provenance, source-text identity, and missing adversarial tests.
+The final G4.2 closure is narrow: true transfer-time bounded object reads, stronger durable post-upload verification/reconciliation, and a database-level semantic consistency constraint for embedding-provenance targets.
 
 See **[G4 Mentor Review Checkpoint](docs/G4_REVIEW_REPORT.md)**.
 
-**G5 remains locked until G4 receives final mentor approval.**
+**G5 remains locked until final G4 mentor approval.**
 
 ---
 
@@ -202,7 +203,7 @@ PUBLIC SHOWCASE
 | G1 | Database foundation & backend scaffold | ✅ Approved |
 | G2 | Academic ingestion & connector framework | ✅ Approved |
 | G3 | Full-text parsing & quote-grounded extraction | ✅ Approved |
-| G4 | Intelligence Lake / memory storage & embeddings | 🛠 G4.1 integrity closure |
+| G4 | Intelligence Lake / memory storage & embeddings | 🛠 G4.2 micro-closure |
 | G5 | Research gaps / opportunities / idea lineage | 🔒 Locked |
 | G6 | Hybrid search, retrieval & synthesis | Planned |
 | G7 | Living handbook / research outputs | Planned |
