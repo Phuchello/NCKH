@@ -83,13 +83,12 @@ To ensure disciplined execution, the following components are strictly deferred 
 ## 6. Last Safe Checkpoint
 
 * **Previous Checkpoint (G0 Baseline)**: `dbb55ac148771a80c565f544fe229dd9cd618fc6`
-* **Current Checkpoint (G0.1 Corrected)**: Will be registered upon git commit of G0.1.
+* **Current Checkpoint (G0.1 Corrected)**: `60abdbe65b88b2dd61e28d5419655b50c5fd94cb`
 * **Working Tree**: Clean.
 
 ---
 
 ## 7. Exact Next Action
 
-1. Commit G0.1 corrected specification suite and push to `origin/main`.
-2. Present G0.1 completion report to the mentor and request formal re-audit for Gate 1 authorization.
-3. **DO NOT START GATE 1 BEFORE MENTOR APPROVAL**.
+1. Present G0.1 completion report to the mentor and request formal re-audit for Gate 1 authorization.
+2. **DO NOT START GATE 1 BEFORE MENTOR APPROVAL**.
