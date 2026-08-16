@@ -14,8 +14,9 @@ This page is the public milestone mirror for Intel OS / NCKH. It reports verifie
 | G2 — Academic Ingestion & Connector Framework | ✅ Approved |
 | G3 — Full-Text Parsing & Quote-Grounded Extraction | ✅ Approved |
 | G4 — Intelligence Lake & Personal Research Memory | ✅ Approved |
-| G5 — Opportunity Miner & Snapshot-Pinned Idea Lineage | 🛠 Active |
-| G6 — Hybrid Search / Retrieval / Synthesis | 🔒 Locked until G5 approval |
+| G5 — Opportunity Miner & Snapshot-Pinned Idea Lineage | ✅ Approved (~98/100) |
+| G6 — Hybrid Retrieval & Citation-Grounded Synthesis | 🛠 Active |
+| G7 — Research Output Engine | 🔒 Locked until G6 approval |
 
 The public repository remains an active showcase, verified-results surface, and research/publication hub. The authoritative G2+ implementation remains private.
 
@@ -45,7 +46,7 @@ Mentor assessment                  ~96/100 — APPROVED
 
 ## G2 — Academic Metadata Ingestion & Connector Framework
 
-**Final decision: APPROVED.**
+**Final decision: APPROVED (~98/100).**
 
 ```text
 G2.1                     92 / 92 PASS   → REVISE
@@ -61,7 +62,7 @@ Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
 
 ## G3 — Full-Text Parsing & Quote-Grounded Extraction
 
-**Final decision: APPROVED.**
+**Final decision: APPROVED (~99/100).**
 
 ```text
 G3 initial    134 / 134 PASS   → REVISE (~88/100)
@@ -80,8 +81,6 @@ Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
 
 **Final decision: APPROVED (~99/100).**
 
-### Review progression
-
 ```text
 G4 initial   184 / 184 PASS   → REVISE (~84/100)
 G4.1         215 / 215 PASS   → NEAR PASS (~95/100)
@@ -89,32 +88,18 @@ G4.2         234 / 234 PASS   → NEAR PASS (~98/100)
 G4.3 final   243 / 243 PASS   → APPROVED (~99/100)
 ```
 
-### Final verified evidence
+Final verified evidence:
 
 ```text
-Private CI run                    31945476008
+Private CI                         31945476008
 PostgreSQL 16.15 + pgvector       PASS
-Alembic 0001 -> 0007              PASS
-Downgrade base / second upgrade   PASS
+Alembic through 0007              U/D/U PASS
 Full automated suite              243 / 243 PASS
 Failed / skipped                  0 / 0
 Coverage                          88%
-Mentor assessment                 APPROVED (~99/100)
 ```
 
-### Publicly reportable capability
-
-- concrete S3-compatible retained-artifact storage boundary with offline adapter validation;
-- bounded upload and transfer-time bounded streaming reads;
-- explicit compensation/reconciliation semantics for cross-store retention rather than distributed-atomicity claims;
-- durable post-upload metadata verification before RETAINED state;
-- strict retained-object idempotency and inconsistency handling;
-- immutable historical embedding provenance plus a separate active pgvector/HNSW projection;
-- exact source-text identity and version-sensitive embedding history;
-- embedding dimension/cardinality/input/batch/timeout/partial-failure protections;
-- Personal Research Memory notes with optional-link preservation semantics;
-- conservative claim relationships without automatic scientific-status mutation;
-- full approved G1–G3 regression surface preserved.
+Publicly reportable capability includes a bounded S3-compatible retained-artifact boundary, explicit cross-store compensation/reconciliation, immutable embedding provenance, pgvector/HNSW active projections, Personal Research Memory notes and conservative claim relationships.
 
 Full report: **[G4 Final Gate Report](G4_REVIEW_REPORT.md)**.
 
@@ -122,29 +107,74 @@ Full report: **[G4 Final Gate Report](G4_REVIEW_REPORT.md)**.
 
 ## G5 — Research Opportunity Miner & Snapshot-Pinned Idea Lineage
 
-**Status: ACTIVE.**
+**Final decision: APPROVED (~98/100).**
 
-G5 begins the Research Opportunity Memory layer:
+### Review progression
 
 ```text
-Grounded claims / limitations / future work
-→ gap candidates
-→ contradiction candidates
-→ research opportunities
-→ candidate research ideas
-→ snapshot-pinned backward lineage
+G5 initial     286 / 286 PASS   → REVISE (~91/100)
+G5.1 final     297 / 297 PASS   → APPROVED (~98/100)
 ```
 
-The public-facing principles for this gate are intentionally conservative:
+### Final verified evidence
 
-- author-stated limitations and system-inferred gaps remain distinguishable;
-- contradiction candidates do not automatically refute or downgrade claims;
-- semantic distinctiveness is a retrieval-based signal, not proof of scientific novelty;
-- generated ideas default to candidate status;
-- automated scoring formulas remain provisional/unvalidated until later calibration;
-- every persisted generated idea must remain explainable back to grounded claims and exact source snapshots.
+```text
+Private implementation CI         31952247007
+PostgreSQL 16.15 + pgvector       PASS
+Alembic through 0008              U/D/U PASS
+Full automated suite              297 / 297 PASS
+Failed / skipped                  0 / 0
+Coverage                          90%
+Mentor assessment                 APPROVED (~98/100)
+```
 
-Private unpublished opportunities, ideas, detailed experiment logs and proprietary generation/provenance rules remain in the private core.
+### Publicly reportable capability
+
+G5 establishes the first Research Opportunity Memory layer:
+
+- source-grounded explicit limitation and future-work gap candidates;
+- separately labeled system-inferred cross-paper gaps;
+- conservative contradiction candidates that preserve source epistemic status;
+- research opportunities with separate provisional scoring signals;
+- semantic distinctiveness treated only as retrieval-derived distinctiveness, never scientific novelty proof;
+- generated research ideas defaulting to candidate status;
+- exact snapshot-pinned backward Idea lineage;
+- deterministic validation of model-generated lineage references;
+- lightweight experiment/human-review records without automatic scientific-status promotion.
+
+The final G5.1 integrity closure hardens the boundary against semantically valid-looking but incorrect references: real unrelated opportunities/claims cannot be substituted into a lineage, trusted grounding is rechecked at persistence time, corrupted persisted source pins are surfaced, and provider attribution follows the exact source observation of the pinned snapshot.
+
+Private unpublished opportunities, idea text, experiment notes and proprietary implementation remain private by design.
+
+---
+
+## G6 — Hybrid Retrieval & Citation-Grounded Research Synthesis
+
+**Status: ACTIVE.**
+
+Target flow:
+
+```text
+Research Query
+→ lexical retrieval + vector retrieval
+→ deterministic normalization / hybrid fusion
+→ provenance-rich bounded context
+→ typed synthesis
+→ deterministic citation validation
+→ source-traceable answer
+```
+
+G6 will preserve the same epistemic discipline established in earlier gates:
+
+- retrieval rank is relevance, not truth;
+- semantic similarity is not entailment;
+- source text is untrusted data;
+- every source-supported model statement must cite an exact allowed retrieval-context item;
+- citations to fabricated IDs, real-but-nonretrieved entities, or mismatched source snapshots/documents are rejected rather than silently repaired;
+- conflicting evidence may be presented without automatic adjudication;
+- retrieval, fusion, context and synthesis policies remain versioned and reproducible.
+
+G7 remains locked until G6 passes mentor review.
 
 ---
 
