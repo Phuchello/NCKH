@@ -2,10 +2,11 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G2%20Review-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G2.2%20Closure-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-83%2F83%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![Database](https://img.shields.io/badge/PostgreSQL-16%20%2B%20pgvector-blue?style=flat-square)](docs/DATA_MODEL.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-92%2F92%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![G3](https://img.shields.io/badge/G3-Locked-orange?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
@@ -16,13 +17,11 @@
 
 It is not intended to be another RSS reader, bookmark manager, or one-shot AI summarizer.
 
-Its core loop is:
-
 ```text
 Collect → Understand → Filter → Verify → Connect → Analyze → Remember → Synthesize
 ```
 
-The first application domain is **scientific research / NCKH**, with a strong focus on networking, IoT, AIoT, digital twins, AI, cloud/devops, cybersecurity, and adjacent technical research.
+The first application domain is **scientific research / NCKH**, with emphasis on networking, IoT, AIoT, digital twins, AI, cloud/devops, cybersecurity, and adjacent technical research.
 
 ---
 
@@ -78,63 +77,48 @@ Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot
 ## Current verified progress
 
 ### G0 — Foundation & Architecture
-**Approved.**
-
-Established:
-
-- modular-monolith architecture;
-- provenance-first data model;
-- cloud-first authoritative storage model;
-- staged milestone/gate workflow;
-- security and retention principles;
-- Personal Research Memory / Opportunity Memory concepts.
+**Approved.** Established the modular-monolith direction, provenance-first data model, cloud-first storage model, gate workflow, security/retention principles, and long-lived research-memory concepts.
 
 ### G1 — Database Foundation & Backend Scaffold
-**Approved after PostgreSQL hardening.**
+**Approved after real PostgreSQL hardening.** The verified baseline includes FastAPI, SQLAlchemy 2.x async + asyncpg, PostgreSQL 16 + pgvector, staged Alembic migrations, seven foundation tables, provenance/idempotency constraints, bounded local cache, health/status endpoints, and PostgreSQL-backed CI.
 
-Verified baseline includes:
+Final G1 checkpoint:
 
-- FastAPI + typed Python backend foundation;
-- SQLAlchemy 2.x async + asyncpg;
-- PostgreSQL 16 + pgvector;
-- staged Alembic migrations;
-- 7 foundation tables;
-- provider-observation idempotency;
-- versioned document snapshot provenance;
-- bounded local cache;
-- PostgreSQL-backed integration tests;
-- GitHub Actions CI.
+```text
+G1 automated suite               49 / 49 PASS
+Coverage                         91%
+PostgreSQL migration lifecycle   PASS
+GitHub Actions                   PASS
+Mentor decision                  APPROVED (~96/100)
+```
 
 ### G2 — Academic Metadata Ingestion
-**Implementation complete in the private core; mentor audit in progress.**
+**Implemented in the private core and undergoing adversarial closure review.**
 
-The current private implementation covers:
+Publicly reportable scope includes:
 
-- arXiv;
-- Crossref;
-- OpenAlex;
-- Semantic Scholar Academic Graph;
+- arXiv, Crossref, OpenAlex, and Semantic Scholar ingestion paths;
 - provider-neutral discovery records;
 - DOI/arXiv/URL normalization;
-- centralized reconciliation;
-- resilient async HTTP transport;
-- retry/backoff and per-provider rate control;
-- SSRF-oriented network safety checks;
-- multi-provider provenance;
-- ingestion job telemetry.
+- conservative multi-provider reconciliation;
+- provider-observation provenance;
+- resilient async HTTP transport, retry/backoff, rate control, and network-safety checks;
+- bounded ingestion jobs and telemetry;
+- deterministic CI fixtures and PostgreSQL integration testing.
 
-Latest private validation checkpoint:
+Latest verified G2.1 checkpoint:
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
 Alembic upgrade/downgrade       PASS
-Full automated suite            83 / 83 PASS
+Full private automated suite    92 / 92 PASS
 Coverage                        86%
 G1 regression surface           PASS
-G2 PG multi-provider test       PASS
+Private GitHub Actions          PASS
+Mentor review                   REVISE
 ```
 
-Passing tests prove the implemented behavior is internally consistent. G2 remains under adversarial review for identity conflicts, concurrency, transaction failure semantics, provider-policy changes, and network edge cases before G3 is authorized.
+The current review is intentionally stricter than “tests are green”: remaining closure work focuses on concurrency/idempotency, complete hard-identity agreement, and precise job/transaction semantics. **G3 remains locked until G2 is formally approved.**
 
 Full public milestone report: **[docs/PUBLIC_PROGRESS.md](docs/PUBLIC_PROGRESS.md)**
 
@@ -159,29 +143,19 @@ The V1 architecture intentionally avoids premature microservices, Kafka, Kuberne
 
 ## Research / engineering principles
 
-- **Provenance before cleverness.** AI output must be traceable to evidence where meaningful.
+- **Provenance before cleverness.** Important AI output should remain traceable to evidence.
 - **False merge is worse than temporary duplication.** Scientific identity reconciliation is conservative.
-- **Metadata-first ingestion.** Discovering a source does not mean permanently downloading it.
+- **Metadata-first ingestion.** Discovering a source does not imply permanent full-text storage.
 - **Cloud-first data, local-first development.** A laptop is not the authoritative research-memory store.
 - **Strong models only for high-value items.** Cheap deterministic filtering should happen first.
 - **No premature custom-LLM training.** Retrieval + structured memory comes first.
-- **Gate-based development.** A milestone is not considered complete merely because code was generated.
+- **Gate-based development.** Generated code is not considered a completed milestone until verification and review pass.
 
 ---
 
 ## Public showcase vs private core
 
-This repository is the **public-facing project surface**. It is intentionally kept active and will continue to publish:
-
-- milestone outcomes;
-- architecture at a safe level of detail;
-- verified test/benchmark summaries;
-- screenshots and product demos;
-- public research outputs;
-- posters, papers, presentations, and selected reproducible artifacts;
-- release notes and roadmap progress.
-
-The authoritative G2+ implementation lives in a private core repository. Proprietary implementation details, private research memory, unpublished ideas, prompts, datasets, and strategically sensitive logic are not published by default.
+This repository is the **public-facing project surface** and remains actively maintained. It publishes verified progress without exposing proprietary core implementation by default.
 
 ```text
 PRIVATE CORE
@@ -192,7 +166,11 @@ PUBLIC SHOWCASE
     progress → metrics → demos → selected results → publications
 ```
 
-**Public does not mean open source.** This repository is source-available/proprietary. See [`LICENSE`](LICENSE), [`NOTICE.md`](NOTICE.md), and [`docs/IP_POLICY.md`](docs/IP_POLICY.md).
+Public releases may include milestone outcomes, safe architecture descriptions, verified metrics, screenshots/demos, selected benchmark results, posters, papers, presentations, and intentionally released artifacts.
+
+Private by default: proprietary implementation, private research memory, unpublished ideas/experiments, sensitive prompts/rules, private datasets, credentials, and strategically sensitive algorithms.
+
+**Public does not mean open source.** See [`LICENSE`](LICENSE), [`NOTICE.md`](NOTICE.md), and [`docs/IP_POLICY.md`](docs/IP_POLICY.md).
 
 ---
 
@@ -202,7 +180,7 @@ PUBLIC SHOWCASE
 |---|---|---|
 | G0 | Product & architecture foundation | ✅ Approved |
 | G1 | Database foundation & backend scaffold | ✅ Approved |
-| G2 | Academic ingestion & connector framework | 🔎 Mentor review |
+| G2 | Academic ingestion & connector framework | 🛠 G2.2 closure after mentor review |
 | G3 | Cleaning, full-text processing & extraction foundation | 🔒 Locked |
 | G4 | Intelligence extraction & scoring | Planned |
 | G5 | Research gaps / opportunities / idea lineage | Planned |
@@ -235,7 +213,7 @@ PUBLIC SHOWCASE
 **Võ Trọng Phúc**  
 University of Information Technology — VNU-HCM (UIT)
 
-This project is developed as a long-term personal research-engineering platform and NCKH foundation.
+Developed as a long-term personal research-engineering platform and NCKH foundation.
 
 ---
 
