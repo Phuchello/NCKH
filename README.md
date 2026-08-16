@@ -2,10 +2,10 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G3.1%20Closure-informational?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G3.2%20Micro--Closure-informational?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-134%2F134%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-141%2F141%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G4](https://img.shields.io/badge/G4-Locked-orange?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
@@ -97,18 +97,19 @@ Mentor decision                 APPROVED (~98/100)
 See **[G2 Final Gate Report](docs/G2_FINAL_REPORT.md)**.
 
 ### G3 — Full-Text Parsing & Quote-Grounded Extraction
-**Implemented; mentor review = REVISE. G3.1 closure is active.**
+**Implemented. G3.1 passed private CI and is now NEAR PASS; G3.2 final micro-closure is active.**
 
-The private core now contains the first end-to-end source-grounding pipeline:
+The private core contains the first end-to-end source-grounding pipeline:
 
 ```text
 Fetched representation
 → immutable snapshot
 → deterministic parsing
-→ sections / chunks
+→ versioned sections / chunks
 → claim candidate
-→ quote verification
+→ character-exact quote verification
 → snapshot-pinned evidence
+→ extraction-run provenance
 ```
 
 Latest verified checkpoint:
@@ -116,14 +117,14 @@ Latest verified checkpoint:
 ```text
 PostgreSQL 16.15 + pgvector      PASS
 Alembic upgrade/downgrade/up     PASS
-Private automated suite         134 / 134 PASS
+Private automated suite         141 / 141 PASS
 Failed / skipped                0 / 0
-Coverage                        87%
+Coverage                        88%
 G1/G2 regression surface        PASS
-Mentor decision                 REVISE (~88/100)
+Mentor decision                 NEAR PASS (~96/100)
 ```
 
-The closure focuses on true transfer-time resource bounds, character-exact quote semantics, version-safe reruns, controlled multi-column parser evaluation, reproducible extraction provenance, and safe quarantine of ungrounded evidence.
+G3.1 closed true streamed size enforcement, multi-column parser proof, ungrounded-evidence quarantine, extraction-run provenance/idempotency, versioned chunk lineage and snapshot/source consistency. The remaining G3.2 work is a small contract/invariant pass around exact quote edges, enforced LLM bounds and explicit version-history semantics.
 
 See **[G3 Mentor Review Checkpoint](docs/G3_REVIEW_REPORT.md)**.
 
@@ -182,7 +183,7 @@ PUBLIC SHOWCASE
 | G0 | Product & architecture foundation | ✅ Approved |
 | G1 | Database foundation & backend scaffold | ✅ Approved |
 | G2 | Academic ingestion & connector framework | ✅ Approved |
-| G3 | Full-text parsing & quote-grounded extraction | 🛠 G3.1 closure |
+| G3 | Full-text parsing & quote-grounded extraction | 🛠 G3.2 final micro-closure |
 | G4 | Intelligence Lake / memory storage & embeddings | 🔒 Locked |
 | G5 | Research gaps / opportunities / idea lineage | Planned |
 | G6 | Hybrid search, retrieval & synthesis | Planned |
