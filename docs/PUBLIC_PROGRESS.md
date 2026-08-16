@@ -13,11 +13,11 @@ It reports **verified outcomes, engineering milestones, public architecture, and
 | G0 — Foundation & Architecture | ✅ Approved |
 | G1 — Database Foundation & Backend Scaffold | ✅ Approved |
 | Private-core migration | ✅ Validated |
-| G2 — Academic Ingestion & Connector Framework | 🔎 Implemented, mentor audit in progress |
+| G2 — Academic Ingestion & Connector Framework | 🛠 G2.2 closure required after mentor review |
 | G3 | 🔒 Not authorized |
 
 Current authoritative implementation: private core.  
-Current public role: project showcase, milestone mirror, verified-results surface, research/publication hub.
+Current public role: project showcase, milestone mirror, verified-results surface, and research/publication hub.
 
 ---
 
@@ -76,11 +76,7 @@ G1 created the first executable engineering foundation and was approved only aft
 - PostgreSQL integration/contract tests;
 - GitHub Actions CI.
 
-### Verification path
-
-G1 was not approved from SQLite-only tests. It underwent an additional PostgreSQL hardening pass to verify production-dialect behavior.
-
-Final validated G1 baseline:
+### Final validated G1 baseline
 
 ```text
 PostgreSQL 16 + pgvector           PASS
@@ -90,23 +86,14 @@ Alembic second upgrade            PASS
 G1 automated suite                49 / 49 PASS
 Coverage at G1 checkpoint         91%
 GitHub Actions                    PASS
+Mentor assessment                 ~96/100 — APPROVED
 ```
-
-### G1 review outcome
-
-Final mentor assessment: approximately **96/100 — approved**.
 
 ---
 
 ## Private-core transition
 
-A Public Showcase + Private Core model was adopted before continuing proprietary G2+ development.
-
-### Why
-
-The project should remain publicly reviewable and portfolio/research friendly without making its complete proprietary implementation, research memory, unpublished ideas, private data, or strategically sensitive reasoning logic public by default.
-
-### Current model
+A **Public Showcase + Private Core** model was adopted before continuing proprietary G2+ development.
 
 ```text
 PRIVATE CORE
@@ -125,18 +112,12 @@ PUBLIC SHOWCASE
     intentionally released artifacts
 ```
 
-### Migration validation
-
-After the repository split, the complete backend was revalidated in the private repository rather than assuming the migration preserved behavior.
-
-Private validation checkpoint:
+After the split, the backend was revalidated in the private repository instead of assuming migration preserved behavior.
 
 ```text
 PostgreSQL                         16.15 + pgvector
 Alembic upgrade/downgrade/upgrade PASS
-Collected tests                   83
-Passed                            83
-Failed                            0
+Private migration suite           83 / 83 PASS
 Coverage                          86%
 Original G1 regression surface    PASS
 ```
@@ -147,20 +128,16 @@ The public repository remains an active project surface; it is not an abandoned 
 
 ## G2 — Academic Metadata Ingestion & Connector Framework
 
-### Current state
-
-**Implementation complete in private core. Mentor audit is in progress. G3 remains locked.**
-
 ### Publicly reportable implementation scope
 
-G2 currently integrates metadata acquisition paths for:
+The private G2 implementation currently covers metadata acquisition paths for:
 
 - **arXiv**;
 - **Crossref**;
 - **OpenAlex**;
 - **Semantic Scholar Academic Graph**.
 
-The architecture includes, at a public high level:
+At a safe public level, the architecture includes:
 
 - provider-neutral normalized discovery records;
 - centralized DOI/arXiv/URL normalization;
@@ -170,43 +147,65 @@ The architecture includes, at a public high level:
 - async HTTP transport;
 - retry/backoff behavior;
 - configurable per-provider rate control;
-- redirect/network safety checks;
+- redirect/network-safety checks;
 - ingestion-job telemetry;
-- deterministic mock provider fixtures for CI;
-- PostgreSQL multi-provider reconciliation integration testing.
+- deterministic provider fixtures for CI;
+- PostgreSQL integration testing.
 
-### Latest verified private test checkpoint
+### G2.1 adversarial-hardening checkpoint
+
+G2.1 addressed several mentor-review findings around provider-policy drift, identity conflicts, false-merge risk, failure recovery, and HTTP/network safety.
+
+Latest **verified** private CI result:
 
 ```text
-Full automated suite              83 / 83 PASS
-Overall coverage                  86%
 PostgreSQL 16.15 + pgvector       PASS
-Alembic lifecycle                 PASS
-G1 regression behavior            PASS
-G2 multi-provider PG test         PASS
+Alembic upgrade/downgrade/upgrade PASS
+Full automated suite              92 / 92 PASS
+Failed tests                      0
+Overall coverage                  86%
+Original G1 regressions           PASS
 Private GitHub Actions            PASS
 ```
 
-### Why G2 is still under review
+### Mentor review decision
 
-Passing tests are necessary but not sufficient for this type of system. The mentor review is deliberately challenging the implementation on:
+**REVISE — G2 is not approved yet.**
 
-- conflicting hard scientific identifiers;
-- false-merge risk;
-- concurrent ingestion races;
-- transaction failure recovery;
-- background-job idempotency;
-- cancellation/retry edge cases;
-- SSRF/DNS limitations;
-- changing provider API/auth/rate-limit policies.
+The green test suite is meaningful evidence, but the mentor audit found that the current suite still does not prove several critical adversarial invariants. A narrow **G2.2 closure** is required before G3.
 
-No G3 implementation is authorized until those issues are resolved or explicitly accepted.
+Publicly reportable closure themes:
+
+- real concurrent-ingestion/idempotency verification on PostgreSQL;
+- complete agreement checking across trusted scholarly identities;
+- precise duplicate-running/background-job semantics;
+- explicit transaction/failure accounting;
+- final provider-authentication/policy alignment;
+- remaining HTTP cancellation/redirect/timeout edge cases.
+
+These findings are treated as normal gate-review work rather than hidden failures. **G3 remains locked until G2 is formally approved.**
+
+---
+
+## Review philosophy
+
+A milestone is not approved simply because generated code compiles or CI is green. Gate reviews distinguish between:
+
+1. implementation completeness;
+2. deterministic test coverage;
+3. production-dialect behavior;
+4. adversarial data-integrity behavior;
+5. failure/concurrency semantics;
+6. provider-policy correctness;
+7. safe public disclosure.
+
+This is why G2.1 can report **92/92 passing** while still receiving a **REVISE** decision.
 
 ---
 
 ## Public reporting policy
 
-For every future gate, this public repository should publish a concise verified report containing, when safe to disclose:
+For every future gate, this repository should publish a concise verified report containing, when safe to disclose:
 
 1. milestone objective;
 2. capabilities completed;
