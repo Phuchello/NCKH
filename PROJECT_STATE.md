@@ -95,6 +95,22 @@ To ensure disciplined execution, the following components are strictly deferred 
 * **Code Coverage**: 91% total backend coverage (723 statements, 68 missed).
 * **Passing Test Modules**: 12/12 modules green.
 
+### C. GitHub Actions CI Pipeline (Verified GREEN)
+* **Workflow**: `Backend CI` (`.github/workflows/backend-ci.yml`)
+* **Run ID**: `31920290908`
+* **Status**: `completed`
+* **Conclusion**: `success`
+* **Job**: `PostgreSQL 16 + pgvector Test Suite` (Job ID: `95098998918`)
+* **Services**: `pgvector/pgvector:pg16` on PostgreSQL 16 (healthy)
+* **Executed Steps**:
+  1. Set up job: `success`
+  2. Initialize containers: `success`
+  3. Checkout Code (`actions/checkout@v4`): `success`
+  4. Set up Python 3.11 (`actions/setup-python@v5`): `success`
+  5. Install uv and Backend Dependencies: `success`
+  6. Run Alembic Migration Lifecycle on PostgreSQL 16 (`upgrade head` -> `downgrade base` -> `upgrade head`): `success`
+  7. Run Full Test Suite (Unit + PostgreSQL 16 Integration): `success` (49/49 passed)
+
 ---
 
 ## 5. Checkpoints
@@ -104,7 +120,7 @@ To ensure disciplined execution, the following components are strictly deferred 
 * **G0.2 Hardened Checkpoint**: `f95ddb8`
 * **G1 Implementation Checkpoint**: `e07286b`
 * **G1.1 Hardened Checkpoint**: `3f6e771`
-* **G1.2 Final Checkpoint**: *(Tracked via Git commit)*
+* **G1.2 Final Checkpoint**: `d164b3f`
 * **Working Tree**: Clean.
 
 ---
