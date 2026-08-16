@@ -1,73 +1,90 @@
 # Intel OS / NCKH Intelligence Platform — Intelligence & Epistemic Model
 
-## 1. Epistemic Foundations
+## 1. Scientific Epistemology & Epistemic Foundations
 
-Scientific research is an evolving graph of claims, evidence, hypotheses, and contradictions—not a static sequence of documents. Intel OS formalizes this process through an **Epistemic Intelligence Model** that separates raw observations from validated scientific knowledge.
+Scientific inquiry is not a mere accumulation of textual documents; it is a structured, evolving network of claims, empirical evidence, baseline methodologies, contradictions, and consensus shifts.
+
+Intel OS rejects the flawed assumption that textual presence implies scientific truth. The platform enforces a strict separation between four foundational epistemic dimensions:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                       EPISTEMIC INTELLIGENCE LADDER                         │
+│                     FOUR EPISTEMIC DIMENSIONS OF INTEL OS                   │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ Level 5: Research Ideas & Blueprints  │ "Adaptive Speculative Decoding"     │
-│ Level 4: Research Gaps & Gaps Matrix  │ "Verification latency on NPUs"      │
-│ Level 3: Verified Scientific Claims   │ "Fixed lookahead causes 38% stall"  │
-│ Level 2: Empirical Evidence Items     │ "Table 3: Latency on Apple A17 NPU" │
-│ Level 1: Ingested Source Documents    │ "Paper: arXiv:2403.xxxxx (PDF)"     │
-│ Level 0: Raw Discovery Metadata       │ "DOI: 10.48550/arXiv.2403.xxxxx"    │
+│ 1. Grounding Status (Textual Fidelity)                                      │
+│    └── "Did the source document actually state this?"                       │
+│    └── Values: UNVERIFIED, VERBATIM_MATCH, PARAPHRASE_VERIFIED, FAILED      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 2. Claim Type (Rhetorical & Scientific Category)                            │
+│    └── "What kind of scientific assertion is this?"                         │
+│    └── Values: EMPIRICAL_FINDING, AUTHOR_HYPOTHESIS, BACKGROUND_ASSERTION,  │
+│                INTERPRETATION, LIMITATION, FUTURE_WORK, OTHER               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 3. Epistemic Status (Scientific Validity & Literature Consensus)            │
+│    └── "What is the validated truth-state of this claim in literature?"     │
+│    └── Values: UNASSESSED, SUPPORTED, CONTESTED, REFUTED, CONSENSUS,        │
+│                SPECULATIVE                                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 4. Evidence Quality (Empirical & Methodological Rigor)                      │
+│    └── "How rigorous is the empirical benchmark backing this finding?"      │
+│    └── Attributes: Dataset openness, sample size, hardware rigor,           │
+│                    statistical significance (p-value), baseline ablations   │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
+> [!IMPORTANT]
+> **The Grounding Invariant**: Verbatim quote extraction validates only **Grounding Status** (`grounding_status = 'VERBATIM_MATCH'`). It does **not** determine scientific truth. All newly extracted claims default to `epistemic_status = 'UNASSESSED'` until evaluated against empirical evidence, methodology rigor, or cross-publication consensus.
+
 ---
 
-## 2. Epistemic Status Taxonomy
-
-Every scientific claim in Intel OS is assigned an explicit epistemic status that evolves as new literature is integrated:
+## 2. Epistemic Status Lifecycle
 
 ```mermaid
 stateDiagram-v2
-    [*] --> HYPOTHESIS: Extracted conjecture
-    [*] --> SUPPORTED: Extracted with empirical data
+    [*] --> UNASSESSED: Claim Extracted & Grounded
     
-    SUPPORTED --> CONTRADICTED: Opposing claim detected
-    HYPOTHESIS --> SUPPORTED: New empirical evidence added
-    HYPOTHESIS --> REFUTED: Empirical disproof found
+    UNASSESSED --> SPECULATIVE: If Claim Type is AUTHOR_HYPOTHESIS / FUTURE_WORK
+    UNASSESSED --> SUPPORTED: If Rigorous Empirical Evidence & Benchmark Attached
     
-    CONTRADICTED --> CONSENSUS: Meta-analysis / resolution
-    CONTRADICTED --> REFUTED: Flawed baseline exposed
+    SUPPORTED --> CONTESTED: Opposing Claim / Contradiction Detected in Literature
+    CONTESTED --> REFUTED: Methodological Flaw or Direct Disproof Identified
+    CONTESTED --> CONSENSUS: Reconciliation via Meta-Analysis / Multi-Team Replication
     
-    SUPPORTED --> CONSENSUS: Multiple independent replications
+    SUPPORTED --> CONSENSUS: Confirmed by >= 3 Independent Empirical Replications
+    SPECULATIVE --> SUPPORTED: New Empirical Trials Provide Benchmark Validation
+    SPECULATIVE --> REFUTED: Empirical Trials Disprove Hypothesis
 ```
 
-| Epistemic Status | Description | Required Verification Condition |
+| Epistemic Status | Scientific Definition | Transition Condition |
 | :--- | :--- | :--- |
-| `HYPOTHESIS` | Theoretical proposition or author assertion. | Stated by author without direct quantitative benchmark. |
-| `SUPPORTED` | Grounded claim backed by empirical evidence. | Verified quote + documented experimental setup & metrics. |
-| `CONTRADICTED` | Conflict between two peer-reviewed claims. | Dual opposing claims on identical entity/metric pair. |
-| `REFUTED` | Disproven or invalidated claim. | Explicit empirical contradiction with superior methodology. |
-| `CONSENSUS` | Broadly accepted foundational principle. | Confirmed across \(\ge 3\) independent research teams. |
-| `SPECULATION` | Future outlook or exploratory comment. | Found in author discussion / future work section. |
+| `UNASSESSED` | Default initial state upon extraction. No validity assessment performed. | Assigned on creation. |
+| `SUPPORTED` | Grounded claim backed by empirical benchmarks, ablations, and sound methodology. | Associated `evidence_items` meet rigor threshold. |
+| `CONTESTED` | Active dispute between peer-reviewed publications. | Record created in `contradictions` table linking opposing claims. |
+| `REFUTED` | Empirically disproven, retracted, or invalidated by flawed baselines. | Direct empirical refutation with superior methodology. |
+| `CONSENSUS` | Broadly accepted foundational principle across independent teams. | Verified across \(\ge 3\) independent study snapshots. |
+| `SPECULATIVE` | Theoretical conjecture, exploratory hypothesis, or untested outlook. | Assigned when claim type is `AUTHOR_HYPOTHESIS` or `FUTURE_WORK`. |
 
 ---
 
 ## 3. The 3-Tier Intellectual Asset Ontology
-
-Intel OS separates storage and memory into three decoupled ontological tiers:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                           ASSET ONTOLOGY TOPOLOGY                           │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 1. Intelligence Lake                                                        │
-│    └── Discovered Entities, Filtered Metadata, Parsed Markdown,             │
-│        Selectively Retained Raw Artifacts (PDFs, HTML snapshots).           │
+│    └── Discovered entities, multi-provider observations (`document_sources`),│
+│        multi-topic mappings (`document_topics`), versioned representations │
+│        (`document_snapshots`), and selectively retained raw files (S3).     │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 2. Personal Research Memory (Durable Core)                                  │
-│    └── Atomic Verified Claims, Empirical Benchmark Evidence,                │
-│        Methodology Taxonomies, User Critique Notes, Failed Experiments.     │
+│ 2. Personal Research Memory (The Durable Core)                              │
+│    └── Atomic grounded claims, empirical benchmark metrics (`evidence_items`),│
+│        claim-to-claim logic relationships (`relationships`), user notes,    │
+│        and empirical experiment records (`experiment_logs`).                │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 3. Research Opportunity Memory (Generative Frontier)                         │
-│    └── Unresolved Research Gaps, Active Contradictions,                     │
-│        Emerging Trend Trajectories, Candidate Hypotheses & Ideas.           │
+│ 3. Research Opportunity Memory (The Generative Frontier)                    │
+│    └── Unresolved research gaps (`research_gaps`), scientific conflicts     │
+│        (`contradictions`), opportunity vectors (`research_opportunities`),  │
+│        and candidate hypotheses (`research_ideas`) with full Lineage.       │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -75,42 +92,45 @@ Intel OS separates storage and memory into three decoupled ontological tiers:
 
 ## 4. Flagship Requirement: Idea Lineage & Provenance Mechanics
 
-Intel OS guarantees that every generated idea, gap, and synthesis can be traced across bidirectional provenance graphs.
+Intel OS guarantees that every generated idea, gap, and synthesis can be traced across bidirectional provenance graphs, pinning the exact source document snapshots that originated the evidence.
 
-### 4.1 Backward Traceability (Audit & Justification)
-Answers: *"Why was this research idea synthesized?"*
+### 4.1 Backward Lineage (Audit & Justification)
+Answers: *"Why was this research idea synthesized, and from which exact document versions?"*
 
 ```text
 Research Idea (ID: IDEA-109)
   │
   ├──► Research Gap (ID: GAP-042): "Speculative decoding fails on heterogeneous NPUs"
   │      │
-  │      ├──► Claim (ID: CLM-801): "Verification latency exceeds draft generation speed"
+  │      ├──► Claim (ID: CLM-801) [Type: EMPIRICAL_FINDING, Epistemic: SUPPORTED, Grounding: VERBATIM_MATCH]
   │      │      └── Evidence (ID: EVD-304): Table 2 - Latency Breakdown
-  │      │            └── Document: arXiv:2403.01234
-  │      │                  └── Source: arXiv cs.AI Feed
+  │      │            └── Snapshot: arXiv v2 (Hash: e3b0c442...)
+  │      │                  └── Document: "Latency Dynamics of Edge Speculation"
+  │      │                        └── Source: arXiv cs.AI Feed
   │      │
-  │      └──► Claim (ID: CLM-802): "Fixed draft lengths create pipeline bubbles"
-  │             └── Evidence (ID: EVD-305): Figure 5 - Core Utilization
-  │                   └── Document: ACM MobileSys 2024
+  │      └──► Claim (ID: CLM-802) [Type: EMPIRICAL_FINDING, Epistemic: SUPPORTED, Grounding: VERBATIM_MATCH]
+  │             └── Evidence (ID: EVD-305): Figure 5 - Core Thermal Throttling
+  │                   └── Snapshot: Camera-Ready PDF (Hash: 9f83ac12...)
+  │                         └── Document: "Thermal Characterization of Edge NPUs"
+  │                               └── Source: ACM Digital Library
   │
-  └──► Contradiction (ID: CONTR-018): "Memory Bandwidth vs Compute Latency"
-         ├── Claim A: "Compute kernel dispatch is primary bottleneck" (MLSys 2024)
-         └── Claim B: "DRAM bandwidth saturation limits scaling" (IEEE Micro 2024)
+  └──► Contradiction (ID: CONTR-018): "Memory Bandwidth vs Compute Kernel Dispatch"
+         ├── Claim A: "Compute kernel dispatch is primary bottleneck" (Snapshot: MLSys 2024 PDF)
+         └── Claim B: "DRAM bandwidth saturation limits scaling" (Snapshot: IEEE Micro 2024 PDF)
 ```
 
-### 4.2 Forward Traceability (Impact Analysis)
-Answers: *"What existing hypotheses are impacted when this new paper is ingested?"*
+### 4.2 Forward Lineage (Impact Analysis)
+Answers: *"What existing hypotheses or research gaps are impacted when a new paper snapshot is ingested?"*
 
-When a new document \(D_{new}\) is processed:
+When a new document snapshot \(S_{new}\) is processed:
 1. Extract new claims \(\{C_1, C_2, \dots, C_k\}\).
-2. Calculate cosine similarity against all active `research_ideas` and `research_gaps`.
-3. If \(C_i\) contradicts a foundational claim of an approved idea, generate an **Impact Alert**:
-   > *"Alert: Newly ingested paper (arXiv:2608.xxxxx) challenges baseline claim CLM-801. Idea IDEA-109 feasibility score updated from 0.85 to 0.62."*
+2. Compare claim embeddings against active `research_ideas`, `research_gaps`, and existing `claims`.
+3. If \(C_i\) conflicts with a foundational claim supporting an approved idea, generate an **Impact Alert**:
+   > *"Alert: Newly ingested paper snapshot (arXiv:2608.xxxxx v1) challenges baseline claim CLM-801. Idea IDEA-109 feasibility score updated from 0.85 to 0.62."*
 
 ---
 
 ## 5. Cognitive Memory Evolution & Independence
 
-* **Provider Independence**: Personal Research Memory is represented in pure relational PostgreSQL schemas and standard JSON/vector structures. It does not depend on any proprietary LLM embedding space or conversation buffer.
-* **Non-Destructive Evolution**: When an author's understanding changes or a hypothesis is refuted, the historical state is retained with timestamped annotations, preserving the researcher's cognitive journey.
+* **Provider Independence**: Personal Research Memory is represented in pure relational PostgreSQL schemas and standard JSON/vector structures. It does not depend on any proprietary LLM embedding space or conversational context buffer.
+* **Snapshot Traceability**: As academic preprints update (e.g. arXiv v1 to v2), new snapshots capture the changes while existing claims maintain historical integrity pinned to the specific snapshot version that produced them.

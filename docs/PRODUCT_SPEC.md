@@ -52,33 +52,33 @@ To empower researchers and intelligence analysts to continuously discover, criti
 
 ## 4. Functional Requirements & Core Epics
 
-### Epic 1: Multi-Source Ingestion & Politeness (Discovery Layer)
-* **FR-1.1**: Multi-channel discovery across academic preprint APIs (arXiv, Crossref, Semantic Scholar, OpenAlex) and user-defined web feeds.
-* **FR-1.2**: Automated SHA-256 content hashing, canonical DOI normalization, and URL deduplication.
-* **FR-1.3**: Rate-limited crawling with `robots.txt` compliance and SSRF perimeter defense.
-* **FR-1.4**: Metadata-first intake (`DISCOVERED` tier) to minimize storage footprint.
+### Epic 1: Multi-Source Discovery & Reconciliation (Discovery Layer)
+* **FR-1.1**: Multi-channel discovery across academic preprint APIs (arXiv, Crossref, Semantic Scholar, OpenAlex) and web feeds.
+* **FR-1.2**: Multi-provider document reconciliation: Reconciles records from multiple sources into a single logical `Document` via canonical identity precedence (`DOI → arXiv ID → URL → Metadata Fingerprint`).
+* **FR-1.3**: Many-to-Many Topic Assignment: Maps documents to multiple research topics via `document_topics`.
+* **FR-1.4**: Rate-limited crawling with `robots.txt` compliance and pre-flight SSRF perimeter defense.
+* **FR-1.5**: Metadata-first intake (`DISCOVERED` tier) to prevent storage bloat.
 
-### Epic 2: Extraction, Normalization & Claim Verification
-* **FR-2.1**: Layout-aware parsing of multi-column academic PDFs and web articles into structured markdown sections (Abstract, Methodology, Results, Discussion).
-* **FR-2.2**: Extraction of atomic scientific claims, quantitative metrics, and empirical findings.
-* **FR-2.3**: Quote-level grounding: Every extracted claim must record exact source bounding text to prevent hallucinations.
-* **FR-2.4**: Automated verification scoring assessing empirical rigor and methodology strength.
+### Epic 2: Parsing, Snapshots & Epistemic Verification
+* **FR-2.1**: Layout-aware parsing of multi-column academic PDFs and web articles into structured markdown sections.
+* **FR-2.2**: Representation versioning: Creates immutable `document_snapshots` for each fetched representation (e.g. arXiv v1 vs v2).
+* **FR-2.3**: Four-dimensional claim extraction separating Grounding Status (`VERBATIM_MATCH`), Claim Type, Epistemic Status (default `UNASSESSED`), and Evidence Items.
+* **FR-2.4**: Quote-level grounding: Validates verbatim substring matching against source text to prevent hallucinations.
 
 ### Epic 3: Personal Research Memory (The Long-Lived Asset)
-* **FR-3.1**: Persistent storage of verified claims, evidence items, and entity relationships in PostgreSQL.
+* **FR-3.1**: Persistent storage of verified claims, empirical evidence items, and claim relationships in PostgreSQL.
 * **FR-3.2**: User annotations, personal critique notes, experimental logs, and failed hypothesis tracking.
-* **FR-3.3**: Entity resolution linking methodologies, datasets, benchmarks, and problem spaces across papers.
-* **FR-3.4**: Exportable, LLM-independent knowledge graphs.
+* **FR-3.3**: Exportable, LLM-independent knowledge graphs.
 
 ### Epic 4: Research Opportunity Mining & Idea Lineage
 * **FR-4.1**: Automated identification of research gaps from paper limitation sections and future work notes.
 * **FR-4.2**: Detection of scientific contradictions between opposing publication claims.
-* **FR-4.3**: Emerging trend velocity analysis tracking keyword acceleration and preprint momentum.
-* **FR-4.4**: Idea generation with explicit backward provenance chain:
-  `Idea → Opportunity → Gap / Trend / Contradiction → Findings → Claims → Evidence → Documents → Sources`.
+* **FR-4.3**: Semantic distinctiveness estimation comparing candidate ideas against retrieved prior art.
+* **FR-4.4**: Candidate idea generation with explicit backward Idea Lineage pinned to exact document snapshots:
+  $$\text{Idea} \longrightarrow \text{Opportunity} \longrightarrow \text{Gap / Trend / Contradiction} \longrightarrow \text{Claims} \longrightarrow \text{Evidence} \longrightarrow \text{Snapshots} \longrightarrow \text{Documents} \longrightarrow \text{Sources}$$
 
 ### Epic 5: Retrieval, Synthesis & Research Handbooks
-* **FR-5.1**: Hybrid retrieval combining PostgreSQL full-text search (BM25) and pgvector cosine similarity.
+* **FR-5.1**: Hybrid retrieval combining PostgreSQL full-text lexical search and pgvector cosine similarity (V1 768-dim contract).
 * **FR-5.2**: Generation of structured State-of-the-Art (SOTA) comparative literature matrices.
 * **FR-5.3**: Automated authoring of comprehensive Research Handbooks with verifiable bibliographic citations.
 * **FR-5.4**: Multi-format export (Markdown, LaTeX, PDF).
@@ -90,9 +90,9 @@ To empower researchers and intelligence analysts to continuously discover, criti
 | Dimension | Specification |
 | :--- | :--- |
 | **Data Durability** | Cloud-first authoritative storage with zero data loss guarantee across multi-device usage. |
-| **Idempotency** | Ingestion, parsing, and extraction workflows must be 100% idempotent. Re-running jobs produces identical state. |
+| **Idempotency** | 4-tier idempotency architecture guaranteeing safe, non-duplicating pipeline re-runs. |
 | **Local Boundary** | Local disk usage is strictly bounded by `MAX_LOCAL_CACHE_GB` (default 10 GB) with automated LRU cleanup. |
-| **Security** | Defense-in-depth against SSRF, prompt injection in paper abstracts, and malicious PDF parsers. |
+| **Security** | Defense-in-depth against SSRF, prompt injection in paper abstracts, and parser resource exhaustion. |
 | **Performance** | Hybrid search query latency < 150ms for 50,000+ indexed papers. |
 | **Auditability** | Complete telemetry and logging for all background asynchronous tasks. |
 
@@ -100,11 +100,11 @@ To empower researchers and intelligence analysts to continuously discover, criti
 
 ## 6. End-to-End User Workflows
 
-### Scenario A: Launching a New Research Topic (e.g., "Edge AI Speculative Decoding")
-1. Researcher defines Topic in Intel OS with keywords, seed DOIs, and focus criteria.
-2. Ingestion engine discovers 500 candidate papers; Tier-1 filter indexes 150 relevant abstracts.
-3. System promotes 30 high-impact papers to `RETAINED` tier (PDFs preserved in S3).
-4. Extraction engine extracts 180 atomic claims and 45 quantitative benchmarks.
-5. Opportunity Miner detects 2 major contradictions and 3 unaddressed hardware gaps.
-6. System synthesizes 2 novel research ideas with complete backward lineage graphs.
+### Scenario A: Launching a Multi-Topic Research Track (e.g., "Edge AI & Speculative Decoding")
+1. Researcher defines Topics in Intel OS with keywords and seed DOIs.
+2. Ingestion engine discovers candidate preprints; metadata is reconciled across arXiv and Crossref without duplication.
+3. System assigns papers to multiple topics via `document_topics` and promotes high-impact papers to `RETAINED` tier.
+4. Parsing engine creates versioned `document_snapshots` and extracts claims with verbatim quote grounding.
+5. Opportunity Miner surfaces scientific contradictions and unaddressed hardware limitations.
+6. System synthesizes candidate research ideas with complete backward Idea Lineage pinned to exact snapshot versions.
 7. Researcher reviews the Idea Lineage, adds personal experiment notes, and exports a LaTeX blueprint.

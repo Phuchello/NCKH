@@ -1,34 +1,30 @@
 # Intel OS / NCKH Intelligence Platform — Engineering Task Backlog
 
-## Gate 0: Foundation, Architecture & Specification Baseline [COMPLETED]
-- [x] Initialize Git repository cleanly tracking `Phuchello/NCKH`.
-- [x] Authoritative G0 architectural specifications:
-  - [x] `README.md` (System overview, 3 assets, provenance chain)
-  - [x] `PROJECT_STATE.md` (State checkpoint, metrics, safety boundaries)
-  - [x] `TODO.md` (Engineering backlog G0–G10)
-  - [x] `DECISIONS.md` (ADRs 0001–0008)
-  - [x] `ARCHITECTURE.md` (System architecture, topology, retention funnel)
-  - [x] `CHANGELOG_AGENT.md` (Agent audit trail)
-  - [x] `docs/PRODUCT_SPEC.md` (Vision, user personas, epics, non-goals)
-  - [x] `docs/ARCHITECTURE_DETAILED.md` (Subsystems, connectors, worker model)
-  - [x] `docs/DATA_MODEL.md` (SQL DDL schema, pgvector definitions, lineage queries)
-  - [x] `docs/PIPELINE.md` (End-to-end 8-stage data pipeline & retention tiers)
-  - [x] `docs/MILESTONES.md` (Comprehensive G0–G10 roadmap & acceptance criteria)
-  - [x] `docs/SECURITY_MODEL.md` (Threat matrix, SSRF defenses, prompt injection guards)
-  - [x] `docs/SCORING_MODEL.md` (Mathematical scoring formulations & weighting)
-  - [x] `docs/INTELLIGENCE_MODEL.md` (Epistemic states, opportunity mechanics, lineage)
-- [x] Environment configuration template (`.env.example`) & `.gitignore`.
-- [x] Commit and push G0 checkpoint to GitHub.
+## Gate 0 / Gate 0.1: Foundation, Architecture & Specification Baseline [COMPLETED]
+- [x] Initial G0 repository initialization and remote connection (`Phuchello/NCKH`).
+- [x] G0.1 Architectural Corrections based on Mentor Audit:
+  - [x] Fix Topic Cardinality: Replaced 1:N with Many-to-Many `document_topics` table.
+  - [x] Separate Identity Fingerprint from Content Hash: `metadata_fingerprint` for DISCOVERED tier; `content_hash` on snapshots only.
+  - [x] Document Version / Snapshot Model: Created `document_snapshots` with version identifiers and S3 keys.
+  - [x] Multi-Provider Reconciliation: Introduced `document_sources` for provider observations with canonical identity precedence.
+  - [x] Repair Embedding Model Contract: Established versioned 768-dim contract for V1 schema and migration protocol.
+  - [x] Reconcile Schema References: Standardized exact 18-table normalized DDL across all documents.
+  - [x] Fix Scientific Epistemology: Decoupled Grounding (`VERBATIM_MATCH`), Claim Type, Epistemic Status (default `UNASSESSED`), and Evidence Quality.
+  - [x] Fix Scoring Language: Renamed novelty to Semantic Distinctiveness Signal and marked all formulas PROVISIONAL.
+  - [x] Fix Search Terminology: Standardized on "PostgreSQL full-text lexical retrieval" (`tsvector`/`tsquery`).
+  - [x] Calibrate Security Language: Replaced absolute claims with defense-in-depth and threat mitigation framing.
+- [x] Full Cross-Document Consistency Audit across all 14 specification files.
+- [x] Commit and push G0.1 checkpoint to GitHub.
 - [x] Request mentor review before starting Gate 1.
 
 ---
 
-## Gate 1: Environment Setup, Database & Backend Core Scaffolding [UPCOMING]
+## Gate 1: Environment Setup, Database & Backend Core Scaffolding [UPCOMING - PENDING APPROVAL]
 - [ ] Backend Scaffolding:
   - [ ] Python project structure with `pyproject.toml` / `requirements.txt` (FastAPI, SQLAlchemy, asyncpg, pgvector, Pydantic v2, Alembic).
   - [ ] Asynchronous database engine setup with connection pooling.
   - [ ] Alembic migration environment configured for PostgreSQL 16+ and pgvector.
-  - [ ] Initial database migration generating tables defined in `docs/DATA_MODEL.md`.
+  - [ ] Initial database migration generating all 18 normalized tables defined in `docs/DATA_MODEL.md`.
   - [ ] Bounded local cache manager enforcing `MAX_LOCAL_CACHE_GB` quota.
   - [ ] Basic health check and telemetry API routes (`/api/v1/health`, `/api/v1/status`).
   - [ ] Unit testing harness with `pytest` and `pytest-asyncio`.
@@ -38,11 +34,11 @@
 ## Gate 2: Ingestion Engine & Source Connector Framework
 - [ ] Ingestion Architecture:
   - [ ] Base connector interface (`BaseConnector`) with rate limiting and retry logic.
-  - [ ] Academic connectors: arXiv API / RSS, Semantic Scholar API, Crossref API, OpenAlex.
-  - [ ] Web & General crawler connector with `robots.txt` compliance and SSRF validation.
-  - [ ] Content fingerprinting and deduplication engine using SHA-256 and DOI normalization.
+  - [ ] Academic connectors: arXiv API / RSS, Semantic Scholar API, Crossref API, OpenAlex API.
+  - [ ] Web & General crawler connector with `robots.txt` compliance and pre-flight SSRF validation.
+  - [ ] Multi-provider document reconciliation engine using canonical identity precedence.
   - [ ] Tier 1 Filter: Fast metadata classification to assign initial retention tier (`DISCOVERED` vs `INDEXED`).
-  - [ ] Asynchronous ingestion job queue with transactional state logging.
+  - [ ] 4-Tier Idempotency engine with deterministic job keys.
 
 ---
 
@@ -50,21 +46,20 @@
 - [ ] Processing Subsystem:
   - [ ] Robust PDF parser supporting multi-column layouts, tables, and references (pdfplumber/PyPDF).
   - [ ] HTML article cleaner and markdown converter with boilerplate removal.
-  - [ ] Structural section splitter (Abstract, Background, Methodology, Results, Discussion, Limitations).
-  - [ ] LLM Provider Gateway supporting Gemini, Claude, and OpenAI with structured JSON schemas.
-  - [ ] Atomic claim and empirical evidence extractor with verbatim quote bounding.
-  - [ ] Claim verification engine comparing extracted statements against source text.
+  - [ ] Section splitter (Abstract, Methodology, Results, Limitations, Future Work).
+  - [ ] Representation snapshot manager populating `document_snapshots`.
+  - [ ] Replaceable LLM Provider Gateway supporting Gemini, Claude, and OpenAI with structured Pydantic schemas.
+  - [ ] Atomic claim and empirical evidence extractor with verbatim quote bounding and default `epistemic_status = 'UNASSESSED'`.
 
 ---
 
 ## Gate 4: Intelligence Lake & Personal Research Memory Storage
 - [ ] Memory Engine:
   - [ ] S3-compatible Object Storage manager for high-value raw artifact retention (`RETAINED` tier).
-  - [ ] Topic and Domain taxonomy manager with hierarchical tagging.
-  - [ ] Structured persistence for verified claims, evidence items, and entity relationships.
-  - [ ] pgvector chunk and claim embedding generator with cosine similarity index.
+  - [ ] Multi-topic mapping manager with relevance scoring (`document_topics`).
+  - [ ] Structured persistence for verified claims, evidence items, and claim relationships.
+  - [ ] pgvector chunk and claim embedding generator (768-dim contract) with HNSW cosine index.
   - [ ] Personal Research Memory CRUD APIs for user notes, observation logs, and experiment notes.
-  - [ ] Entity resolution engine linking identical concepts across multiple papers.
 
 ---
 
@@ -72,18 +67,18 @@
 - [ ] Opportunity Subsystem:
   - [ ] Research gap detection algorithm analyzing unaddressed limitations and open questions.
   - [ ] Scientific contradiction detector identifying opposing claims across publications.
-  - [ ] Emerging trend analyzer calculating velocity across topics and preprint keywords.
-  - [ ] Candidate research idea and hypothesis generator with feasibility and novelty scoring.
-  - [ ] Provenance graph builder establishing full backward and forward Idea Lineage links.
+  - [ ] Semantic distinctiveness signal calculator comparing candidate ideas against retrieved prior art.
+  - [ ] Candidate research idea and hypothesis generator with feasibility scoring.
+  - [ ] Provenance graph builder establishing snapshot-pinned backward and forward Idea Lineage links.
 
 ---
 
 ## Gate 6: Core Search, Retrieval & Synthesis API
 - [ ] Retrieval Subsystem:
-  - [ ] Hybrid search engine combining PostgreSQL full-text search (BM25) and pgvector semantic retrieval.
-  - [ ] Reciprocal Rank Fusion (RRF) and cross-encoder reranking.
+  - [ ] Hybrid search engine combining PostgreSQL full-text lexical search and pgvector semantic retrieval.
+  - [ ] Reciprocal Rank Fusion (RRF) and context grounding builder.
   - [ ] Provenance-constrained synthesis engine producing literature review matrices and state-of-the-art summaries.
-  - [ ] Citation-backed Q&A endpoint guaranteeing zero-hallucination factual grounding.
+  - [ ] Citation-backed Q&A endpoint with snapshot verification.
 
 ---
 
@@ -100,7 +95,7 @@
 - [ ] Frontend Workbench:
   - [ ] Next.js 15+ App Router application with responsive research-centric interface.
   - [ ] Intelligence Dashboard: Topic feeds, recent discoveries, opportunity alerts.
-  - [ ] Idea Lineage Visualizer: Interactive node-link graph of ideas, gaps, claims, and papers.
+  - [ ] Idea Lineage Visualizer: Interactive node-link graph of ideas, gaps, claims, and paper snapshots.
   - [ ] Research Memory Workbench: Personal notes, claim verification explorer, hypothesis tracker.
   - [ ] Ingestion & Job Monitor: Real-time crawl logs, storage quota gauges, retention metrics.
 
@@ -110,8 +105,8 @@
 - [ ] Enterprise Hardening:
   - [ ] SSRF defense test suite against private IP spaces and metadata services.
   - [ ] Prompt injection fuzz testing across malicious academic PDF test fixtures.
-  - [ ] End-to-end telemetry and structured JSON audit logging.
-  - [ ] Retrieval accuracy benchmark (Precision@K, Recall@K, Grounding Faithfulness).
+  - [ ] Empirical calibration of multi-factor scoring model weights.
+  - [ ] Retrieval accuracy benchmark (MRR@10, NDCG@10).
   - [ ] Codex engineering audit for concurrency, idempotency, and database performance.
 
 ---
