@@ -5,11 +5,11 @@
 - **G0 — Foundation & Architecture:** APPROVED
 - **G1 — Database Foundation & Backend Scaffold:** APPROVED (~96/100 final mentor assessment)
 - **Private-core transition:** VALIDATED
-- **G2 — Academic Ingestion & Connector Framework:** IMPLEMENTED; G2.1 adversarial hardening completed; mentor decision **REVISE**
-- **Current engineering action:** **G2.2 — concurrency, identity-agreement & job-semantics closure**
-- **G3 authorization:** **DENIED until G2 final approval**
+- **G2 — Academic Ingestion & Connector Framework:** **APPROVED (~98/100)**
+- **G3 — Full-Text Parsing & Quote-Grounded Extraction:** **ACTIVE**
+- **G4 authorization:** **DENIED until G3 mentor approval**
 
-This repository is the **public showcase / verified-results surface**. Proprietary G2+ implementation is maintained in the private authoritative core and is disclosed here only at a safe level of detail.
+This repository is the **public showcase / verified-results surface**. Proprietary G2+ implementation remains in the private authoritative core and is disclosed here only at a safe level of detail.
 
 ---
 
@@ -19,70 +19,76 @@ This repository is the **public showcase / verified-results surface**. Proprieta
 
 ```text
 PostgreSQL 16 + pgvector           PASS
-Alembic lifecycle                 PASS
-G1 automated suite                49 / 49 PASS
-Coverage                          91%
-GitHub Actions                    PASS
-Mentor decision                   APPROVED
+Alembic lifecycle                  PASS
+G1 automated suite                 49 / 49 PASS
+Coverage                           91%
+GitHub Actions                     PASS
+Mentor decision                    APPROVED
 ```
 
-### Private-core migration checkpoint
+### G2 final checkpoint
 
 ```text
 PostgreSQL 16.15 + pgvector       PASS
-Alembic upgrade/downgrade/upgrade PASS
-Full suite                        83 / 83 PASS
-Original G1 regressions           PASS
+Alembic upgrade/downgrade/up      PASS
+Full automated suite              111 / 111 PASS
+Failed / skipped                  0 / 0
 Coverage                          86%
-```
-
-### G2.1 checkpoint
-
-```text
-PostgreSQL 16.15 + pgvector       PASS
-Alembic upgrade/downgrade/upgrade PASS
-Full automated suite              92 / 92 PASS
-Failed tests                      0
-Coverage                          86%
+Real PostgreSQL concurrency       PASS
 Original G1 regressions           PASS
 Private GitHub Actions            PASS
-Mentor decision                   REVISE
+Mentor decision                   APPROVED (~98/100)
 ```
 
-The G2.1 REVISE verdict reflects missing adversarial proof/semantics around concurrency and idempotency, not a regression of G1.
+Private CI run ID for the final G2 checkpoint: `31924223739`.
+
+See [`docs/G2_FINAL_REPORT.md`](docs/G2_FINAL_REPORT.md) for the sanitized final gate report.
 
 ---
 
 ## Publicly reportable G2 capability
 
-The private implementation currently includes high-level support for:
+The private implementation includes, at a high level:
 
 - academic metadata acquisition from arXiv, Crossref, OpenAlex, and Semantic Scholar;
 - provider-neutral discovery records;
-- DOI/arXiv/URL normalization;
-- conservative scholarly-document reconciliation;
+- DOI/arXiv/provider identity normalization and reconciliation;
+- conservative scholarly-document identity handling;
+- explicit identity-conflict preservation;
 - provider-observation provenance;
 - bounded ingestion jobs and telemetry;
-- async HTTP transport, retry/backoff and rate control;
-- network-safety / SSRF-oriented checks;
-- deterministic CI fixtures and PostgreSQL integration tests.
+- async HTTP transport, retry/backoff and provider-aware rate control;
+- network-safety / SSRF-oriented protections;
+- real PostgreSQL concurrency/idempotency tests;
+- whole-ingestion-attempt transaction semantics;
+- background-job idempotency.
 
 Detailed proprietary implementation is intentionally not mirrored here.
 
 ---
 
-## G2.2 public closure themes
+## G3 public objective
 
-Before G2 can be approved, the private core must close and verify:
+G3 builds the first source-grounded full-text pipeline:
 
-1. real concurrent-ingestion/idempotency behavior on PostgreSQL;
-2. complete agreement across trusted scholarly identities;
-3. safe duplicate-running background-job behavior;
-4. explicit transaction/failure accounting;
-5. final provider authentication/policy alignment;
-6. remaining HTTP timeout/cancellation/redirect edge cases.
+```text
+Fetched representation
+→ immutable snapshot
+→ layout-aware parse
+→ normalized sections/chunks
+→ claim candidate
+→ exact quote verification
+→ evidence record
+```
 
-No G3 work is authorized before those items pass mentor re-review.
+Publicly reportable design principles:
+
+- every parsed/grounded object remains tied to a specific snapshot/version;
+- grounding status is separate from scientific truth;
+- newly extracted claims default to `UNASSESSED`;
+- exact quote verification is deterministic and independent of the model that proposed the claim;
+- malformed or ungrounded output is quarantined/rejected;
+- embeddings, S3/R2 durable object storage, opportunity mining and frontend work remain deferred.
 
 ---
 
@@ -97,18 +103,10 @@ PUBLIC NCKH
     verified progress → metrics → demos → selected results → publications
 ```
 
-The public repository remains actively maintained. Future gate approvals, verified metrics, demos/screenshots, selected benchmarks, posters, papers, presentations, and safe research outputs should be reported here.
-
-See:
-
-- [`README.md`](README.md)
-- [`docs/PUBLIC_PROGRESS.md`](docs/PUBLIC_PROGRESS.md)
-- [`docs/IP_POLICY.md`](docs/IP_POLICY.md)
-- [`LICENSE`](LICENSE)
-- [`NOTICE.md`](NOTICE.md)
+The public repository remains actively maintained at every major gate. It should continue to receive verified metrics, sanitized architecture updates, demos/screenshots, selected benchmarks, release notes, posters, papers and presentations when those artifacts genuinely exist and pass disclosure review.
 
 ---
 
 ## Exact next action
 
-Complete **G2.2** in the private authoritative core, run real PostgreSQL concurrency/failure tests and full CI, then return for mentor review. If approved, update this public surface to **G2 APPROVED / G3 AUTHORIZED** with verified final metrics.
+Complete G3 in the private authoritative core, preserve all G1/G2 invariants, run private PostgreSQL CI, then return for mentor review. **Do not begin G4 before G3 approval.**
