@@ -198,3 +198,32 @@ This document records the foundational architectural decisions for **Intel OS / 
 * **Consequences**:
   * *Positive*: Each gate migration is atomic and independently testable. Snapshot model correctly handles multi-format documents.
   * *Negative*: Requires care to ensure cross-gate FK references are resolved correctly when later migrations reference earlier tables.
+
+---
+
+## ADR-0014: Partial Unique Index Strategy for Multi-Provider Observation Idempotency with NULL Identifiers
+
+* **Status**: Accepted
+* **Date**: 2026-08-16
+* **Context**: In G0.2, `document_sources` used `UNIQUE NULLS NOT DISTINCT (document_id, source_id, provider_doc_id)`. However, for web crawl sources without provider-assigned IDs (`provider_doc_id = NULL`), this constraint incorrectly collapsed all observations from that source into a single row, preventing multiple distinct pages (e.g. overview vs supplement) of the same document from being recorded.
+* **Decision**: Replace `UNIQUE NULLS NOT DISTINCT` with two complementary partial unique indexes:
+  1. `uq_doc_sources_provider`: `UNIQUE (document_id, source_id, provider_doc_id) WHERE provider_doc_id IS NOT NULL` — ensures duplicate provider records (e.g. identical arXiv ID) are rejected.
+  2. `uq_doc_sources_url_null_provider`: `UNIQUE (document_id, source_id, observed_url) WHERE provider_doc_id IS NULL` — ensures duplicate fetches of the exact same URL from that source are rejected, while allowing different URLs from the same source to be recorded as distinct observations.
+* **Consequences**:
+  * *Positive*: Completely resolves the NULL provider ID edge case without collapsing distinct web observations.
+  * *Negative*: Requires two indexes instead of one table-level constraint.
+
+---
+
+## ADR-0015: Snapshot-to-Observation Provenance Protection via ON DELETE RESTRICT and ORM Passive Deletes
+
+* **Status**: Accepted
+* **Date**: 2026-08-16
+* **Context**: `document_snapshots.document_source_id` links a fetched representation back to the specific provider observation in `document_sources`. If `document_sources` is deleted with `ON DELETE SET NULL`, the provenance connecting the snapshot to the provider is silently destroyed. Furthermore, SQLAlchemy ORM by default attempts to nullify foreign keys in Python before issuing a delete unless instructed otherwise.
+* **Decision**:
+  1. Enforce `ON DELETE RESTRICT` on `document_snapshots.document_source_id` at the database foreign key level.
+  2. Configure `passive_deletes=True` on the `DocumentSource.document_snapshots` ORM relationship so SQLAlchemy allows the database to enforce the restriction rather than silently nullifying the FK.
+* **Consequences**:
+  * *Positive*: Bulletproof provenance retention; source observations cannot be deleted while dependent snapshots exist.
+  * *Negative*: Deleting an observation requires explicitly deleting or migrating its dependent snapshots first.
+

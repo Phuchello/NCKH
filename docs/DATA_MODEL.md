@@ -244,14 +244,19 @@ CREATE TABLE document_sources (
     observed_metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
     match_method VARCHAR(50) NOT NULL DEFAULT 'MANUAL', -- 'DOI_EXACT', 'ARXIV_ID_EXACT', 'CANONICAL_URL', 'METADATA_FINGERPRINT', 'MANUAL'
     match_confidence FLOAT NOT NULL DEFAULT 1.0, -- 1.0 for hard identity, 0.7-0.9 for candidate signals
-    observed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    -- PostgreSQL 16+ NULLS NOT DISTINCT: prevents duplicate NULL provider_doc_id rows
-    -- for the same (document_id, source_id) pair
-    UNIQUE NULLS NOT DISTINCT (document_id, source_id, provider_doc_id)
+    observed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX idx_document_sources_doc ON document_sources(document_id);
 CREATE INDEX idx_document_sources_source ON document_sources(source_id);
+
+-- Idempotency Rule 1: Non-NULL provider_doc_id uniqueness per (document, source)
+CREATE UNIQUE INDEX uq_doc_sources_provider ON document_sources (document_id, source_id, provider_doc_id)
+WHERE provider_doc_id IS NOT NULL;
+
+-- Idempotency Rule 2: NULL provider_doc_id uniqueness per (document, source, observed_url)
+CREATE UNIQUE INDEX uq_doc_sources_url_null_provider ON document_sources (document_id, source_id, observed_url)
+WHERE provider_doc_id IS NULL;
 
 -- =============================================================================
 -- 6. Document Snapshots (Fetched Representations / Versions)     [G1 MIGRATION]
@@ -259,7 +264,7 @@ CREATE INDEX idx_document_sources_source ON document_sources(source_id);
 CREATE TABLE document_snapshots (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
-    document_source_id UUID REFERENCES document_sources(id) ON DELETE SET NULL, -- Which provider observation triggered this fetch
+    document_source_id UUID REFERENCES document_sources(id) ON DELETE RESTRICT, -- Provenance protected: cannot drop source observation while snapshots depend on it
     version_identifier VARCHAR(50) NOT NULL DEFAULT 'v1', -- e.g. 'arxiv_v1', 'arxiv_v2'
     mime_type VARCHAR(100) NOT NULL, -- 'application/pdf', 'text/html'
     source_url TEXT NOT NULL,

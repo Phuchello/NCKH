@@ -19,15 +19,18 @@
 
 ---
 
-## Gate 1: Environment Setup, Database & Backend Core Scaffolding [UPCOMING - PENDING APPROVAL]
-- [ ] Backend Scaffolding:
-  - [ ] Python project structure with `pyproject.toml` / `requirements.txt` (FastAPI, SQLAlchemy, asyncpg, pgvector, Pydantic v2, Alembic).
-  - [ ] Asynchronous database engine setup with connection pooling.
-  - [ ] Alembic migration environment configured for PostgreSQL 16+ and pgvector.
-  - [ ] Initial database migration generating all 18 normalized tables defined in `docs/DATA_MODEL.md`.
-  - [ ] Bounded local cache manager enforcing `MAX_LOCAL_CACHE_GB` quota.
-  - [ ] Basic health check and telemetry API routes (`/api/v1/health`, `/api/v1/status`).
-  - [ ] Unit testing harness with `pytest` and `pytest-asyncio`.
+## Gate 1: Database Foundation & Backend Scaffolding [COMPLETED]
+- [x] Backend Scaffolding:
+  - [x] Python project structure with `pyproject.toml` (Python 3.11+, FastAPI, SQLAlchemy 2.x async, asyncpg, Alembic, Pydantic v2, pydantic-settings).
+  - [x] Asynchronous database engine setup (`intel_os.db.session`) with connection pooling, transaction boundaries, and health connectivity check.
+  - [x] Alembic migration environment configured for PostgreSQL 16+, extensions (`uuid-ossp`, `vector`), and async/sync multi-dialect support.
+  - [x] Initial database migration (`0001_g1_foundation`) generating the 7 G1 foundation tables (`topics`, `sources`, `documents`, `document_topics`, `document_sources`, `document_snapshots`, `background_jobs`).
+  - [x] Partial unique index strategy for `document_sources` resolving NULL `provider_doc_id` observation idempotency.
+  - [x] Snapshot-to-observation provenance protection with `ON DELETE RESTRICT` and `passive_deletes=True`.
+  - [x] Snapshot multi-format representation support (PDF vs HTML) and byte-level deduplication.
+  - [x] Bounded local cache manager (`LocalCacheManager`) enforcing `MAX_LOCAL_CACHE_GB` quota with LRU eviction and path traversal security guardrails.
+  - [x] Basic health check and telemetry API routes (`GET /api/v1/health`, `GET /api/v1/status`).
+  - [x] Comprehensive pytest test suite (30 unit/integration tests with 87% coverage across settings, DB lifecycle, CRUD, idempotency, representations, cache, and API).
 
 ---
 

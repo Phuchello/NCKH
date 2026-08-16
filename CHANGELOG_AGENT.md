@@ -18,6 +18,42 @@ Each entry must record:
 
 ## Entries
 
+### [2026-08-16 01:30:00 UTC] — Gate 1 (G1) Database Foundation & Backend Scaffolding
+* **Milestone**: Gate 1 (G1)
+* **Agent Role**: Antigravity (Gemini)
+* **Action Summary**:
+  * Built complete, executable Python backend scaffolding under `backend/intel_os`.
+  * Configured strongly typed Settings using `pydantic-settings` with safe development defaults and validation.
+  * Implemented asynchronous database engine and session management with connection pooling, transaction boundaries, and health check.
+  * Authored SQLAlchemy 2.x declarative models for the exact 7 G1 foundation tables (`Topic`, `Source`, `Document`, `DocumentTopic`, `DocumentSource`, `DocumentSnapshot`, `BackgroundJob`).
+  * Enforced candidate-only semantics on `metadata_fingerprint` (indexed, NOT unique).
+  * Resolved the multi-provider observation NULL `provider_doc_id` edge case via two partial unique indexes (`uq_doc_sources_provider` and `uq_doc_sources_url_null_provider`).
+  * Protected snapshot-to-source provenance with `ON DELETE RESTRICT` and ORM `passive_deletes=True`.
+  * Supported multi-format snapshots (PDF vs HTML) per version with exact-byte deduplication.
+  * Created initial Alembic migration (`0001_g1_foundation`) generating the 7 foundation tables with extensions and enum types.
+  * Implemented `LocalCacheManager` with `MAX_LOCAL_CACHE_GB` quota, LRU eviction, and path traversal security guardrails.
+  * Created FastAPI service with lifespan lifecycle and endpoints (`GET /api/v1/health`, `GET /api/v1/status`).
+  * Created comprehensive pytest test suite (30 tests, 87% coverage).
+* **Files Created**:
+  * `backend/pyproject.toml`, `backend/alembic.ini`, `backend/README.md`, `docker-compose.yml`
+  * `backend/intel_os/__init__.py`, `backend/intel_os/main.py`
+  * `backend/intel_os/core/__init__.py`, `backend/intel_os/core/config.py`, `backend/intel_os/core/logging.py`
+  * `backend/intel_os/db/__init__.py`, `backend/intel_os/db/base.py`, `backend/intel_os/db/session.py`
+  * `backend/intel_os/db/models/__init__.py`, `enums.py`, `topic.py`, `source.py`, `document.py`, `document_topic.py`, `document_source.py`, `document_snapshot.py`, `background_job.py`
+  * `backend/intel_os/db/migrations/env.py`, `script.py.mako`, `versions/20260816_0001_g1_foundation.py`
+  * `backend/intel_os/api/__init__.py`, `router.py`, `routes/__init__.py`, `routes/health.py`, `routes/status.py`
+  * `backend/intel_os/storage/__init__.py`, `storage/local_cache.py`
+  * `backend/tests/__init__.py`, `conftest.py`, `test_config.py`, `test_db_lifecycle.py`, `test_models_crud.py`, `test_document_sources_idempotency.py`, `test_snapshot_representations.py`, `test_local_cache.py`, `test_api_health_status.py`, `test_alembic_migration.py`
+* **Files Modified**:
+  * `docs/DATA_MODEL.md`, `DECISIONS.md` (ADR-0014, ADR-0015), `TODO.md`, `PROJECT_STATE.md`
+* **Verification**:
+  * 30/30 automated pytest tests passing (100% pass rate, 87% coverage).
+  * Alembic migration upgrade / downgrade / upgrade cycle verified.
+  * Zero G2+ feature code introduced.
+* **Status**: G1 Completed. Checkpoint ready for mentor review.
+
+---
+
 ### [2026-08-16 01:15:00 UTC] — Gate 0.2 (G0.2) Data-Integrity Hardening Pass
 * **Milestone**: Gate 0.2 (G0.2)
 * **Agent Role**: Antigravity (Gemini)
