@@ -2,44 +2,38 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G2.3%20Final%20Closure-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G3%20Active-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-107%2F107%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-111%2F111%20passing-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![G3](https://img.shields.io/badge/G3-Locked-orange?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
 
 ## What is Intel OS?
 
-**Intel OS** is a long-term research intelligence platform designed to turn large volumes of papers, technical sources, reports, and future research data into a durable, provenance-aware personal research memory.
+**Intel OS** is a long-term research intelligence platform for turning papers, technical sources, reports, and future research data into a durable, provenance-aware research memory.
 
 It is not intended to be another RSS reader, bookmark manager, or one-shot AI summarizer.
 
 ```text
-Collect → Understand → Filter → Verify → Connect → Analyze → Remember → Synthesize
+Collect → Filter → Verify → Connect → Analyze → Remember → Synthesize → Act
 ```
 
-The first application domain is **scientific research / NCKH**, with emphasis on networking, IoT, AIoT, digital twins, AI, cloud/devops, cybersecurity, and adjacent technical research.
+The first application domain is scientific research / NCKH, with emphasis on networking, IoT, AIoT, digital twins, AI, cloud/devops, cybersecurity, and adjacent technical research.
 
 ---
 
-## Why this project exists
+## Core idea
 
-Research discovery is fragmented: papers live in different indexes, evidence is easy to lose, repeated searches waste time, and useful ideas are often disconnected from the sources that inspired them.
-
-Intel OS is being built around three long-lived assets:
+Intel OS is built around three long-lived assets:
 
 - **Intelligence Lake** — discovered sources and selectively retained evidence.
 - **Personal Research Memory** — claims, notes, relationships, analyses, and evolving understanding.
 - **Research Opportunity Memory** — gaps, contradictions, hypotheses, opportunities, and idea lineage.
 
-AI models are treated as **replaceable reasoning engines**. The durable asset is the structured research memory and its provenance.
-
----
-
-## System concept
+AI models are treated as **replaceable reasoning engines**. The durable asset is the structured memory and its provenance.
 
 ```text
 Academic / Technical Sources
@@ -51,10 +45,7 @@ Academic / Technical Sources
  Normalize + Reconcile
             │
             ▼
-   Evidence / Provenance
-            │
-            ▼
- Intelligence Analysis
+ Parse + Ground Evidence
             │
             ▼
  Personal Research Memory
@@ -66,7 +57,7 @@ Academic / Technical Sources
    Living Research Handbook
 ```
 
-Important conclusions are intended to remain traceable through a lineage such as:
+A long-term provenance target is:
 
 ```text
 Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot → Document → Source
@@ -77,88 +68,80 @@ Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot
 ## Current verified progress
 
 ### G0 — Foundation & Architecture
-**Approved.** Established the modular-monolith direction, provenance-first data model, cloud-first storage model, gate workflow, security/retention principles, and long-lived research-memory concepts.
+**Approved.** Established the modular-monolith direction, provenance-first data model, cloud-first storage model, epistemic model, security principles, retention strategy, and gate-based engineering workflow.
 
 ### G1 — Database Foundation & Backend Scaffold
-**Approved after real PostgreSQL hardening.** The verified baseline includes FastAPI, SQLAlchemy 2.x async + asyncpg, PostgreSQL 16 + pgvector, staged Alembic migrations, seven foundation tables, provenance/idempotency constraints, bounded local cache, health/status endpoints, and PostgreSQL-backed CI.
-
-Final G1 checkpoint:
+**Approved after real PostgreSQL hardening.**
 
 ```text
 G1 automated suite               49 / 49 PASS
 Coverage                         91%
 PostgreSQL migration lifecycle   PASS
-GitHub Actions                   PASS
 Mentor decision                  APPROVED (~96/100)
 ```
 
-### G2 — Academic Metadata Ingestion
-**Implemented in the private core and now at final adversarial closure.**
+### G2 — Academic Metadata Ingestion & Connector Framework
+**Approved after three adversarial hardening passes.**
 
 Publicly reportable scope includes:
 
-- arXiv, Crossref, OpenAlex, and Semantic Scholar ingestion paths;
+- arXiv, Crossref, OpenAlex, and Semantic Scholar metadata ingestion;
 - provider-neutral discovery records;
-- DOI/arXiv/URL normalization;
-- conservative multi-provider reconciliation;
-- provider-observation provenance;
-- resilient async HTTP transport, retry/backoff, rate control, and network-safety checks;
-- bounded ingestion jobs and telemetry;
-- PostgreSQL-backed concurrency and integration testing;
-- provider-identity database invariant;
-- whole-ingestion-attempt atomicity and explicit background-job idempotency semantics.
+- DOI/arXiv/provider-identity reconciliation;
+- conservative false-merge policy and explicit identity-conflict handling;
+- multi-provider provenance;
+- resilient async HTTP transport, bounded retries and per-provider rate control;
+- network-safety / SSRF-oriented defenses;
+- background-job idempotency and whole-attempt transaction semantics;
+- real PostgreSQL concurrency testing.
 
-Latest verified G2.2 checkpoint:
+Final G2 verification:
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
-Alembic upgrade/downgrade       PASS
-Full private automated suite    107 / 107 PASS
+Alembic upgrade/downgrade/up     PASS
+Private automated suite         111 / 111 PASS
+Failed / skipped                0 / 0
 Coverage                        86%
-G1 regression surface           PASS
 Real PG concurrency suite       PASS
-Private GitHub Actions          PASS
-Mentor review                   NEAR PASS (~95/100)
+G1 regression surface           PASS
+Mentor decision                 APPROVED (~98/100)
 ```
 
-The remaining closure is deliberately narrow: one provider-identity concurrency artifact must be eliminated and regression-tested before G2 can be formally approved. **G3 remains locked until that final invariant is proven.**
+See **[G2 Final Gate Report](docs/G2_FINAL_REPORT.md)**.
 
-Full public milestone report: **[docs/PUBLIC_PROGRESS.md](docs/PUBLIC_PROGRESS.md)**
+### G3 — Full-Text Parsing & Quote-Grounded Extraction
+**Active.** G3 is building the first source-grounded full-text pipeline:
 
----
+```text
+Fetched representation
+→ immutable snapshot
+→ layout-aware parse
+→ sections / chunks
+→ claim candidate
+→ exact quote verification
+→ evidence record
+```
 
-## Technology direction
-
-| Layer | Direction |
-|---|---|
-| Web | Next.js + TypeScript |
-| API / Intelligence backend | FastAPI + Python |
-| Structured memory | PostgreSQL 16+ |
-| Semantic retrieval | pgvector |
-| Large artifacts | S3-compatible object storage |
-| Background execution | Lightweight jobs/workers |
-| Local machine | Development + bounded cache |
-| Cold backup | Optional external HDD / archive |
-
-The V1 architecture intentionally avoids premature microservices, Kafka, Kubernetes, and unnecessary infrastructure.
+No G4 work is authorized until G3 passes mentor review.
 
 ---
 
-## Research / engineering principles
+## Engineering principles
 
-- **Provenance before cleverness.** Important AI output should remain traceable to evidence.
-- **False merge is worse than temporary duplication.** Scientific identity reconciliation is conservative.
-- **Metadata-first ingestion.** Discovering a source does not imply permanent full-text storage.
-- **Cloud-first data, local-first development.** A laptop is not the authoritative research-memory store.
-- **Strong models only for high-value items.** Cheap deterministic filtering should happen first.
-- **No premature custom-LLM training.** Retrieval + structured memory comes first.
-- **Gate-based development.** Generated code is not considered a completed milestone until verification and review pass.
+- **Provenance before cleverness.** Important outputs should remain traceable to source evidence.
+- **Grounding is not truth.** A quote existing in a paper does not make the scientific claim correct.
+- **False merge is worse than temporary duplication.** Scholarly identity reconciliation stays conservative.
+- **Metadata first.** Discovering a paper does not imply permanently storing its raw file.
+- **Cloud-first data, local-first development.** The laptop is not the authoritative research-memory store.
+- **No premature custom-LLM training.** Retrieval and structured memory come first.
+- **Gate-based development.** Green CI is necessary, but not sufficient, for approval.
 
 ---
 
-## Public showcase vs private core
+## Public showcase + private core
 
-This repository is the **public-facing project surface** and remains actively maintained. It publishes verified progress without exposing proprietary core implementation by default.
+This repository is the **public-facing project surface** and remains actively maintained.
 
 ```text
 PRIVATE CORE
@@ -169,9 +152,20 @@ PUBLIC SHOWCASE
     progress → metrics → demos → selected results → publications
 ```
 
-Public releases may include milestone outcomes, safe architecture descriptions, verified metrics, screenshots/demos, selected benchmark results, posters, papers, presentations, and intentionally released artifacts.
+### Public by design
+- product vision and safe architecture;
+- verified milestone outcomes;
+- test/evaluation summaries;
+- sanitized screenshots and demos;
+- selected benchmarks;
+- papers, posters, presentations and intentionally released artifacts.
 
-Private by default: proprietary implementation, private research memory, unpublished ideas/experiments, sensitive prompts/rules, private datasets, credentials, and strategically sensitive algorithms.
+### Private by design
+- authoritative G2+ source implementation;
+- proprietary reasoning/scoring internals;
+- private research memory and datasets;
+- unpublished experiments and ideas;
+- sensitive prompts/rules and credentials.
 
 **Public does not mean open source.** See [`LICENSE`](LICENSE), [`NOTICE.md`](NOTICE.md), and [`docs/IP_POLICY.md`](docs/IP_POLICY.md).
 
@@ -183,21 +177,22 @@ Private by default: proprietary implementation, private research memory, unpubli
 |---|---|---|
 | G0 | Product & architecture foundation | ✅ Approved |
 | G1 | Database foundation & backend scaffold | ✅ Approved |
-| G2 | Academic ingestion & connector framework | 🛠 G2.3 final race-artifact closure |
-| G3 | Cleaning, full-text processing & extraction foundation | 🔒 Locked |
-| G4 | Intelligence extraction & scoring | Planned |
+| G2 | Academic ingestion & connector framework | ✅ Approved |
+| G3 | Full-text parsing & quote-grounded extraction | 🚧 Active |
+| G4 | Intelligence Lake / memory storage & embeddings | 🔒 Locked |
 | G5 | Research gaps / opportunities / idea lineage | Planned |
-| G6 | Knowledge memory & retrieval | Planned |
-| G7 | Living handbook / synthesis | Planned |
-| G8 | Product dashboard / UX | Planned |
-| G9 | Reliability, security & performance | Planned |
-| G10 | Final release audit | Planned |
+| G6 | Hybrid search, retrieval & synthesis | Planned |
+| G7 | Living handbook / research outputs | Planned |
+| G8 | Research console / UX | Planned |
+| G9 | Reliability, security & benchmark audit | Planned |
+| G10 | Production release & archival | Planned |
 
 ---
 
 ## Documentation
 
 - [Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md)
+- [G2 Final Gate Report](docs/G2_FINAL_REPORT.md)
 - [Product Specification](docs/PRODUCT_SPEC.md)
 - [Architecture](ARCHITECTURE.md)
 - [Detailed Architecture](docs/ARCHITECTURE_DETAILED.md)
@@ -217,7 +212,5 @@ Private by default: proprietary implementation, private research memory, unpubli
 University of Information Technology — VNU-HCM (UIT)
 
 Developed as a long-term personal research-engineering platform and NCKH foundation.
-
----
 
 © 2026 Võ Trọng Phúc. All Rights Reserved.
