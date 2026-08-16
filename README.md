@@ -2,9 +2,9 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G2.2%20Closure-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G2.3%20Final%20Closure-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-92%2F92%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-107%2F107%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G3](https://img.shields.io/badge/G3-Locked-orange?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
@@ -93,7 +93,7 @@ Mentor decision                  APPROVED (~96/100)
 ```
 
 ### G2 — Academic Metadata Ingestion
-**Implemented in the private core and undergoing adversarial closure review.**
+**Implemented in the private core and now at final adversarial closure.**
 
 Publicly reportable scope includes:
 
@@ -104,21 +104,24 @@ Publicly reportable scope includes:
 - provider-observation provenance;
 - resilient async HTTP transport, retry/backoff, rate control, and network-safety checks;
 - bounded ingestion jobs and telemetry;
-- deterministic CI fixtures and PostgreSQL integration testing.
+- PostgreSQL-backed concurrency and integration testing;
+- provider-identity database invariant;
+- whole-ingestion-attempt atomicity and explicit background-job idempotency semantics.
 
-Latest verified G2.1 checkpoint:
+Latest verified G2.2 checkpoint:
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
 Alembic upgrade/downgrade       PASS
-Full private automated suite    92 / 92 PASS
+Full private automated suite    107 / 107 PASS
 Coverage                        86%
 G1 regression surface           PASS
+Real PG concurrency suite       PASS
 Private GitHub Actions          PASS
-Mentor review                   REVISE
+Mentor review                   NEAR PASS (~95/100)
 ```
 
-The current review is intentionally stricter than “tests are green”: remaining closure work focuses on concurrency/idempotency, complete hard-identity agreement, and precise job/transaction semantics. **G3 remains locked until G2 is formally approved.**
+The remaining closure is deliberately narrow: one provider-identity concurrency artifact must be eliminated and regression-tested before G2 can be formally approved. **G3 remains locked until that final invariant is proven.**
 
 Full public milestone report: **[docs/PUBLIC_PROGRESS.md](docs/PUBLIC_PROGRESS.md)**
 
@@ -180,7 +183,7 @@ Private by default: proprietary implementation, private research memory, unpubli
 |---|---|---|
 | G0 | Product & architecture foundation | ✅ Approved |
 | G1 | Database foundation & backend scaffold | ✅ Approved |
-| G2 | Academic ingestion & connector framework | 🛠 G2.2 closure after mentor review |
+| G2 | Academic ingestion & connector framework | 🛠 G2.3 final race-artifact closure |
 | G3 | Cleaning, full-text processing & extraction foundation | 🔒 Locked |
 | G4 | Intelligence extraction & scoring | Planned |
 | G5 | Research gaps / opportunities / idea lineage | Planned |
