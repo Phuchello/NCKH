@@ -13,8 +13,9 @@ This page is the public milestone mirror for Intel OS / NCKH. It reports verifie
 | Private-core transition | ✅ Validated |
 | G2 — Academic Ingestion & Connector Framework | ✅ Approved |
 | G3 — Full-Text Parsing & Quote-Grounded Extraction | ✅ Approved |
-| G4 — Intelligence Lake & Personal Research Memory | 🛠 G4.2 micro-closure |
-| G5 — Opportunity / Idea Lineage | 🔒 Locked |
+| G4 — Intelligence Lake & Personal Research Memory | ✅ Approved |
+| G5 — Opportunity Miner & Snapshot-Pinned Idea Lineage | 🛠 Active |
+| G6 — Hybrid Search / Retrieval / Synthesis | 🔒 Locked until G5 approval |
 
 The public repository remains an active showcase, verified-results surface, and research/publication hub. The authoritative G2+ implementation remains private.
 
@@ -77,50 +78,73 @@ Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
 
 ## G4 — Intelligence Lake & Personal Research Memory
 
+**Final decision: APPROVED (~99/100).**
+
 ### Review progression
 
 ```text
 G4 initial   184 / 184 PASS   → REVISE (~84/100)
 G4.1         215 / 215 PASS   → NEAR PASS (~95/100)
-G4.2         active           → final sign-off pending
+G4.2         234 / 234 PASS   → NEAR PASS (~98/100)
+G4.3 final   243 / 243 PASS   → APPROVED (~99/100)
 ```
 
-### Latest verified G4.1 evidence
+### Final verified evidence
 
 ```text
-Private CI run                    31941431543
+Private CI run                    31945476008
 PostgreSQL 16.15 + pgvector       PASS
-Alembic 0001 -> 0006              PASS
+Alembic 0001 -> 0007              PASS
 Downgrade base / second upgrade   PASS
-Full automated suite              215 / 215 PASS
+Full automated suite              243 / 243 PASS
 Failed / skipped                  0 / 0
 Coverage                          88%
-Protected regression surface      PASS
-Mentor assessment                 NEAR PASS (~95/100)
+Mentor assessment                 APPROVED (~99/100)
 ```
 
 ### Publicly reportable capability
 
-- S3-compatible retained-artifact storage boundary with offline adapter validation;
+- concrete S3-compatible retained-artifact storage boundary with offline adapter validation;
+- bounded upload and transfer-time bounded streaming reads;
 - explicit compensation/reconciliation semantics for cross-store retention rather than distributed-atomicity claims;
+- durable post-upload metadata verification before RETAINED state;
+- strict retained-object idempotency and inconsistency handling;
 - immutable historical embedding provenance plus a separate active pgvector/HNSW projection;
 - exact source-text identity and version-sensitive embedding history;
-- embedding dimension/cardinality/input/batch/partial-failure protections;
+- embedding dimension/cardinality/input/batch/timeout/partial-failure protections;
 - Personal Research Memory notes with optional-link preservation semantics;
 - conservative claim relationships without automatic scientific-status mutation;
-- all approved G1–G3 regression behavior preserved.
+- full approved G1–G3 regression surface preserved.
 
-### G4.2 final micro-closure
+Full report: **[G4 Final Gate Report](G4_REVIEW_REPORT.md)**.
 
-The remaining reviewed work is deliberately narrow:
+---
 
-- enforce object-download limits while bytes are being read rather than after full buffering;
-- strengthen durable post-upload object verification/reconciliation before the database claims retention success;
-- enforce at the database layer that an immutable embedding-provenance row's declared entity type matches its actual foreign-key target.
+## G5 — Research Opportunity Miner & Snapshot-Pinned Idea Lineage
 
-**G5 remains locked until final G4 approval.**
+**Status: ACTIVE.**
 
-Full checkpoint: **[G4 Mentor Review Checkpoint](G4_REVIEW_REPORT.md)**.
+G5 begins the Research Opportunity Memory layer:
+
+```text
+Grounded claims / limitations / future work
+→ gap candidates
+→ contradiction candidates
+→ research opportunities
+→ candidate research ideas
+→ snapshot-pinned backward lineage
+```
+
+The public-facing principles for this gate are intentionally conservative:
+
+- author-stated limitations and system-inferred gaps remain distinguishable;
+- contradiction candidates do not automatically refute or downgrade claims;
+- semantic distinctiveness is a retrieval-based signal, not proof of scientific novelty;
+- generated ideas default to candidate status;
+- automated scoring formulas remain provisional/unvalidated until later calibration;
+- every persisted generated idea must remain explainable back to grounded claims and exact source snapshots.
+
+Private unpublished opportunities, ideas, detailed experiment logs and proprietary generation/provenance rules remain in the private core.
 
 ---
 
