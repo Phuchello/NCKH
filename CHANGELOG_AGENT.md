@@ -18,6 +18,36 @@ Each entry must record:
 
 ## Entries
 
+### [2026-08-16 01:15:00 UTC] — Gate 0.2 (G0.2) Data-Integrity Hardening Pass
+* **Milestone**: Gate 0.2 (G0.2)
+* **Agent Role**: Antigravity (Gemini)
+* **Action Summary**:
+  * Performed final data-integrity hardening following mentor re-audit (G0: 77/100, G0.1: 88/100, Status: NEAR PASS).
+  * **Snapshot-Pinned Provenance**: Enforced `snapshot_id NOT NULL` on `claims`, `evidence_items`, `idea_provenance`, `document_chunks`. Changed `ON DELETE SET NULL` to `ON DELETE RESTRICT` on `claims`, `evidence_items`, and `idea_provenance` to prevent silent provenance destruction.
+  * **Snapshot → Source Linkage**: Added `document_source_id` FK on `document_snapshots` to record which provider observation triggered the fetch, completing the lineage chain Source → Observation → Snapshot → Claims.
+  * **Confidence-Based Reconciliation**: Added `match_method` and `match_confidence` columns to `document_sources`. Classified identity signals into Hard (DOI, arXiv ID), Strong (Canonical URL), and Candidate (Metadata Fingerprint) tiers with explicit reconciliation policy: false merge > temporary duplication.
+  * **NULLS NOT DISTINCT**: Changed `document_sources` unique constraint to `UNIQUE NULLS NOT DISTINCT (document_id, source_id, provider_doc_id)` for correct NULL handling on PostgreSQL 16+.
+  * **Snapshot Identity Broadening**: Changed `document_snapshots` unique constraint from `(document_id, version_identifier)` to `(document_id, version_identifier, mime_type, content_hash)` to support multiple representations of the same version.
+  * **Gate-Staged Migrations**: Formally split 18 tables across G1 Foundation (7 tables), G3/G4 Extraction (5 tables), G5 Opportunity (6 tables) with explicit staging matrix.
+  * **ADR-0011 through ADR-0013**: Recorded architectural decisions for snapshot provenance enforcement, confidence-based reconciliation, and staged migrations.
+* **Files Modified**:
+  * `README.md`
+  * `DECISIONS.md` (ADR-0011, ADR-0012, ADR-0013)
+  * `CHANGELOG_AGENT.md`
+  * `PROJECT_STATE.md`
+  * `docs/DATA_MODEL.md` (primary rewrite)
+  * `docs/PIPELINE.md`
+  * `docs/MILESTONES.md`
+  * `docs/ARCHITECTURE_DETAILED.md`
+  * `docs/INTELLIGENCE_MODEL.md`
+  * `docs/PRODUCT_SPEC.md`
+* **Verification**:
+  * Full cross-document audit confirming schema, column names, constraint types, and provenance invariants are consistent across all 14+ specification files.
+  * Zero application feature code introduced.
+* **Status**: G0.2 Completed. Checkpoint ready for mentor re-audit.
+
+---
+
 ### [2026-08-16 01:05:00 UTC] — Gate 0.1 (G0.1) Architecture Correction Pass
 * **Milestone**: Gate 0.1 (G0.1)
 * **Agent Role**: Antigravity (Gemini)

@@ -2,7 +2,7 @@
 
 > **A Long-Term Personal Research & Scientific Intelligence Operating System**
 
-[![Status: Gate 0.1 Completed](https://img.shields.io/badge/Milestone-Gate%200.1%20Completed-success?style=flat-square)](docs/MILESTONES.md)
+[![Status: Gate 0.2 Completed](https://img.shields.io/badge/Milestone-Gate%200.2%20Completed-success?style=flat-square)](docs/MILESTONES.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Architecture: Cloud-First Modular Monolith](https://img.shields.io/badge/Architecture-Cloud--First%20Modular%20Monolith-orange?style=flat-square)](ARCHITECTURE.md)
 [![PostgreSQL + pgvector](https://img.shields.io/badge/Database-PostgreSQL%2016%2B%20%2B%20pgvector-blue?style=flat-square)](docs/DATA_MODEL.md)
@@ -155,6 +155,6 @@ Engineering tasks on Intel OS are divided across specialized AI roles:
 
 ## 9. Current Status
 
-* **Current Milestone**: **Gate 0.1 (G0.1) — Architecture Correction & Specification Hardening**
+* **Current Milestone**: **Gate 0.2 (G0.2) — Data-Integrity Hardening**
 * **Status**: **100% Completed (Ready for Mentor Re-Audit)**
 * **Active Branch**: `main`

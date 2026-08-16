@@ -8,8 +8,8 @@ This document establishes the authoritative engineering milestones, deliverables
 
 | Gate | Focus Area | Primary Deliverables | Agent Lead |
 | :--- | :--- | :--- | :--- |
-| **G0 / G0.1** | **Foundation & Architecture** | Architecture, 18-Table DDL, Epistemic Model, ADRs, Governance | **Antigravity (Gemini)** |
-| **G1** | **Database & Backend Scaffolding** | FastAPI core, PostgreSQL 16+ DDL (18 tables), pgvector, Alembic | **Antigravity** / *Codex* |
+| **G0 / G0.1 / G0.2** | **Foundation & Architecture** | Architecture, 18-Table DDL, Epistemic Model, ADRs, Governance | **Antigravity (Gemini)** |
+| **G1** | **Database & Backend Scaffolding** | FastAPI core, PostgreSQL 16+ DDL (7 G1 tables), pgvector, Alembic | **Antigravity** / *Codex* |
 | **G2** | **Ingestion & Connectors** | arXiv, Crossref, Semantic Scholar, SSRF guard, Reconciliation | **Antigravity** |
 | **G3** | **Parsing & Claim Extraction** | Layout PDF parser, Snapshot model, LLM quote grounding | **Antigravity** |
 | **G4** | **Memory & Object Storage** | PostgreSQL memory core, pgvector HNSW, S3 R2 store | **Antigravity** |
@@ -22,7 +22,7 @@ This document establishes the authoritative engineering milestones, deliverables
 
 ---
 
-## Gate 0 / Gate 0.1: Foundation, Architecture & Specification Baseline [CURRENT]
+## Gate 0 / Gate 0.1 / Gate 0.2: Foundation, Architecture & Specification Baseline [CURRENT]
 
 ### Objective
 Establish the theoretical, architectural, and data foundation for Intel OS without introducing premature feature code.
@@ -55,19 +55,23 @@ Establish the theoretical, architectural, and data foundation for Intel OS witho
 ## Gate 1: Database Initialization & Backend Core Scaffolding
 
 ### Objective
-Create the executable Python backend scaffolding, establish async database connectivity, execute Alembic migrations generating all 18 normalized tables, and enforce bounded local cache limits.
+Create the executable Python backend scaffolding, establish async database connectivity, execute the **G1 Foundation** Alembic migration (7 tables), and enforce bounded local cache limits.
 
 ### Deliverables
 * Python 3.11+ project configuration (`pyproject.toml`, `requirements.txt`).
 * Async SQLAlchemy / asyncpg engine with connection pooling and health check routes.
-* Alembic migration environment generating all 18 PostgreSQL tables and pgvector HNSW indices defined in `docs/DATA_MODEL.md`.
+* **G1 Foundation Alembic migration** generating 7 tables: `topics`, `sources`, `documents`, `document_topics`, `document_sources`, `document_snapshots`, `background_jobs`.
 * `LocalCacheManager` enforcing `MAX_LOCAL_CACHE_GB` quota with automated LRU cleanup.
 * Pytest testing harness (`pytest-asyncio`).
 
+### Migration Staging Note
+> G1 creates only the 7 foundation tables. Extraction tables (`document_chunks`, `claims`, `evidence_items`, `relationships`, `user_notes`) are introduced in G3/G4. Opportunity tables (`research_gaps`, `contradictions`, `research_opportunities`, `research_ideas`, `idea_provenance`, `experiment_logs`) are introduced in G5. See `docs/DATA_MODEL.md` §5 for the full staging matrix.
+
 ### Acceptance Criteria
-* `alembic upgrade head` successfully creates all 18 normalized tables and pgvector HNSW indices on clean PostgreSQL.
+* `alembic upgrade head` successfully creates the 7 G1 foundation tables and associated indices on clean PostgreSQL 16+.
 * Automated tests pass for database CRUD and async connection lifecycle.
 * Local cache manager throws quota alerts and successfully prunes temporary files when threshold is breached.
+* Schema matches `docs/DATA_MODEL.md` §6 DDL for the 7 G1 tables exactly.
 
 ---
 

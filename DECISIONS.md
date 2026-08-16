@@ -151,3 +151,50 @@ This document records the foundational architectural decisions for **Intel OS / 
 * **Consequences**:
   * *Positive*: Scientifically rigorous knowledge representation; prevents unverified assertions from masquerading as supported scientific facts.
   * *Negative*: Requires secondary validation passes to promote claims from `UNASSESSED` to `SUPPORTED`.
+
+---
+
+## ADR-0011: Snapshot-Pinned Provenance with NOT NULL Enforcement & ON DELETE RESTRICT
+
+* **Status**: Accepted
+* **Date**: 2026-08-16
+* **Context**: The G0.1 schema allowed nullable `snapshot_id` on `claims`, `evidence_items`, and `idea_provenance`. This permits machine-extracted intelligence to exist without traceable provenance — violating the platform's core promise that every extracted assertion can be traced to exact source bytes. Additionally, `ON DELETE SET NULL` silently orphans intelligence when a snapshot is deleted.
+* **Decision**:
+  1. `snapshot_id` is `NOT NULL` on all machine-extracted entities: `claims`, `evidence_items`, `idea_provenance`, `document_chunks`.
+  2. `ON DELETE RESTRICT` on `claims.snapshot_id`, `evidence_items.snapshot_id`, and `idea_provenance.snapshot_id` — a snapshot with dependent intelligence cannot be dropped.
+  3. `ON DELETE CASCADE` remains for `document_chunks.snapshot_id` — chunks are physical derivatives of a snapshot.
+  4. User-authored entities (`user_notes`) retain nullable FKs — they are loosely linked.
+* **Consequences**:
+  * *Positive*: Provenance invariant is schema-enforced, not convention-enforced. Impossible to create untrackable intelligence.
+  * *Negative*: Deleting a snapshot requires explicitly migrating or removing dependent intelligence first.
+
+---
+
+## ADR-0012: Confidence-Based Identity Reconciliation & Tiered Signal Classification
+
+* **Status**: Accepted
+* **Date**: 2026-08-16
+* **Context**: G0.1 treated all identity matches (DOI, arXiv ID, metadata fingerprint) uniformly during deduplication. However, metadata fingerprints are heuristic — two genuinely different papers can produce the same fingerprint if they share normalized title/authors/venue/year. A false merge is more scientifically dangerous than temporary duplication.
+* **Decision**:
+  1. Classify identity signals into tiers: **Hard** (DOI, arXiv ID), **Strong** (Canonical URL), **Candidate** (Metadata Fingerprint, fuzzy title match).
+  2. Add `match_method` and `match_confidence` columns to `document_sources` to record how each provider observation was linked.
+  3. Hard identity matches auto-merge. Candidate matches without hard corroboration are flagged for review; they do not auto-merge if titles differ significantly.
+  4. Use PostgreSQL 16+ `UNIQUE NULLS NOT DISTINCT` on `(document_id, source_id, provider_doc_id)` to correctly handle NULL `provider_doc_id`.
+* **Consequences**:
+  * *Positive*: Prevents false merges while still reducing duplication for high-confidence matches. Reconciliation decisions are auditable.
+  * *Negative*: May produce temporary duplicates that require later human review or automated reconciliation pass.
+
+---
+
+## ADR-0013: Gate-Staged Alembic Migrations & Snapshot Identity Broadening
+
+* **Status**: Accepted
+* **Date**: 2026-08-16
+* **Context**: G0.1 milestone documentation implied that G1 would instantiate all 18 tables in a single Alembic migration. Creating extraction and opportunity tables before their corresponding features exist couples unrelated concerns and makes migration rollbacks unnecessarily complex. Additionally, the snapshot unique constraint `(document_id, version_identifier)` did not account for multiple representations (PDF vs HTML) of the same document version.
+* **Decision**:
+  1. Stage Alembic migrations by gate: G1 Foundation (7 tables), G3/G4 Extraction (5 tables), G5 Opportunity (6 tables).
+  2. Broaden snapshot identity to `UNIQUE(document_id, version_identifier, mime_type, content_hash)` — supporting multiple representations of the same version.
+  3. Add `document_source_id` FK on `document_snapshots` to record which provider observation triggered the fetch — completing the lineage chain from Source → Observation → Snapshot → Claims.
+* **Consequences**:
+  * *Positive*: Each gate migration is atomic and independently testable. Snapshot model correctly handles multi-format documents.
+  * *Negative*: Requires care to ensure cross-gate FK references are resolved correctly when later migrations reference earlier tables.

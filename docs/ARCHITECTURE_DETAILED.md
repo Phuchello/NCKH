@@ -64,12 +64,14 @@ Intel OS is structured as a **Modular Monolith** in Python / FastAPI with an asy
   * `OpenAlexConnector`: Retrieves open scientific metadata and author affiliations.
   * `WebCrawlerConnector`: Ingests open-access web publications.
 
-### 2.2 Deduplication Precedence & Reconciliation
+### 2.2 Deduplication Precedence & Confidence-Based Reconciliation
 To prevent duplicate logical documents when ingesting from multiple providers, the platform follows an explicit identity precedence:
 $$\text{DOI} \longrightarrow \text{arXiv ID} \longrightarrow \text{Canonical URL} \longrightarrow \text{Metadata Fingerprint} \longrightarrow \text{Fetched Content Hash}$$
 
 * `metadata_fingerprint` is a SHA-256 hash of normalized core metadata: `sha256(normalize(title) + normalize(authors) + venue + year)`.
 * When a matching document is identified, a new record is added to `document_sources` to record the provider observation without creating redundant documents.
+* Each `document_sources` observation records `match_method` (e.g. `'DOI_EXACT'`, `'METADATA_FINGERPRINT'`) and `match_confidence` (1.0 for hard identity, 0.7–0.9 for candidate signals).
+* **Reconciliation policy**: Hard identity matches (DOI, arXiv ID) auto-merge. Metadata fingerprint matches without hard identity corroboration are treated as candidates; false merge is more dangerous than temporary duplication.
 * Documents are mapped to topics via the `document_topics` many-to-many table.
 
 ---
@@ -79,11 +81,13 @@ $$\text{DOI} \longrightarrow \text{arXiv ID} \longrightarrow \text{Canonical URL
 ### 3.1 Document Versioning & Snapshots (`document_snapshots`)
 A logical scientific document may have multiple representations over time (e.g., arXiv v1 vs v2, PDF vs HTML).
 * Every fetched representation is stored as a `document_snapshots` record with:
+  * `document_source_id` (FK to `document_sources` — records which provider observation triggered the fetch)
   * `version_identifier` (e.g. `'arxiv_v1'`, `'arxiv_v2'`)
   * `content_hash` (SHA-256 of downloaded bytes)
   * `mime_type` (`'application/pdf'`, `'text/html'`)
   * `raw_s3_key` (Location in S3/R2 when retained)
   * `parser_version` and `extraction_version`
+* **Snapshot identity**: `UNIQUE(document_id, version_identifier, mime_type, content_hash)` — the same version of the same document can have multiple representations (PDF vs HTML), and the same representation reprocessed with identical bytes will not create a duplicate.
 
 ### 3.2 Layout-Aware Parsing & Section Splitting
 * Uses layout-aware parsers (e.g. `pdfplumber` / PyPDF) to detect multi-column text, tables, and references.
@@ -173,6 +177,6 @@ Query Text
 
 * **Tier 1 (Document)**: Deduplicated via DOI, arXiv ID, or `metadata_fingerprint`.
 * **Tier 2 (Provider Observation)**: Unique `(document_id, source_id, provider_doc_id)`.
-* **Tier 3 (Snapshot)**: Unique `(document_id, version_identifier)` with SHA-256 byte hash.
+* **Tier 3 (Snapshot)**: Unique `(document_id, version_identifier, mime_type, content_hash)` — same version with different formats or byte-level changes creates a new snapshot.
 * **Tier 4 (Worker Job)**: Task dispatch with `idempotency_key = sha256(job_type + payload_hash)`.
 * **Local Cache Janitor**: Enforces `MAX_LOCAL_CACHE_GB` quota with automated LRU eviction.

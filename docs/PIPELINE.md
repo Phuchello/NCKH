@@ -25,11 +25,14 @@ flowchart LR
   1. Ingest connector receives record from arXiv API, Crossref API, or Semantic Scholar.
   2. Normalize canonical identifiers (lowercase DOI, strip URL tracking parameters).
   3. Calculate `metadata_fingerprint = sha256(normalize(title) + normalize(authors) + venue + year)`.
-  4. Query `documents` table by DOI, arXiv ID, or `metadata_fingerprint`:
-     * **If Match Found**: Attach new observation to `document_sources` (reconciliation across multiple providers without creating duplicate documents).
-     * **If No Match**: Insert new `documents` record with `retention_tier = 'DISCOVERED'`.
+  4. Query `documents` table by DOI, arXiv ID, canonical URL, or `metadata_fingerprint`:
+     * **Hard Identity Match** (DOI or arXiv ID): Auto-merge. Record `document_sources` observation with `match_method = 'DOI_EXACT'` / `'ARXIV_ID_EXACT'` and `match_confidence = 1.0`.
+     * **Canonical URL Match**: Auto-merge with `match_method = 'CANONICAL_URL'`, `match_confidence = 1.0`.
+     * **Metadata Fingerprint Match (Candidate)**: Record observation with `match_method = 'METADATA_FINGERPRINT'` and `match_confidence = 0.7–0.9`. If no hard identity corroborates and titles differ significantly, **preserve as separate documents**. False merge is more dangerous than temporary duplication.
+     * **No Match**: Insert new `documents` record with `retention_tier = 'DISCOVERED'`.
   5. Map document to relevant topics via `document_topics` (Many-to-Many).
   6. **Invariant**: No content bytes or PDFs are downloaded at this initial stage.
+  7. **Invariant**: Every provider observation is recorded in `document_sources` regardless of merge outcome.
 
 ### Stage 2: Filter (Multi-Tier Retention Funnel)
 * **Goal**: Selectively promote documents across knowledge tiers.

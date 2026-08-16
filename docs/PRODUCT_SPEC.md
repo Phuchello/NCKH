@@ -54,7 +54,7 @@ To empower researchers and intelligence analysts to continuously discover, criti
 
 ### Epic 1: Multi-Source Discovery & Reconciliation (Discovery Layer)
 * **FR-1.1**: Multi-channel discovery across academic preprint APIs (arXiv, Crossref, Semantic Scholar, OpenAlex) and web feeds.
-* **FR-1.2**: Multi-provider document reconciliation: Reconciles records from multiple sources into a single logical `Document` via canonical identity precedence (`DOI → arXiv ID → URL → Metadata Fingerprint`).
+* **FR-1.2**: Multi-provider document reconciliation: Reconciles records from multiple sources into a single logical `Document` via tiered identity signals. Hard identity (DOI, arXiv ID) auto-merges; candidate signals (metadata fingerprint) are tracked with `match_method` and `match_confidence` and do not auto-merge without corroboration. False merge is more dangerous than temporary duplication.
 * **FR-1.3**: Many-to-Many Topic Assignment: Maps documents to multiple research topics via `document_topics`.
 * **FR-1.4**: Rate-limited crawling with `robots.txt` compliance and pre-flight SSRF perimeter defense.
 * **FR-1.5**: Metadata-first intake (`DISCOVERED` tier) to prevent storage bloat.
