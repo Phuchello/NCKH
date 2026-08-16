@@ -6,9 +6,10 @@
 - **G1 — Database Foundation & Backend Scaffold:** APPROVED (~96/100)
 - **Private-core transition:** VALIDATED
 - **G2 — Academic Ingestion & Connector Framework:** APPROVED (~98/100)
-- **G3 — Full-Text Parsing & Quote-Grounded Extraction:** IMPLEMENTED; mentor decision **REVISE (~88/100)**
-- **Current engineering action:** **G3.1 — integrity/provenance closure**
-- **G4 authorization:** **DENIED until G3 final approval**
+- **G3 — Full-Text Parsing & Quote-Grounded Extraction:** APPROVED (~99/100)
+- **G4 — Intelligence Lake & Personal Research Memory:** IMPLEMENTED; first mentor decision **REVISE (~84/100)**
+- **Current engineering action:** **G4.1 — Storage Consistency & Embedding Provenance Closure**
+- **G5 authorization:** **DENIED until G4 final approval**
 
 This repository is the **public showcase / verified-results surface**. Proprietary G2+ implementation remains in the private authoritative core and is disclosed here only at a safe level of detail.
 
@@ -16,64 +17,59 @@ This repository is the **public showcase / verified-results surface**. Proprieta
 
 ## Latest verified engineering evidence
 
-### G1 final
+### G3 final
 
 ```text
-PostgreSQL 16 + pgvector           PASS
-Alembic lifecycle                  PASS
-G1 automated suite                 49 / 49 PASS
-Coverage                           91%
-Mentor decision                    APPROVED
+Private CI run                    31927755688
+PostgreSQL 16.15 + pgvector       PASS
+Alembic 0001 -> 0004              PASS
+Full automated suite              156 / 156 PASS
+Coverage                          88%
+Mentor decision                   APPROVED (~99/100)
 ```
 
-### G2 final
+### G4 implementation / first mentor review
 
 ```text
-Private CI run                    31924223739
+Private CI run                    31936122041
 PostgreSQL 16.15 + pgvector       PASS
-Alembic lifecycle                 PASS
-Full automated suite              111 / 111 PASS
-Coverage                          86%
-Real PostgreSQL concurrency       PASS
-Mentor decision                   APPROVED (~98/100)
-```
-
-### G3 implementation / first mentor review
-
-```text
-Private CI run                    31925479279
-PostgreSQL 16.15 + pgvector       PASS
-Alembic 0001 -> 0002 -> 0003      PASS
-Full automated suite              134 / 134 PASS
+Alembic 0001 -> 0005              PASS
+Downgrade base / second upgrade   PASS
+Full automated suite              184 / 184 PASS
 Failed / skipped                  0 / 0
 Coverage                          87%
-G1/G2 regression surface          PASS
-Mentor decision                   REVISE (~88/100)
+G1/G2/G3 regression surface       PASS
+Mentor decision                   REVISE (~84/100)
 ```
 
-G3 green CI is valid engineering evidence, but final approval is intentionally withheld until the stricter grounding/provenance acceptance criteria are closed.
+The green G4 suite is valid evidence for the behaviors it exercises, but final approval is intentionally withheld until cross-store durability and embedding-history provenance are proven under failure/version-change cases.
 
 ---
 
-## Publicly reportable G3 capability
+## Publicly reportable G4 capability
 
-The private G3 implementation currently includes, at a high level:
+At a disclosure-safe level, the private G4 implementation currently includes:
 
-- selected PDF/HTML representation retrieval architecture;
-- immutable snapshot identity and SHA-256 content hashing;
-- deterministic PDF/HTML parser abstractions;
-- section normalization and snapshot-pinned chunks;
-- dedicated extraction persistence for chunks, claims and evidence;
-- typed provider-neutral LLM extraction interface with deterministic mocks;
-- deterministic quote verification;
-- `UNASSESSED` default for newly extracted claims;
-- malformed/encrypted input handling;
-- PostgreSQL-backed CI and regression tests.
+- 768-dimensional semantic-vector storage for document chunks and claims;
+- PostgreSQL pgvector + HNSW cosine indexing with controlled integration tests;
+- deterministic offline embedding mocks for CI;
+- Personal Research Memory user-note persistence with bounded content and optional-link preservation;
+- conservative claim-to-claim relationship storage without automatic epistemic-status mutation;
+- artifact key safety, deterministic retained-artifact naming and signed-URL redaction;
+- retention promotion happy-path/idempotency plus hash/size/upload-failure checks;
+- full regression of approved G1–G3 behavior.
 
-The active G3.1 closure focuses on true transfer-time resource bounds, character-exact quote grounding, version-safe/idempotent reruns, controlled multi-column evaluation, reproducible extraction metadata, ungrounded-evidence quarantine and source/snapshot consistency.
+The active G4.1 closure focuses on:
+
+1. concrete S3-compatible deployment adapter;
+2. upload-success / DB-commit-failure compensation or reconciliation semantics;
+3. version-preserving embedding provenance across model/config changes;
+4. exact source-text identity for every vector;
+5. response-cardinality and resource-bound enforcement;
+6. missing adversarial PostgreSQL/storage tests.
 
 See:
-- [`docs/G3_REVIEW_REPORT.md`](docs/G3_REVIEW_REPORT.md)
+- [`docs/G4_REVIEW_REPORT.md`](docs/G4_REVIEW_REPORT.md)
 - [`docs/PUBLIC_PROGRESS.md`](docs/PUBLIC_PROGRESS.md)
 
 ---
@@ -89,10 +85,10 @@ PUBLIC NCKH
     verified progress → metrics → demos → selected results → publications
 ```
 
-The public repository remains actively maintained at every major gate. Verified metrics, sanitized architecture updates, demos/screenshots, selected benchmarks, release notes, posters, papers and presentations should be published when those artifacts genuinely exist and pass disclosure review.
+The public repository remains actively maintained at every major gate. Verified metrics, sanitized architecture updates, demos/screenshots, selected benchmarks, release notes, posters, papers and presentations are published only when they genuinely exist and pass disclosure review.
 
 ---
 
 ## Exact next action
 
-Complete **G3.1** in the private authoritative core while preserving the 134-test regression baseline, run PostgreSQL 16 private CI, and return for final G3 mentor review. **Do not begin G4 before G3 approval.**
+Complete **G4.1** in the private authoritative core while preserving the 184-test regression baseline, run PostgreSQL 16 + pgvector CI, and return for final G4 mentor review. **Do not begin G5 before G4 approval.**
