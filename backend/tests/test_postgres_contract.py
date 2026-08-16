@@ -119,19 +119,10 @@ async def test_postgres_column_data_types(postgres_engine: AsyncEngine):
 
 def test_postgres_alembic_lifecycle(postgres_url: str):
     """CONTRACT: Real PostgreSQL 16 full upgrade -> downgrade -> upgrade cycle succeeds without enum leaks."""
-    import socket
-    from urllib.parse import urlparse
     from alembic import command
     from alembic.config import Config
 
     assert_safe_test_db(postgres_url)
-
-    parsed = urlparse(postgres_url)
-    try:
-        with socket.create_connection((parsed.hostname or "localhost", parsed.port or 5432), timeout=2.0):
-            pass
-    except Exception as exc:
-        pytest.skip(f"PostgreSQL 16 test database is not reachable ({exc}) - runs in CI")
 
     alembic_ini_path = Path(__file__).parent.parent / "alembic.ini"
     alembic_cfg = Config(str(alembic_ini_path))
@@ -142,5 +133,4 @@ def test_postgres_alembic_lifecycle(postgres_url: str):
 
     # 2. Upgrade back to head (re-creates extensions, enums, tables, and partial indexes)
     command.upgrade(alembic_cfg, "head")
-
 
