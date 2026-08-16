@@ -133,7 +133,7 @@ TOTAL COVERAGE: 87% (694 statements, 89 missed)
 * **G0 Baseline Checkpoint**: `dbb55ac148771a80c565f544fe229dd9cd618fc6`
 * **G0.1 Corrected Checkpoint**: `60abdbe65b88b2dd61e28d5419655b50c5fd94cb`
 * **G0.2 Hardened Checkpoint**: `f95ddb8`
-* **G1 Implementation Checkpoint**: `466dd23`
+* **G1 Implementation Checkpoint**: `e07286b`
 * **Working Tree**: Clean.
 
 ---
