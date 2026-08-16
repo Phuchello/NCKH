@@ -2,12 +2,13 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G4%20Active-informational?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G4.1%20Integrity%20Closure-informational?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
 [![G3](https://img.shields.io/badge/G3-Approved-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-156%2F156%20passing-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-184%2F184%20passing-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![G5](https://img.shields.io/badge/G5-Locked-orange?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
@@ -82,9 +83,7 @@ Mentor decision                  APPROVED (~96/100)
 ```
 
 ### G2 — Academic Metadata Ingestion & Connector Framework
-**Approved after three adversarial hardening passes.**
-
-Publicly reportable capability includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; conservative scholarly identity reconciliation; multi-provider provenance; bounded async networking; job idempotency; whole-attempt transactions; and real PostgreSQL concurrency testing.
+**Approved after adversarial concurrency, transaction and provider-policy hardening.**
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
@@ -94,65 +93,68 @@ Real PG concurrency suite        PASS
 Mentor decision                  APPROVED (~98/100)
 ```
 
+Publicly reportable capability includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; conservative scholarly identity reconciliation; multi-provider provenance; bounded async networking; job idempotency; whole-attempt transactions; and PostgreSQL concurrency testing.
+
 See **[G2 Final Gate Report](docs/G2_FINAL_REPORT.md)**.
 
 ### G3 — Full-Text Parsing & Quote-Grounded Extraction
 **Approved after progressive integrity hardening.**
 
-The private core now contains the first end-to-end source-grounding pipeline:
-
-```text
-Fetched representation
-→ immutable snapshot
-→ deterministic parsing
-→ versioned sections / chunks
-→ claim candidate
-→ character-exact quote verification
-→ snapshot-pinned evidence
-→ immutable extraction-run provenance
-```
-
-Final verified G3 checkpoint:
-
 ```text
 PostgreSQL 16.15 + pgvector      PASS
-Alembic upgrade/downgrade/up     PASS
 Private automated suite          156 / 156 PASS
-Failed / skipped                 0 / 0
 Coverage                         88%
-G1/G2 regression surface         PASS
 Mentor decision                  APPROVED (~99/100)
 ```
 
-G3 verifies exact source grounding without confusing quotation presence with scientific truth. It also preserves parser/extraction version history, quarantines ungrounded evidence, and enforces bounded extraction contracts.
+G3 provides streamed representation bounds, immutable snapshot/version provenance, deterministic parsing, versioned chunks, character-exact quote verification, ungrounded-evidence quarantine, immutable extraction-run provenance and bounded provider-neutral extraction contracts.
+
+> **Grounding is not truth.** A verified quote proves that a source contains a statement; it does not prove the statement is scientifically correct.
 
 See **[G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)**.
 
 ### G4 — Intelligence Lake & Personal Research Memory
-**Authorized / active.**
+**Implemented; first mentor review = REVISE. G4.1 integrity closure is active.**
 
-G4 is building the durable storage layer behind the research-memory system:
+Latest verified checkpoint:
 
 ```text
-Retained artifact bytes
-→ immutable snapshot storage pointer
-→ versioned semantic embeddings
-→ pgvector claim/chunk index
+PostgreSQL 16.15 + pgvector      PASS
+Alembic upgrade/downgrade/up     PASS
+Private automated suite          184 / 184 PASS
+Failed / skipped                 0 / 0
+Coverage                         87%
+G1/G2/G3 regression surface      PASS
+Mentor decision                  REVISE (~84/100)
+```
+
+The private core now contains the first memory/vector foundation:
+
+```text
+Grounded snapshot / chunk / claim
+→ selective retained-artifact workflow
+→ 768-dimension semantic vectors
+→ pgvector / HNSW indexing
 → user-authored research notes
 → conservative claim relationships
 ```
 
-Implementation remains private. Public results, verified metrics, architecture diagrams, and sanitized demos will be mirrored here after each reviewed G4 checkpoint.
+The remaining G4.1 closure is focused on cross-store durability and historical reproducibility: concrete S3-compatible deployment adapter, commit-failure compensation/recovery, version-preserving embedding provenance, source-text identity, and missing adversarial tests.
+
+See **[G4 Mentor Review Checkpoint](docs/G4_REVIEW_REPORT.md)**.
+
+**G5 remains locked until G4 receives final mentor approval.**
 
 ---
 
 ## Engineering principles
 
 - **Provenance before cleverness.** Important outputs should remain traceable to source evidence.
-- **Grounding is not truth.** A paper containing a statement does not make that statement scientifically correct.
+- **Grounding is not truth.** Source presence and scientific validity remain separate dimensions.
 - **False merge is worse than temporary duplication.** Scholarly identity reconciliation stays conservative.
 - **Metadata first.** Discovering a paper does not imply permanently storing its raw file.
-- **Selective retention.** Raw artifacts are retained only when value, provenance, or research use justifies it.
+- **Selective retention.** Raw artifacts are retained only when value, provenance, licensing, or research use justifies it.
+- **Historical reproducibility.** Model/config changes must not silently reinterpret past research-memory state.
 - **Cloud-first data, local-first development.** The laptop is not the authoritative research-memory store.
 - **No premature custom-LLM training.** Retrieval and structured memory come first.
 - **Gate-based development.** Green CI is necessary, but not sufficient, for approval.
@@ -200,8 +202,8 @@ PUBLIC SHOWCASE
 | G1 | Database foundation & backend scaffold | ✅ Approved |
 | G2 | Academic ingestion & connector framework | ✅ Approved |
 | G3 | Full-text parsing & quote-grounded extraction | ✅ Approved |
-| G4 | Intelligence Lake / memory storage & embeddings | 🚧 Active |
-| G5 | Research gaps / opportunities / idea lineage | Planned |
+| G4 | Intelligence Lake / memory storage & embeddings | 🛠 G4.1 integrity closure |
+| G5 | Research gaps / opportunities / idea lineage | 🔒 Locked |
 | G6 | Hybrid search, retrieval & synthesis | Planned |
 | G7 | Living handbook / research outputs | Planned |
 | G8 | Research console / UX | Planned |
@@ -215,6 +217,7 @@ PUBLIC SHOWCASE
 - [Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md)
 - [G2 Final Gate Report](docs/G2_FINAL_REPORT.md)
 - [G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)
+- [G4 Mentor Review Checkpoint](docs/G4_REVIEW_REPORT.md)
 - [Product Specification](docs/PRODUCT_SPEC.md)
 - [Architecture](ARCHITECTURE.md)
 - [Detailed Architecture](docs/ARCHITECTURE_DETAILED.md)
