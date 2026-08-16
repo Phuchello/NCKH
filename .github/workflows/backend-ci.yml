@@ -2,13 +2,13 @@ name: Backend CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   test:
-    name: PostgreSQL 16 + pgvector Test Suite
+    name: "PostgreSQL 16 + pgvector Test Suite"
     runs-on: ubuntu-latest
 
     services:
@@ -27,15 +27,15 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Checkout Code
+      - name: "Checkout Code"
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: "Set up Python 3.11"
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install uv and Backend Dependencies
+      - name: "Install uv and Backend Dependencies"
         working-directory: backend
         run: |
           python -m pip install --upgrade pip
@@ -43,20 +43,20 @@ jobs:
           uv venv .venv
           uv pip install -e ".[dev]"
 
-      - name: Run Alembic Migration Lifecycle on PostgreSQL 16
+      - name: "Run Alembic Migration Lifecycle on PostgreSQL 16"
         working-directory: backend
         env:
-          DATABASE_URL: postgresql+asyncpg://postgres:postgrespassword@localhost:5432/intel_os_test
+          DATABASE_URL: "postgresql+asyncpg://postgres:postgrespassword@localhost:5432/intel_os_test"
         run: |
           uv run alembic upgrade head
           uv run alembic downgrade base
           uv run alembic upgrade head
 
-      - name: Run Full Test Suite (Unit + PostgreSQL 16 Integration)
+      - name: "Run Full Test Suite (Unit + PostgreSQL 16 Integration)"
         working-directory: backend
         env:
-          APP_ENV: testing
-          DATABASE_URL: sqlite+aiosqlite:///:memory:
-          POSTGRES_TEST_URL: postgresql+asyncpg://postgres:postgrespassword@localhost:5432/intel_os_test
+          APP_ENV: "testing"
+          DATABASE_URL: "sqlite+aiosqlite:///:memory:"
+          POSTGRES_TEST_URL: "postgresql+asyncpg://postgres:postgrespassword@localhost:5432/intel_os_test"
         run: |
           uv run pytest -v --cov=intel_os
