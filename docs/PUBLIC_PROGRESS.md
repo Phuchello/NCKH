@@ -1,99 +1,69 @@
 # Intel OS / NCKH — Public Progress & Verified Results
 
-This page is the public milestone mirror for Intel OS / NCKH.
-
-It reports **verified outcomes, engineering milestones, public architecture, and research-facing progress** without publishing proprietary private-core implementation by default.
+This page is the public milestone mirror for Intel OS / NCKH. It reports verified engineering outcomes and research-facing progress without publishing proprietary private-core implementation by default.
 
 ---
 
 ## Current status
 
-| Item | Status |
+| Gate / Item | Status |
 |---|---|
 | G0 — Foundation & Architecture | ✅ Approved |
 | G1 — Database Foundation & Backend Scaffold | ✅ Approved |
-| Private-core migration | ✅ Validated |
-| G2 — Academic Ingestion & Connector Framework | 🛠 G2.2 closure required after mentor review |
-| G3 | 🔒 Not authorized |
+| Private-core transition | ✅ Validated |
+| G2 — Academic Ingestion & Connector Framework | ✅ Approved |
+| G3 — Full-Text Parsing & Quote-Grounded Extraction | 🚧 Active |
+| G4 | 🔒 Locked until G3 approval |
 
-Current authoritative implementation: private core.  
-Current public role: project showcase, milestone mirror, verified-results surface, and research/publication hub.
+The public repository remains an active showcase, verified-results surface, and research/publication hub. The authoritative G2+ implementation remains private.
 
 ---
 
 ## G0 — Foundation & Architecture
 
-### Outcome
-
-G0 established the architectural and research principles used by later gates.
-
-### Publicly reportable deliverables
+G0 established the architectural and research principles used by later gates:
 
 - modular-monolith V1 architecture;
-- web-first product direction;
 - provenance-first data model;
-- Intelligence Lake concept;
-- Personal Research Memory concept;
-- Research Opportunity Memory concept;
+- Intelligence Lake / Personal Research Memory / Research Opportunity Memory concepts;
 - idea-lineage requirement;
-- cloud-first authoritative storage;
-- retention tiers and metadata-first discovery;
-- replaceable LLM/reasoning-engine strategy;
-- staged database/migration philosophy;
-- security and source-provenance model;
-- gate-based engineering workflow.
+- cloud-first authoritative storage direction;
+- metadata-first retention policy;
+- replaceable reasoning-model strategy;
+- security, epistemic and gate-review principles.
 
-### Review history
+Review history:
 
-- Initial G0 review: **77/100 — revise**.
-- G0.1 architecture correction: **88/100 — near pass**.
-- G0.2 data-integrity hardening: **approved**.
+```text
+G0 initial review       77/100 — REVISE
+G0.1                    88/100 — NEAR PASS
+G0.2                    APPROVED
+```
 
 ---
 
 ## G1 — Database Foundation & Backend Scaffold
 
-### Outcome
+G1 created the executable backend foundation and was approved only after real PostgreSQL verification.
 
-G1 created the first executable engineering foundation and was approved only after real PostgreSQL validation.
-
-### Verified capabilities
-
-- FastAPI application foundation;
-- typed configuration with Pydantic;
-- SQLAlchemy 2.x async database layer;
-- asyncpg PostgreSQL connectivity;
-- PostgreSQL 16 + pgvector development environment;
-- Alembic migration lifecycle;
-- exactly 7 initial foundation tables;
-- topic/document many-to-many mapping;
-- multi-provider observation provenance;
-- normalized observed-URL idempotency;
-- document snapshot/version representation;
-- `ON DELETE RESTRICT` provenance protection;
-- bounded local cache manager;
-- health/status API endpoints;
-- PostgreSQL integration/contract tests;
-- GitHub Actions CI.
-
-### Final validated G1 baseline
+Verified baseline:
 
 ```text
 PostgreSQL 16 + pgvector           PASS
-Alembic upgrade head              PASS
-Alembic downgrade base            PASS
-Alembic second upgrade            PASS
-G1 automated suite                49 / 49 PASS
-Coverage at G1 checkpoint         91%
-GitHub Actions                    PASS
-Mentor assessment                 ~96/100 — APPROVED
+Alembic upgrade/downgrade/up       PASS
+G1 automated suite                 49 / 49 PASS
+Coverage                           91%
+GitHub Actions                     PASS
+Mentor assessment                  ~96/100 — APPROVED
 ```
+
+Publicly reportable capabilities include FastAPI, SQLAlchemy 2 async + asyncpg, seven foundation tables, multi-provider provenance, normalized URL idempotency, versioned snapshots, bounded local cache, and PostgreSQL-backed CI.
 
 ---
 
 ## Private-core transition
 
-A **Public Showcase + Private Core** model was adopted before continuing proprietary G2+ development.
+The project uses a **Public Showcase + Private Core** model.
 
 ```text
 PRIVATE CORE
@@ -106,142 +76,139 @@ PUBLIC SHOWCASE
     architecture overview
     verified progress
     milestone outcomes
+    demos / screenshots
     selected benchmark summaries
-    screenshots / demos
     papers / posters / presentations
-    intentionally released artifacts
 ```
 
-After the split, the backend was revalidated in the private repository instead of assuming migration preserved behavior.
+After the split, the backend was revalidated rather than assuming migration preserved behavior:
 
 ```text
-PostgreSQL                         16.15 + pgvector
-Alembic upgrade/downgrade/upgrade PASS
-Private migration suite           83 / 83 PASS
-Coverage                          86%
-Original G1 regression surface    PASS
+PostgreSQL 16.15 + pgvector       PASS
+Alembic lifecycle                PASS
+Private migration suite          83 / 83 PASS
+Coverage                         86%
+Original G1 regression surface   PASS
 ```
-
-The public repository remains an active project surface; it is not an abandoned mirror.
 
 ---
 
 ## G2 — Academic Metadata Ingestion & Connector Framework
 
-### Publicly reportable implementation scope
+**Final decision: APPROVED.**
 
-The private G2 implementation currently covers metadata acquisition paths for:
+Publicly reportable scope:
 
-- **arXiv**;
-- **Crossref**;
-- **OpenAlex**;
-- **Semantic Scholar Academic Graph**.
+- arXiv, Crossref, OpenAlex, and Semantic Scholar metadata ingestion;
+- provider-neutral discovery records;
+- DOI/arXiv/provider identity normalization and reconciliation;
+- explicit hard-identity conflict handling;
+- conservative false-merge policy;
+- provider-observation provenance;
+- bounded ingestion jobs;
+- resilient async HTTP transport;
+- bounded retries and provider-aware rate control;
+- network-safety / SSRF-oriented defenses;
+- whole-attempt transaction semantics;
+- background-job idempotency;
+- real PostgreSQL concurrency testing.
 
-At a safe public level, the architecture includes:
+### Review progression
 
-- provider-neutral normalized discovery records;
-- centralized DOI/arXiv/URL normalization;
-- conservative multi-provider reconciliation;
-- preservation of provider observations/provenance;
-- bounded ingestion runs;
-- async HTTP transport;
-- retry/backoff behavior;
-- configurable per-provider rate control;
-- redirect/network-safety checks;
-- ingestion-job telemetry;
-- deterministic provider fixtures for CI;
-- PostgreSQL integration testing.
+```text
+Private split baseline   83 / 83 PASS
+G2.1                     92 / 92 PASS   → REVISE
+G2.2                    107 / 107 PASS  → NEAR PASS
+G2.3 final              111 / 111 PASS  → APPROVED
+```
 
-### G2.1 adversarial-hardening checkpoint
+G2 was not approved merely because CI was green. Review passes specifically challenged scientific identity conflicts, database race conditions, transaction failure recovery, job idempotency, provider-policy changes, and HTTP edge cases.
 
-G2.1 addressed several mentor-review findings around provider-policy drift, identity conflicts, false-merge risk, failure recovery, and HTTP/network safety.
-
-Latest **verified** private CI result:
+### Final verified G2 evidence
 
 ```text
 PostgreSQL 16.15 + pgvector       PASS
-Alembic upgrade/downgrade/upgrade PASS
-Full automated suite              92 / 92 PASS
-Failed tests                      0
-Overall coverage                  86%
-Original G1 regressions           PASS
+Alembic upgrade/downgrade/up      PASS
+Full automated suite              111 / 111 PASS
+Failed / skipped                  0 / 0
+Coverage                          86%
+Real PostgreSQL concurrency       PASS
+Original G1 regression surface    PASS
 Private GitHub Actions            PASS
+Mentor assessment                 ~98/100 — APPROVED
 ```
 
-### Mentor review decision
+Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
 
-**REVISE — G2 is not approved yet.**
+---
 
-The green test suite is meaningful evidence, but the mentor audit found that the current suite still does not prove several critical adversarial invariants. A narrow **G2.2 closure** is required before G3.
+## G3 — Full-Text Parsing & Quote-Grounded Extraction
 
-Publicly reportable closure themes:
+**Status: Active.**
 
-- real concurrent-ingestion/idempotency verification on PostgreSQL;
-- complete agreement checking across trusted scholarly identities;
-- precise duplicate-running/background-job semantics;
-- explicit transaction/failure accounting;
-- final provider-authentication/policy alignment;
-- remaining HTTP cancellation/redirect/timeout edge cases.
+G3 is the first gate that turns selected document representations into source-grounded research objects.
 
-These findings are treated as normal gate-review work rather than hidden failures. **G3 remains locked until G2 is formally approved.**
+Public architectural target:
+
+```text
+Fetched representation
+→ immutable snapshot identity
+→ layout-aware parsing
+→ normalized sections/chunks
+→ claim candidate
+→ deterministic exact-quote verification
+→ evidence record
+```
+
+Key G3 principles:
+
+- parsed content remains pinned to a specific snapshot/version;
+- quote grounding is deterministic and independent of the LLM that proposed the claim;
+- `VERBATIM_MATCH` means the quote exists in the source text — it does **not** mean the scientific claim is true;
+- newly extracted claims default to `UNASSESSED`;
+- malformed or ungrounded extraction is quarantined/rejected rather than silently accepted;
+- embeddings, S3/R2 storage, opportunity mining and frontend work remain out of scope for G3.
+
+G3 results will be mirrored publicly after mentor/disclosure review.
 
 ---
 
 ## Review philosophy
 
-A milestone is not approved simply because generated code compiles or CI is green. Gate reviews distinguish between:
+A gate is evaluated on more than implementation completeness:
 
-1. implementation completeness;
-2. deterministic test coverage;
-3. production-dialect behavior;
-4. adversarial data-integrity behavior;
-5. failure/concurrency semantics;
-6. provider-policy correctness;
+1. deterministic tests;
+2. production-dialect behavior;
+3. provenance/data-integrity invariants;
+4. concurrency and failure semantics;
+5. external-provider policy correctness;
+6. epistemic correctness;
 7. safe public disclosure.
 
-This is why G2.1 can report **92/92 passing** while still receiving a **REVISE** decision.
+Green CI is necessary, but not sufficient, for gate approval.
 
 ---
 
 ## Public reporting policy
 
-For every future gate, this repository should publish a concise verified report containing, when safe to disclose:
+For future gates, this repository publishes a concise verified report containing, when safe:
 
-1. milestone objective;
-2. capabilities completed;
-3. architecture impact at a safe level of detail;
-4. tests / evaluation summary;
-5. benchmark or experiment results;
-6. known limitations;
-7. mentor/gate decision;
-8. screenshots/demo artifacts when available;
-9. public research outputs and publication links;
-10. what remains private and why.
+- milestone objective and completed capability;
+- safe architecture impact;
+- test/evaluation evidence;
+- benchmark/experiment results;
+- known limitations;
+- mentor/gate decision;
+- screenshots/demos when real outputs exist;
+- public papers/posters/presentations;
+- explicit disclosure boundary.
 
-Results should be **specific and evidence-based**, but proprietary source code or sensitive research material should not be published merely to make the report look complete.
-
----
-
-## Planned public showcase evolution
-
-As the product matures, the public repository is expected to gain selected artifacts such as:
-
-- architecture diagrams;
-- polished product screenshots;
-- short demo recordings / GIFs;
-- sanitized topic-intelligence examples;
-- performance and reliability summaries;
-- research workflow examples;
-- release notes;
-- posters / slides / papers after disclosure review;
-- selected datasets or fixtures when redistribution rights allow.
-
-No placeholder screenshots or fabricated benchmarks should be added before real outputs exist.
+No fabricated benchmark, placeholder screenshot, or private-core implementation is published merely for appearance.
 
 ---
 
 ## Disclosure note
 
-The public repository is **source-available/proprietary, not open source**. Public reporting is intended to make the project assessable, reviewable, and professionally presentable while preserving the project's private core and research/IP boundary.
+This repository is **source-available/proprietary, not open source**. Public reporting keeps the project assessable and professionally presentable while preserving its private core and research/IP boundary.
 
 See [`IP_POLICY.md`](IP_POLICY.md) and the root [`LICENSE`](../LICENSE).
