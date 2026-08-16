@@ -24,7 +24,6 @@ def upgrade() -> None:
 
     # 0. PostgreSQL Extensions and Controlled ENUM Lifecycle
     if is_postgres:
-        op.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
         op.execute('CREATE EXTENSION IF NOT EXISTS vector')
         op.execute("CREATE TYPE retention_tier AS ENUM ('DISCOVERED', 'INDEXED', 'RELEVANT', 'RETAINED', 'ARCHIVED')")
         op.execute("CREATE TYPE job_status AS ENUM ('PENDING', 'RUNNING', 'COMPLETED', 'FAILED', 'RETRYING')")

@@ -14,6 +14,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 os.environ["APP_ENV"] = "testing"
 os.environ["LOG_LEVEL"] = "WARNING"
 os.environ["MAX_LOCAL_CACHE_GB"] = "1.0"
+os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 
 from intel_os.core.config import Settings, get_settings
 from intel_os.db.base import Base

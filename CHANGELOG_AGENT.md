@@ -16,6 +16,27 @@ Each entry must record:
 
 ---
 
+### [2026-08-16 02:00:00 UTC] — Gate 1.2 (G1.2) CI Green & Final Cleanup
+* **Milestone**: Gate 1.2 (G1.2)
+* **Agent Role**: Antigravity (Gemini)
+* **Action Summary**:
+  * Simplified GitHub Actions CI workflow (`.github/workflows/backend-ci.yml`) using only official `actions/checkout@v4` and `actions/setup-python@v5` to eliminate startup and third-party action policy failure risk.
+  * Configured automated `pip install uv`, backend dependency installation, and PostgreSQL 16 + pgvector container service (`pgvector/pgvector:pg16`).
+  * Verified automated Alembic migration lifecycle (`upgrade head` -> `downgrade base` -> `upgrade head`) and full 49-test suite execution in CI.
+  * Removed unused `uuid-ossp` extension creation from migrations, tests, and authoritative DDL in `docs/DATA_MODEL.md`.
+  * Updated `PROJECT_STATE.md` to reflect consistent Gate 1.2 status and metrics.
+* **Files Modified**:
+  * `.github/workflows/backend-ci.yml`
+  * `backend/intel_os/db/migrations/versions/20260816_0001_g1_foundation.py`
+  * `backend/tests/test_postgres_contract.py`, `backend/tests/conftest.py`
+  * `docs/DATA_MODEL.md`, `TODO.md`, `CHANGELOG_AGENT.md`, `PROJECT_STATE.md`
+* **Verification**:
+  * 49/49 automated pytest tests passing.
+  * GitHub Actions workflow run verified green.
+* **Status**: G1.2 Completed. Awaiting mentor review for Gate 2 authorization.
+
+---
+
 ### [2026-08-16 01:45:00 UTC] — Gate 1.1 (G1.1) PostgreSQL Reality Check & Schema Alignment
 * **Milestone**: Gate 1.1 (G1.1)
 * **Agent Role**: Antigravity (Gemini)

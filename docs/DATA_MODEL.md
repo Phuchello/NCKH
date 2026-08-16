@@ -157,7 +157,6 @@ The DDL below defines the **complete V1 Target Schema** (18 normalized tables). 
 ```sql
 -- Ensure extensions are enabled
 CREATE EXTENSION IF NOT EXISTS vector;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- =============================================================================
 -- 1. Topics (Research Areas & Domains)                           [G1 MIGRATION]
@@ -311,7 +310,7 @@ CREATE INDEX idx_background_jobs_status ON background_jobs(status);
 -- 8. Document Chunks & Vector Index                          [G3/G4 MIGRATION]
 -- =============================================================================
 CREATE TABLE document_chunks (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     snapshot_id UUID NOT NULL REFERENCES document_snapshots(id) ON DELETE CASCADE,
     chunk_index INT NOT NULL,
@@ -333,7 +332,7 @@ CREATE INDEX idx_document_chunks_embedding_hnsw ON document_chunks USING hnsw (e
 -- PROVENANCE INVARIANT: Machine-extracted claims MUST have a NOT NULL snapshot_id.
 -- ON DELETE RESTRICT on snapshot_id prevents silently orphaning extracted intelligence.
 CREATE TABLE claims (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     snapshot_id UUID NOT NULL REFERENCES document_snapshots(id) ON DELETE RESTRICT,
     claim_text TEXT NOT NULL,
@@ -362,7 +361,7 @@ CREATE INDEX idx_claims_embedding_hnsw ON claims USING hnsw (embedding vector_co
 -- =============================================================================
 -- PROVENANCE INVARIANT: Machine-extracted evidence MUST have a NOT NULL snapshot_id.
 CREATE TABLE evidence_items (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     claim_id UUID NOT NULL REFERENCES claims(id) ON DELETE CASCADE,
     document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     snapshot_id UUID NOT NULL REFERENCES document_snapshots(id) ON DELETE RESTRICT,
@@ -386,7 +385,7 @@ CREATE INDEX idx_evidence_snapshot_id ON evidence_items(snapshot_id);
 -- 11. Relationships (Claim-to-Claim Logic Graph)             [G3/G4 MIGRATION]
 -- =============================================================================
 CREATE TABLE relationships (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     source_claim_id UUID NOT NULL REFERENCES claims(id) ON DELETE CASCADE,
     target_claim_id UUID NOT NULL REFERENCES claims(id) ON DELETE CASCADE,
     relation_type VARCHAR(50) NOT NULL,
@@ -405,7 +404,7 @@ CREATE INDEX idx_relationships_type ON relationships(relation_type);
 -- =============================================================================
 -- User-authored notes are loosely linked; NULLable FKs are appropriate.
 CREATE TABLE user_notes (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     topic_id UUID REFERENCES topics(id) ON DELETE SET NULL,
     document_id UUID REFERENCES documents(id) ON DELETE SET NULL,
     claim_id UUID REFERENCES claims(id) ON DELETE SET NULL,
@@ -423,7 +422,7 @@ CREATE INDEX idx_user_notes_document_id ON user_notes(document_id);
 -- 13. Research Gaps (Limitations & Missing Evaluations)         [G5 MIGRATION]
 -- =============================================================================
 CREATE TABLE research_gaps (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     topic_id UUID NOT NULL REFERENCES topics(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
@@ -440,7 +439,7 @@ CREATE INDEX idx_research_gaps_topic_id ON research_gaps(topic_id);
 -- 14. Contradictions (Conflicting Empirical Claims)             [G5 MIGRATION]
 -- =============================================================================
 CREATE TABLE contradictions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     topic_id UUID NOT NULL REFERENCES topics(id) ON DELETE CASCADE,
     claim_a_id UUID NOT NULL REFERENCES claims(id) ON DELETE CASCADE,
     claim_b_id UUID NOT NULL REFERENCES claims(id) ON DELETE CASCADE,
@@ -457,7 +456,7 @@ CREATE INDEX idx_contradictions_claims ON contradictions(claim_a_id, claim_b_id)
 -- 15. Research Opportunities                                    [G5 MIGRATION]
 -- =============================================================================
 CREATE TABLE research_opportunities (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     topic_id UUID NOT NULL REFERENCES topics(id) ON DELETE CASCADE,
     research_gap_id UUID REFERENCES research_gaps(id) ON DELETE SET NULL,
     contradiction_id UUID REFERENCES contradictions(id) ON DELETE SET NULL,
@@ -476,7 +475,7 @@ CREATE INDEX idx_opportunities_topic_id ON research_opportunities(topic_id);
 -- 16. Research Ideas (Candidate Hypotheses & Blueprints)        [G5 MIGRATION]
 -- =============================================================================
 CREATE TABLE research_ideas (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     opportunity_id UUID NOT NULL REFERENCES research_opportunities(id) ON DELETE CASCADE,
     topic_id UUID NOT NULL REFERENCES topics(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
@@ -498,7 +497,7 @@ CREATE INDEX idx_research_ideas_embedding_hnsw ON research_ideas USING hnsw (emb
 -- =============================================================================
 -- PROVENANCE INVARIANT: snapshot_id is NOT NULL — lineage must reach exact bytes.
 CREATE TABLE idea_provenance (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     idea_id UUID NOT NULL REFERENCES research_ideas(id) ON DELETE CASCADE,
     opportunity_id UUID REFERENCES research_opportunities(id) ON DELETE SET NULL,
     gap_id UUID REFERENCES research_gaps(id) ON DELETE SET NULL,
@@ -519,7 +518,7 @@ CREATE INDEX idx_idea_provenance_claim_id ON idea_provenance(claim_id);
 -- 18. Experiment Logs (Empirical Trials & Lessons)              [G5 MIGRATION]
 -- =============================================================================
 CREATE TABLE experiment_logs (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     idea_id UUID NOT NULL REFERENCES research_ideas(id) ON DELETE CASCADE,
     experiment_name VARCHAR(255) NOT NULL,
     setup_description TEXT NOT NULL,

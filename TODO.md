@@ -23,7 +23,7 @@
 - [x] Backend Scaffolding:
   - [x] Python project structure with `pyproject.toml` (Python 3.11+, FastAPI, SQLAlchemy 2.x async, asyncpg, Alembic, Pydantic v2, pydantic-settings).
   - [x] Asynchronous database engine setup (`intel_os.db.session`) with connection pooling, transaction boundaries, and health connectivity check.
-  - [x] Alembic migration environment configured for PostgreSQL 16+, extensions (`uuid-ossp`, `vector`), and async/sync multi-dialect support.
+  - [x] Alembic migration environment configured for PostgreSQL 16+, extensions (`vector`), and async/sync multi-dialect support.
   - [x] Initial database migration (`0001_g1_foundation`) generating the 7 G1 foundation tables (`topics`, `sources`, `documents`, `document_topics`, `document_sources`, `document_snapshots`, `background_jobs`).
   - [x] Partial unique index strategy for `document_sources` resolving NULL `provider_doc_id` observation idempotency.
   - [x] Snapshot-to-observation provenance protection with `ON DELETE RESTRICT` and `passive_deletes=True`.
@@ -54,8 +54,20 @@
   - [x] Added PostgreSQL idempotency tests (`test_postgres_idempotency.py`).
   - [x] Added PostgreSQL snapshot provenance and representation tests (`test_postgres_snapshots.py`).
   - [x] Added URL normalizer unit tests (`test_url_normalization.py`).
-  - [x] Added minimal GitHub Actions CI workflow (`.github/workflows/backend-ci.yml`).
-  - [x] Total test suite: 49 passing tests (100% pass rate, 91% code coverage).
+
+---
+
+## Gate 1.2: CI Green & Final Cleanup [COMPLETED]
+- [x] CI Pipeline Reliability:
+  - [x] Eliminated external action policy risk by replacing `astral-sh/setup-uv@v2` with official `actions/checkout@v4` and `actions/setup-python@v5`.
+  - [x] Installed `uv` directly via `pip` on standard Python 3.11 runner.
+  - [x] Added automated PostgreSQL 16 service container (`pgvector/pgvector:pg16`) with health checks.
+  - [x] Automated full Alembic migration verification (`upgrade head` -> `downgrade base` -> `upgrade head`) in CI.
+  - [x] Automated full 49-test suite (Unit + PostgreSQL 16 Integration) in CI.
+- [x] Cleanup & Hardening:
+  - [x] Removed unused `uuid-ossp` extension creation from migrations, tests, and target DDL.
+  - [x] Aligned `test_postgres_alembic_lifecycle` to run without optional `psycopg2` driver dependency.
+  - [x] Refreshed `PROJECT_STATE.md` with internally consistent Gate 1.2 deliverables and test metrics.
 
 ---
 
