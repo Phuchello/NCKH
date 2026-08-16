@@ -2,13 +2,14 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G4.2%20Micro--Closure-informational?style=flat-square)](docs/G4_REVIEW_REPORT.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G5%20Opportunity%20Miner-informational?style=flat-square)](PROJECT_STATE.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
 [![G3](https://img.shields.io/badge/G3-Approved-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-215%2F215%20passing-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
+[![G4](https://img.shields.io/badge/G4-Approved-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-243%2F243%20passing-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![G5](https://img.shields.io/badge/G5-Locked-orange?style=flat-square)](docs/G4_REVIEW_REPORT.md)
+[![G5](https://img.shields.io/badge/G5-Active-blue?style=flat-square)](PROJECT_STATE.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
@@ -112,22 +113,21 @@ G3 provides immutable snapshot/version provenance, deterministic parsing, versio
 See **[G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)**.
 
 ### G4 — Intelligence Lake & Personal Research Memory
-**G4.1 reviewed as NEAR PASS; G4.2 micro-closure is active.**
+**Approved after three integrity-closure passes.**
 
-Latest verified checkpoint:
+Final verified checkpoint:
 
 ```text
 PostgreSQL 16.15 + pgvector      PASS
-Alembic 0001 -> 0006             PASS
+Alembic 0001 -> 0007             PASS
 Upgrade / downgrade / upgrade    PASS
-Private automated suite          215 / 215 PASS
+Private automated suite          243 / 243 PASS
 Failed / skipped                 0 / 0
 Coverage                         88%
-Protected regression surface     PASS
-Mentor decision                  NEAR PASS (~95/100)
+Mentor decision                  APPROVED (~99/100)
 ```
 
-At a disclosure-safe level, G4.1 now establishes:
+At a disclosure-safe level, G4 establishes:
 
 ```text
 Grounded research objects
@@ -140,11 +140,23 @@ Grounded research objects
 → conservative claim relationships
 ```
 
-The final G4.2 closure is narrow: true transfer-time bounded object reads, stronger durable post-upload verification/reconciliation, and a database-level semantic consistency constraint for embedding-provenance targets.
+The final closure verifies transfer-time bounded S3 reads, post-upload durable metadata checks, commit-failure compensation/reconciliation, version-preserving embedding history, exact source-text identity, provider cardinality/bounds, DB-level embedding-provenance integrity, and strict already-RETAINED idempotency checks.
 
-See **[G4 Mentor Review Checkpoint](docs/G4_REVIEW_REPORT.md)**.
+See **[G4 Final Gate Report](docs/G4_REVIEW_REPORT.md)**.
 
-**G5 remains locked until final G4 mentor approval.**
+### G5 — Research Opportunity Miner & Idea Lineage
+**Active.** G5 begins the Research Opportunity Memory layer.
+
+```text
+Grounded claims / limitations / future work
+→ gap candidates
+→ contradiction candidates
+→ research opportunities
+→ candidate ideas
+→ snapshot-pinned backward lineage
+```
+
+G5 keeps several distinctions explicit: contradiction candidates are not scientific refutations, semantic distinctiveness is not proof of novelty, system-inferred gaps are not author-stated limitations, and generated ideas are candidates rather than validated research conclusions.
 
 ---
 
@@ -203,9 +215,9 @@ PUBLIC SHOWCASE
 | G1 | Database foundation & backend scaffold | ✅ Approved |
 | G2 | Academic ingestion & connector framework | ✅ Approved |
 | G3 | Full-text parsing & quote-grounded extraction | ✅ Approved |
-| G4 | Intelligence Lake / memory storage & embeddings | 🛠 G4.2 micro-closure |
-| G5 | Research gaps / opportunities / idea lineage | 🔒 Locked |
-| G6 | Hybrid search, retrieval & synthesis | Planned |
+| G4 | Intelligence Lake / memory storage & embeddings | ✅ Approved |
+| G5 | Research gaps / opportunities / idea lineage | 🛠 Active |
+| G6 | Hybrid search, retrieval & synthesis | 🔒 Locked until G5 approval |
 | G7 | Living handbook / research outputs | Planned |
 | G8 | Research console / UX | Planned |
 | G9 | Reliability, security & benchmark audit | Planned |
@@ -218,7 +230,7 @@ PUBLIC SHOWCASE
 - [Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md)
 - [G2 Final Gate Report](docs/G2_FINAL_REPORT.md)
 - [G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)
-- [G4 Mentor Review Checkpoint](docs/G4_REVIEW_REPORT.md)
+- [G4 Final Gate Report](docs/G4_REVIEW_REPORT.md)
 - [Product Specification](docs/PRODUCT_SPEC.md)
 - [Architecture](ARCHITECTURE.md)
 - [Detailed Architecture](docs/ARCHITECTURE_DETAILED.md)
