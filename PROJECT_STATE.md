@@ -87,7 +87,7 @@ To ensure disciplined execution, the following components are strictly deferred 
 
 * **G0 Baseline Checkpoint**: `dbb55ac148771a80c565f544fe229dd9cd618fc6`
 * **G0.1 Corrected Checkpoint**: `60abdbe65b88b2dd61e28d5419655b50c5fd94cb`
-* **G0.2 Data-Integrity Checkpoint**: `9999c81`
+* **G0.2 Data-Integrity Checkpoint**: `f95ddb8`
 * **Working Tree**: Clean.
 
 ---
