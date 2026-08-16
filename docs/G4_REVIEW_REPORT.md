@@ -1,65 +1,74 @@
-# G4 Mentor Review Checkpoint
+# G4 Final Gate Report
 
 > **Intelligence Lake, Personal Research Memory & Embedding Storage**
 
-G4 has reached a second reviewed checkpoint. The first implementation passed 184 tests but received **REVISE (~84/100)**. The focused G4.1 closure then reached **215/215 PASS** and resolved the major storage/provenance blockers, but final mentor review found three narrow integrity gaps. Current status: **G4.1 NEAR PASS (~95/100) → G4.2 micro-closure active**.
+**Final decision: APPROVED (~99/100).**
 
-## Latest verified engineering evidence
+G4 required several integrity-closure passes because green CI alone did not prove the durability and provenance guarantees needed for long-lived research memory.
+
+## Final verified engineering evidence
 
 ```text
-Private CI run                       31941431543
+Private CI run                       31945476008
 PostgreSQL                           16.15 + pgvector
-Alembic 0001 -> 0006                 PASS
+Alembic 0001 -> 0007                 PASS
 Downgrade base / second upgrade      PASS
-Full automated suite                 215 / 215 PASS
+Full automated suite                 243 / 243 PASS
 Failed / skipped                     0 / 0
 Coverage                             88%
-Protected prior regression surface   PASS
-Mentor decision                      NEAR PASS (~95/100)
+Mentor decision                      APPROVED (~99/100)
 ```
-
-## Publicly reportable G4.1 progress
-
-The private core now includes, at a disclosure-safe level:
-
-```text
-Grounded snapshot / chunk / claim
-→ selective retained-artifact workflow
-→ S3-compatible storage boundary
-→ compensated/reconcilable retention promotion
-→ immutable embedding provenance history
-→ active 768-dimension pgvector/HNSW projection
-→ user-authored research notes
-→ conservative claim relationships
-```
-
-Verified progress includes:
-
-- a concrete S3-compatible deployment adapter with offline CI tests and explicit upload limits;
-- explicit PostgreSQL/object-store compensation and reconciliation semantics rather than distributed-atomicity claims;
-- immutable historical embedding records plus a separate active vector projection;
-- exact source-text identity for embedding provenance;
-- response-cardinality, dimension, input/batch and partial-failure protections;
-- PostgreSQL tests for embedding-history coexistence and optional note-link preservation;
-- full regression of previously approved G1–G3 behavior.
-
-## Why final G4 approval is still withheld
-
-The remaining G4.2 work is intentionally small and integrity-focused:
-
-1. **True bounded object download:** the current concrete download path rejects oversized data only after the body has already been read. The final contract must enforce the limit during the read and prove oversized bodies are not fully consumed.
-2. **Durable post-upload verification:** retention needs an actual object-store stat/HEAD verification before DB commit, with compensation/recovery when that verification fails. Reconciliation must also detect a retained snapshot whose stored pointer disagrees with the deterministic expected key.
-3. **Embedding provenance DB semantics:** the immutable history table must enforce that its declared entity type matches the actual non-null foreign-key target, not merely that exactly one target exists.
-
-These are micro-closure items, not a G4 redesign. **G5 remains locked until final G4 approval.**
 
 ## Review progression
 
 ```text
 G4 initial   184 / 184 PASS  → REVISE (~84/100)
 G4.1         215 / 215 PASS  → NEAR PASS (~95/100)
-G4.2         active          → final G4 sign-off pending
+G4.2         234 / 234 PASS  → NEAR PASS (~98/100)
+G4.3 final   243 / 243 PASS  → APPROVED (~99/100)
 ```
+
+## Publicly reportable capability
+
+At a disclosure-safe level, the private core now provides:
+
+```text
+Grounded snapshot / chunk / claim
+→ selective retained-artifact workflow
+→ S3-compatible storage boundary
+→ compensation + reconciliation across storage / PostgreSQL
+→ immutable embedding provenance history
+→ active 768-dimensional pgvector/HNSW projections
+→ user-authored research notes
+→ conservative claim relationships
+```
+
+Verified capability includes:
+
+- concrete S3-compatible storage integration designed for AWS S3 / Cloudflare R2 / compatible endpoints while CI remains offline;
+- bounded upload and true transfer-time bounded streaming download;
+- deterministic object-key and signed-URL/credential-safety contracts;
+- post-upload durable metadata verification before a snapshot is committed as RETAINED;
+- explicit commit-failure compensation and reconciliation rather than claiming cross-system ACID transactions;
+- strict already-RETAINED idempotency: artifact hash/size, deterministic pointer and durable metadata must all remain consistent before a no-op success is returned;
+- immutable version-preserving embedding history with exact source-text identity;
+- provider response-cardinality, input/batch, timeout and multi-batch rollback protections;
+- PostgreSQL pgvector/HNSW active-vector storage with a 768-dimension V1 contract;
+- database-level semantic integrity for embedding provenance targets;
+- Personal Research Memory user notes with optional-link preservation;
+- claim relationships that do not automatically change epistemic truth state.
+
+## Scientific / architectural calibration
+
+G4 intentionally does **not** claim:
+
+- that PostgreSQL and object storage form one ACID transaction;
+- that vector similarity proves scientific novelty;
+- that `user_notes.is_private` is an authorization system;
+- that one CI query establishes a universal search-latency guarantee;
+- that embedding-provider output establishes scientific truth.
+
+Those distinctions remain important as the project moves into opportunity mining and later retrieval benchmarking.
 
 ## Gate state
 
@@ -69,15 +78,27 @@ G4.2         active          → final G4 sign-off pending
 | G1 | ✅ Approved |
 | G2 | ✅ Approved |
 | G3 | ✅ Approved |
-| G4 | 🛠 G4.2 micro-closure |
-| G5 | 🔒 Locked |
+| G4 | ✅ Approved |
+| G5 | 🛠 Active — Opportunity Miner & Idea Lineage |
+| G6 | 🔒 Locked until G5 approval |
 
-## Review principle
+## Next gate
 
-Green CI proves tested behavior, not every architectural invariant. For long-lived scientific memory, resource bounds, failure recovery and historical provenance must remain correct under adversarial cases and version changes.
+G5 builds the first **Research Opportunity Memory** layer:
+
+```text
+Grounded claims / limitations / future work
+→ research-gap candidates
+→ contradiction candidates
+→ research opportunities
+→ candidate ideas
+→ snapshot-pinned backward lineage
+```
+
+The key rule remains provenance-first: generated ideas must remain explainable back to grounded claims and exact source snapshots, while contradiction, gap and semantic-distinctiveness signals remain candidates/heuristics rather than scientific truth.
 
 ## Disclosure boundary
 
-This report publishes only reviewed outcomes and high-level architecture. Private-core implementation, private research memory/data, credentials, retained raw artifacts and strategically sensitive implementation details are not mirrored into the public repository.
+This report publishes only reviewed outcomes and high-level architecture. Private-core implementation, retained raw artifacts, private research memory, unpublished opportunities/ideas, experiment logs, credentials and strategically sensitive implementation details remain private.
 
 © 2026 Võ Trọng Phúc. All Rights Reserved.
