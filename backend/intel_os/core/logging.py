@@ -24,3 +24,9 @@ def setup_logging(level: Optional[str] = None) -> None:
     # Silence overly verbose external loggers
     logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
     logging.getLogger("asyncio").setLevel(logging.WARNING)
+
+
+def get_logger(name: Optional[str] = None) -> logging.Logger:
+    """Returns a named logger instance."""
+    return logging.getLogger(name or "intel_os")
+

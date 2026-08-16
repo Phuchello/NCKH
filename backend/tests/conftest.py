@@ -133,9 +133,16 @@ def postgres_url() -> str:
 
 @pytest.fixture
 async def postgres_engine(postgres_url: str) -> AsyncGenerator[AsyncEngine, None]:
-    """Yields an async engine connected to real PostgreSQL 16 test database."""
+    """Yields an async engine connected to real PostgreSQL 16 test database, or skips if unreachable."""
     assert_safe_test_db(postgres_url)
     engine = create_async_engine(postgres_url, echo=False)
+
+    try:
+        async with engine.connect() as conn:
+            await conn.execute(text("SELECT 1"))
+    except Exception as exc:
+        await engine.dispose()
+        pytest.skip(f"PostgreSQL 16 test database is not reachable at {postgres_url} ({exc}) - runs in CI")
 
     yield engine
 
@@ -154,3 +161,4 @@ async def pg_session(postgres_engine: AsyncEngine) -> AsyncGenerator[AsyncSessio
     async with session_factory() as session:
         yield session
         await session.rollback()
+

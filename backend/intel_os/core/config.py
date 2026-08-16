@@ -53,6 +53,50 @@ class Settings(BaseSettings):
         description="Strict vector dimension for V1 schema",
     )
 
+    # Ingestion & Provider Configuration
+    INGEST_POLITE_EMAIL: str = Field(
+        default="researcher@intel-os.local",
+        description="Polite pool identification email for Crossref and OpenAlex APIs",
+    )
+    INGEST_USER_AGENT: str = Field(
+        default="IntelOS-ResearchBot/0.2.0 (https://github.com/Phuchello/NCKH; mailto:researcher@intel-os.local)",
+        description="Custom User-Agent header sent to scholarly APIs",
+    )
+
+    # Provider Rate Limits & API Keys
+    ARXIV_RATE_LIMIT_DELAY_SECONDS: float = Field(
+        default=3.0,
+        ge=0.1,
+        description="Minimum inter-request delay for arXiv API (official guideline: 3.0s)",
+    )
+    CROSSREF_RATE_LIMIT_RPS: float = Field(
+        default=10.0,
+        ge=0.1,
+        description="Maximum requests per second for Crossref Polite Pool",
+    )
+    OPENALEX_RATE_LIMIT_RPS: float = Field(
+        default=10.0,
+        ge=0.1,
+        description="Maximum requests per second for OpenAlex API",
+    )
+    SEMANTIC_SCHOLAR_RATE_LIMIT_RPS: float = Field(
+        default=1.0,
+        ge=0.1,
+        description="Maximum requests per second for Semantic Scholar API (1.0 unauth, 10.0 with key)",
+    )
+    SEMANTIC_SCHOLAR_API_KEY: str | None = Field(
+        default=None,
+        description="Optional API key for Semantic Scholar Academic Graph",
+    )
+
+    # HTTP Client & Resilience Configuration
+    HTTP_CONNECT_TIMEOUT_SECONDS: float = Field(default=10.0, ge=1.0)
+    HTTP_READ_TIMEOUT_SECONDS: float = Field(default=30.0, ge=1.0)
+    HTTP_OVERALL_TIMEOUT_SECONDS: float = Field(default=60.0, ge=1.0)
+    HTTP_MAX_CONCURRENCY_PER_HOST: int = Field(default=5, ge=1, le=50)
+    HTTP_MAX_RETRIES: int = Field(default=3, ge=0, le=10)
+    HTTP_MAX_REDIRECTS: int = Field(default=3, ge=0, le=10)
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

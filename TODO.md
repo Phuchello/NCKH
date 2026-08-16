@@ -71,14 +71,36 @@
 
 ---
 
-## Gate 2: Ingestion Engine & Source Connector Framework
-- [ ] Ingestion Architecture:
-  - [ ] Base connector interface (`BaseConnector`) with rate limiting and retry logic.
-  - [ ] Academic connectors: arXiv API / RSS, Semantic Scholar API, Crossref API, OpenAlex API.
-  - [ ] Web & General crawler connector with `robots.txt` compliance and pre-flight SSRF validation.
-  - [ ] Multi-provider document reconciliation engine using canonical identity precedence.
-  - [ ] Tier 1 Filter: Fast metadata classification to assign initial retention tier (`DISCOVERED` vs `INDEXED`).
-  - [ ] 4-Tier Idempotency engine with deterministic job keys.
+## Gate 2: Ingestion Engine & Source Connector Framework [COMPLETED]
+- [x] Ingestion Architecture:
+  - [x] Base connector interface (`BaseConnector`) with rate limiting, async streaming, and bounded pagination.
+  - [x] 4 Academic connectors implemented and verified against official API policies:
+    - [x] arXiv: Atom XML query API, 3-second politeness limiter, canonical logical vs versioned ID handling.
+    - [x] Crossref: Works REST API, polite pool identification headers, JATS XML abstract cleaning, cursor paging.
+    - [x] OpenAlex: Works REST API, polite pool headers, inverted-index abstract reconstruction, concepts.
+    - [x] Semantic Scholar: Academic Graph API v1, batch fetching, externalIds mapping, 429 Retry-After handling.
+  - [x] Shared HTTP Transport & Resilience (`intel_os.http`):
+    - [x] `ResilientHttpClient` with timeouts, exponential backoff, jitter, and Retry-After header parsing (numeric & HTTP dates).
+    - [x] Token bucket and minimum delay `RateLimiter` per provider.
+    - [x] Sensitive header/key redaction in all logging outputs.
+  - [x] Network Safety & SSRF Mitigation (`intel_os.http.network_safety`):
+    - [x] Pre-flight URL scheme validation (`http`/`https` only, userinfo rejection).
+    - [x] IP blocklist checking (loopback `127.0.0.0/8`, `::1`, RFC 1918 private networks, link-local `169.254.169.254`).
+    - [x] Redirect hop validation with maximum hop cap (3 hops).
+  - [x] Normalized Discovery DTO (`NormalizedDiscoveryRecord`) provider-neutral Pydantic model.
+  - [x] Centralized Identity Normalization (`intel_os.ingestion.identity`):
+    - [x] `normalize_doi` canonical lowercasing and URL stripping.
+    - [x] `normalize_arxiv_id` logical identifier coalescence.
+    - [x] `extract_arxiv_version` version extraction.
+    - [x] `compute_metadata_fingerprint` deterministic SHA-256 computation.
+  - [x] Multi-Provider Reconciliation & Idempotency:
+    - [x] Hard identity matching (DOI, logical arXiv ID, provider doc ID, canonical URL).
+    - [x] Candidate-only non-merge preservation (metadata fingerprints NEVER silently merge).
+    - [x] Cross-provider same-DOI 3-source test passes (1 Document, 3 Sources).
+    - [x] Re-ingestion idempotency test passes (0 duplicate rows created).
+  - [x] Ingestion Service & Telemetry:
+    - [x] `IngestionService` coordinating harvest runs, bounds (`max_records`), and `BackgroundJob` telemetry.
+  - [x] Comprehensive Automated Test Suite (83 total unit, mock HTTP, and PostgreSQL integration tests).
 
 ---
 

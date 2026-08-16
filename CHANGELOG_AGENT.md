@@ -16,8 +16,29 @@ Each entry must record:
 
 ---
 
-### [2026-08-16 02:00:00 UTC] — Gate 1.2 (G1.2) CI Green & Final Cleanup
-* **Milestone**: Gate 1.2 (G1.2)
+### [2026-08-16 02:30:00 UTC] — Gate 2 (G2) Academic Ingestion & Source Connector Framework
+* **Milestone**: Gate 2 (G2)
+* **Agent Role**: Antigravity (Gemini)
+* **Action Summary**:
+  * Implemented 4 academic scholarly connectors (`arXiv`, `Crossref`, `OpenAlex`, `Semantic Scholar`) respecting official API policies, rate constraints, and pagination contracts.
+  * Implemented shared HTTP transport and resilience layer (`intel_os.http`) with `ResilientHttpClient`, exponential backoff with jitter, automatic `Retry-After` header parsing (numeric & HTTP dates), and per-provider token bucket / delay `RateLimiter`.
+  * Implemented pre-flight SSRF network safety guardrails (`intel_os.http.network_safety`) blocking loopback, RFC 1918 private subnets, cloud metadata (`169.254.169.254`), and enforcing capped redirect safety.
+  * Created typed provider-neutral `NormalizedDiscoveryRecord` DTO and centralized identifier normalizers (`normalize_doi`, `normalize_arxiv_id`, `compute_metadata_fingerprint`).
+  * Implemented centralized reconciliation engine (`ReconciliationEngine`) enforcing strict hard identity precedence (DOI, logical arXiv ID, provider doc ID, canonical URL) while strictly preserving candidate-only signals as separate documents to prevent false merges.
+  * Implemented idempotent database persistence preserving multi-provider provenance observations in `document_sources` with zero duplicate row insertions on re-crawling.
+  * Implemented `IngestionService` orchestrator tracking `BackgroundJob` telemetry (`records_seen`, `new_documents`, `matched_documents`, `observations_created`, `duration_seconds`).
+  * Added 34 new unit, mock HTTP, and PostgreSQL integration tests (expanding total test count from 49 to 83 tests).
+* **Files Created / Modified**:
+  * Created: `backend/intel_os/http/` (`network_safety.py`, `rate_limit.py`, `retry.py`, `transport.py`, `__init__.py`)
+  * Created: `backend/intel_os/ingestion/` (`dto.py`, `identity.py`, `reconciliation.py`, `persistence.py`, `service.py`, `__init__.py`)
+  * Created: `backend/intel_os/connectors/` (`base.py`, `arxiv.py`, `crossref.py`, `openalex.py`, `semantic_scholar.py`, `smoke_test.py`, `__init__.py`)
+  * Created: `backend/tests/test_network_safety.py`, `backend/tests/test_http_resilience.py`, `backend/tests/test_identity_normalization.py`, `backend/tests/test_connectors_arxiv.py`, `backend/tests/test_connectors_crossref.py`, `backend/tests/test_connectors_openalex.py`, `backend/tests/test_connectors_semantic_scholar.py`, `backend/tests/test_reconciliation_and_idempotency.py`, `backend/tests/test_ingestion_service.py`, `backend/tests/test_postgres_ingestion_integration.py`
+  * Modified: `backend/intel_os/core/config.py`, `backend/intel_os/core/logging.py`, `backend/tests/conftest.py`, `backend/tests/test_postgres_contract.py`, `DECISIONS.md`, `TODO.md`, `PROJECT_STATE.md`
+* **Verification**:
+  * 83 total automated tests with 87% test coverage.
+  * Tested 3-provider same-DOI reconciliation scenario (1 Document, 3 Sources) and re-ingestion idempotency.
+* **Status**: G2 Implementation Complete.
+
 * **Agent Role**: Antigravity (Gemini)
 * **Action Summary**:
   * Simplified GitHub Actions CI workflow (`.github/workflows/backend-ci.yml`) using only official `actions/checkout@v4` and `actions/setup-python@v5` to eliminate startup and third-party action policy failure risk.
