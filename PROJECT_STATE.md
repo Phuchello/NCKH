@@ -120,7 +120,7 @@ CODE COVERAGE: 91% (724 statements, 68 missed)
 * **G0.1 Corrected Checkpoint**: `60abdbe65b88b2dd61e28d5419655b50c5fd94cb`
 * **G0.2 Hardened Checkpoint**: `f95ddb8`
 * **G1 Implementation Checkpoint**: `e07286b`
-* **G1.1 Hardened Checkpoint**: `86a9175`
+* **G1.1 Hardened Checkpoint**: `3f6e771`
 * **Working Tree**: Clean.
 
 ---
