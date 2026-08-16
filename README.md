@@ -2,14 +2,15 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G5%20Opportunity%20Miner-informational?style=flat-square)](PROJECT_STATE.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G6%20Hybrid%20Retrieval-informational?style=flat-square)](PROJECT_STATE.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
 [![G3](https://img.shields.io/badge/G3-Approved-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![G4](https://img.shields.io/badge/G4-Approved-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-243%2F243%20passing-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
+[![G5](https://img.shields.io/badge/G5-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-297%2F297%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![G5](https://img.shields.io/badge/G5-Active-blue?style=flat-square)](PROJECT_STATE.md)
+[![G6](https://img.shields.io/badge/G6-Active-blue?style=flat-square)](PROJECT_STATE.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
@@ -57,7 +58,10 @@ Academic / Technical Sources
  Gaps / Opportunities / Ideas
             │
             ▼
-   Living Research Handbook
+ Retrieval + Grounded Synthesis
+            │
+            ▼
+   Living Research Outputs
 ```
 
 Long-term provenance target:
@@ -115,8 +119,6 @@ See **[G3 Final Gate Report](docs/G3_REVIEW_REPORT.md)**.
 ### G4 — Intelligence Lake & Personal Research Memory
 **Approved after three integrity-closure passes.**
 
-Final verified checkpoint:
-
 ```text
 PostgreSQL 16.15 + pgvector      PASS
 Alembic 0001 -> 0007             PASS
@@ -127,36 +129,53 @@ Coverage                         88%
 Mentor decision                  APPROVED (~99/100)
 ```
 
-At a disclosure-safe level, G4 establishes:
-
-```text
-Grounded research objects
-→ selectively retained artifacts
-→ S3-compatible storage boundary
-→ compensated/reconcilable retention
-→ immutable embedding provenance
-→ active pgvector/HNSW semantic index
-→ user-authored notes
-→ conservative claim relationships
-```
-
-The final closure verifies transfer-time bounded S3 reads, post-upload durable metadata checks, commit-failure compensation/reconciliation, version-preserving embedding history, exact source-text identity, provider cardinality/bounds, DB-level embedding-provenance integrity, and strict already-RETAINED idempotency checks.
+At a disclosure-safe level, G4 establishes selectively retained artifacts, an S3-compatible storage boundary, compensation/reconciliation semantics, immutable embedding provenance, active pgvector/HNSW semantic projections, user-authored notes and conservative claim relationships.
 
 See **[G4 Final Gate Report](docs/G4_REVIEW_REPORT.md)**.
 
-### G5 — Research Opportunity Miner & Idea Lineage
-**Active.** G5 begins the Research Opportunity Memory layer.
+### G5 — Research Opportunity Miner & Snapshot-Pinned Idea Lineage
+**Approved after a dedicated semantic-lineage integrity closure.**
+
+```text
+G5 initial                       286 / 286 PASS → REVISE (~91/100)
+G5.1 final                       297 / 297 PASS → APPROVED (~98/100)
+PostgreSQL 16.15 + pgvector      PASS
+Alembic 0001 -> 0008             PASS
+Upgrade / downgrade / upgrade    PASS
+Failed / skipped                 0 / 0
+Coverage                         90%
+```
+
+G5 establishes the first **Research Opportunity Memory** layer:
 
 ```text
 Grounded claims / limitations / future work
-→ gap candidates
-→ contradiction candidates
+→ explicit + inferred gap candidates
+→ conservative contradiction candidates
 → research opportunities
 → candidate ideas
-→ snapshot-pinned backward lineage
+→ exact snapshot-pinned backward lineage
 ```
 
-G5 keeps several distinctions explicit: contradiction candidates are not scientific refutations, semantic distinctiveness is not proof of novelty, system-inferred gaps are not author-stated limitations, and generated ideas are candidates rather than validated research conclusions.
+The final integrity boundary rejects semantically incorrect references even when individual UUIDs are real database objects. Idea lineage must remain tied to its true opportunity, supporting gap/contradiction, grounded claim, document and exact immutable snapshot. Provider attribution follows the source observation of that exact snapshot.
+
+Several distinctions remain explicit: contradiction candidates are not scientific refutations, semantic distinctiveness is not proof of novelty, system-inferred gaps are not author-stated limitations, generated ideas are candidates rather than validated conclusions, and automated scores remain provisional until later calibration.
+
+### G6 — Hybrid Retrieval & Citation-Grounded Research Synthesis
+**Active.** G6 turns the accumulated research memory into a trustworthy query and synthesis layer.
+
+```text
+Research Query
+→ PostgreSQL lexical retrieval + pgvector semantic retrieval
+→ deterministic normalization / deduplication
+→ hybrid fusion
+→ provenance-rich bounded context
+→ typed synthesis
+→ deterministic citation validation
+→ source-traceable answer
+```
+
+The flagship G6 rule is that **retrieval and generation do not create evidence**. Retrieval rank is relevance rather than truth, semantic similarity is not entailment, source text is untrusted data, and every model-produced source citation must resolve to an exact item that was actually supplied in the bounded retrieval context with matching snapshot/document provenance.
 
 ---
 
@@ -164,6 +183,8 @@ G5 keeps several distinctions explicit: contradiction candidates are not scienti
 
 - **Provenance before cleverness.** Important outputs should remain traceable to source evidence.
 - **Grounding is not truth.** Source presence and scientific validity remain separate dimensions.
+- **Retrieval rank is not truth.** Search scores represent relevance signals only.
+- **Semantic similarity is not entailment or novelty.** Vector distance has a deliberately narrow meaning.
 - **False merge is worse than temporary duplication.** Scholarly identity reconciliation stays conservative.
 - **Metadata first.** Discovering a paper does not imply permanently storing its raw file.
 - **Selective retention.** Raw artifacts are retained only when value, provenance, licensing, or research use justifies it.
@@ -216,9 +237,9 @@ PUBLIC SHOWCASE
 | G2 | Academic ingestion & connector framework | ✅ Approved |
 | G3 | Full-text parsing & quote-grounded extraction | ✅ Approved |
 | G4 | Intelligence Lake / memory storage & embeddings | ✅ Approved |
-| G5 | Research gaps / opportunities / idea lineage | 🛠 Active |
-| G6 | Hybrid search, retrieval & synthesis | 🔒 Locked until G5 approval |
-| G7 | Living handbook / research outputs | Planned |
+| G5 | Research gaps / opportunities / idea lineage | ✅ Approved |
+| G6 | Hybrid retrieval & citation-grounded synthesis | 🛠 Active |
+| G7 | Living handbook / research outputs | 🔒 Locked until G6 approval |
 | G8 | Research console / UX | Planned |
 | G9 | Reliability, security & benchmark audit | Planned |
 | G10 | Production release & archival | Planned |
