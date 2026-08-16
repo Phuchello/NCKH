@@ -12,8 +12,8 @@ This page is the public milestone mirror for Intel OS / NCKH. It reports verifie
 | G1 — Database Foundation & Backend Scaffold | ✅ Approved |
 | Private-core transition | ✅ Validated |
 | G2 — Academic Ingestion & Connector Framework | ✅ Approved |
-| G3 — Full-Text Parsing & Quote-Grounded Extraction | 🚧 Active |
-| G4 | 🔒 Locked until G3 approval |
+| G3 — Full-Text Parsing & Quote-Grounded Extraction | 🛠 G3.1 closure after mentor review |
+| G4 | 🔒 Locked until G3 final approval |
 
 The public repository remains an active showcase, verified-results surface, and research/publication hub. The authoritative G2+ implementation remains private.
 
@@ -21,18 +21,7 @@ The public repository remains an active showcase, verified-results surface, and 
 
 ## G0 — Foundation & Architecture
 
-G0 established the architectural and research principles used by later gates:
-
-- modular-monolith V1 architecture;
-- provenance-first data model;
-- Intelligence Lake / Personal Research Memory / Research Opportunity Memory concepts;
-- idea-lineage requirement;
-- cloud-first authoritative storage direction;
-- metadata-first retention policy;
-- replaceable reasoning-model strategy;
-- security, epistemic and gate-review principles.
-
-Review history:
+G0 established the architectural and research principles used by later gates: modular-monolith V1 architecture, provenance-first data model, Intelligence Lake / Personal Research Memory / Research Opportunity Memory concepts, cloud-first authoritative storage, metadata-first retention, replaceable reasoning models, and gate-based engineering.
 
 ```text
 G0 initial review       77/100 — REVISE
@@ -43,8 +32,6 @@ G0.2                    APPROVED
 ---
 
 ## G1 — Database Foundation & Backend Scaffold
-
-G1 created the executable backend foundation and was approved only after real PostgreSQL verification.
 
 Verified baseline:
 
@@ -97,21 +84,7 @@ Original G1 regression surface   PASS
 
 **Final decision: APPROVED.**
 
-Publicly reportable scope:
-
-- arXiv, Crossref, OpenAlex, and Semantic Scholar metadata ingestion;
-- provider-neutral discovery records;
-- DOI/arXiv/provider identity normalization and reconciliation;
-- explicit hard-identity conflict handling;
-- conservative false-merge policy;
-- provider-observation provenance;
-- bounded ingestion jobs;
-- resilient async HTTP transport;
-- bounded retries and provider-aware rate control;
-- network-safety / SSRF-oriented defenses;
-- whole-attempt transaction semantics;
-- background-job idempotency;
-- real PostgreSQL concurrency testing.
+Publicly reportable scope includes arXiv, Crossref, OpenAlex and Semantic Scholar metadata ingestion; provider-neutral discovery; conservative scholarly identity reconciliation; provider provenance; async HTTP resilience; job idempotency; whole-attempt transaction semantics; and real PostgreSQL concurrency testing.
 
 ### Review progression
 
@@ -121,8 +94,6 @@ G2.1                     92 / 92 PASS   → REVISE
 G2.2                    107 / 107 PASS  → NEAR PASS
 G2.3 final              111 / 111 PASS  → APPROVED
 ```
-
-G2 was not approved merely because CI was green. Review passes specifically challenged scientific identity conflicts, database race conditions, transaction failure recovery, job idempotency, provider-policy changes, and HTTP edge cases.
 
 ### Final verified G2 evidence
 
@@ -144,32 +115,65 @@ Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
 
 ## G3 — Full-Text Parsing & Quote-Grounded Extraction
 
-**Status: Active.**
+**Implementation complete; first mentor decision: REVISE.**
 
 G3 is the first gate that turns selected document representations into source-grounded research objects.
 
-Public architectural target:
+Public pipeline:
 
 ```text
 Fetched representation
 → immutable snapshot identity
-→ layout-aware parsing
+→ deterministic parsing
 → normalized sections/chunks
-→ claim candidate
-→ deterministic exact-quote verification
-→ evidence record
+→ typed claim candidate
+→ deterministic quote verification
+→ snapshot-pinned evidence
 ```
 
-Key G3 principles:
+### Verified implementation checkpoint
 
-- parsed content remains pinned to a specific snapshot/version;
-- quote grounding is deterministic and independent of the LLM that proposed the claim;
-- `VERBATIM_MATCH` means the quote exists in the source text — it does **not** mean the scientific claim is true;
-- newly extracted claims default to `UNASSESSED`;
-- malformed or ungrounded extraction is quarantined/rejected rather than silently accepted;
-- embeddings, S3/R2 storage, opportunity mining and frontend work remain out of scope for G3.
+```text
+Private CI run                    31925479279
+PostgreSQL 16.15 + pgvector       PASS
+Alembic 0001 -> 0002 -> 0003      PASS
+Downgrade base / second upgrade   PASS
+Full automated suite              134 / 134 PASS
+Failed / skipped                  0 / 0
+Coverage                          87%
+G1/G2 regressions                 PASS
+Mentor assessment                 ~88/100 — REVISE
+```
 
-G3 results will be mirrored publicly after mentor/disclosure review.
+### Publicly reportable capability
+
+- bounded-representation retrieval architecture for selected PDF/HTML inputs;
+- immutable snapshot identity and content hashing;
+- deterministic PDF/HTML parser abstractions;
+- section normalization and reference separation;
+- deterministic snapshot-pinned chunking;
+- dedicated G3 extraction schema for chunks, claims and evidence;
+- provider-neutral typed LLM extraction interface with deterministic CI mocks;
+- deterministic quote verification;
+- new machine-extracted claims default to `UNASSESSED`;
+- malformed/encrypted representation failure paths;
+- PostgreSQL-backed end-to-end and regression testing.
+
+### Why G3.1 is required
+
+The mentor review deliberately tests stronger invariants than “CI is green.” Closure is focused on:
+
+- true transfer-time representation size bounds;
+- strict character-exact `VERBATIM_MATCH` semantics;
+- idempotent and version-safe parse/extraction reruns;
+- controlled multi-column parser acceptance testing;
+- reproducible provider/model/prompt extraction provenance;
+- quarantine of ungrounded empirical evidence;
+- consistent snapshot/source provenance.
+
+**G4 remains locked.** The existing 134-test suite is the protected G3.1 regression baseline.
+
+Full checkpoint: **[G3 Mentor Review Checkpoint](G3_REVIEW_REPORT.md)**.
 
 ---
 
@@ -181,7 +185,7 @@ A gate is evaluated on more than implementation completeness:
 2. production-dialect behavior;
 3. provenance/data-integrity invariants;
 4. concurrency and failure semantics;
-5. external-provider policy correctness;
+5. provider/model reproducibility;
 6. epistemic correctness;
 7. safe public disclosure.
 
@@ -191,17 +195,7 @@ Green CI is necessary, but not sufficient, for gate approval.
 
 ## Public reporting policy
 
-For future gates, this repository publishes a concise verified report containing, when safe:
-
-- milestone objective and completed capability;
-- safe architecture impact;
-- test/evaluation evidence;
-- benchmark/experiment results;
-- known limitations;
-- mentor/gate decision;
-- screenshots/demos when real outputs exist;
-- public papers/posters/presentations;
-- explicit disclosure boundary.
+For future gates, this repository publishes milestone objective, safe architecture, verified test/evaluation evidence, known limitations, mentor decision, real demos/screenshots, selected benchmarks, and public research outputs when disclosure permits.
 
 No fabricated benchmark, placeholder screenshot, or private-core implementation is published merely for appearance.
 
