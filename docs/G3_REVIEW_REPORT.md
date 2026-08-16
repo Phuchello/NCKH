@@ -2,79 +2,78 @@
 
 > **Full-Text Parsing, Snapshot Processing & Quote-Grounded Extraction**
 
-G3 is implemented in the private authoritative core and has completed its first mentor review. The implementation passed the complete private CI suite, but the gate is **not yet approved**: a narrow G3.1 integrity closure is required before G4.
+G3 is implemented in the private authoritative core. The first review required a focused G3.1 integrity closure; that closure has now passed private PostgreSQL CI and is **NEAR PASS**, with one final micro-closure required before G4.
 
-## Verified engineering evidence
+## Latest verified engineering evidence
 
 ```text
-Private implementation checkpoint    97ddd615742182c846dd11c07bd16c1168e4dcc1
-Private CI run                       31925479279
+G3.1 implementation checkpoint      3fa6711f17f47cb31aac0ddb8d320ac6c787298a
+Private CI run                       31926369635
 PostgreSQL                           16.15 + pgvector
-Alembic upgrade/downgrade/upgrade   PASS
-Full automated suite                134 / 134 PASS
-Failed / skipped                    0 / 0
-Coverage                            87%
-G1/G2 regression surface            PASS
-Mentor decision                     REVISE (~88/100)
+Alembic 0001 -> 0002 -> 0003 -> 0004 PASS
+Downgrade base / second upgrade      PASS
+Full automated suite                 141 / 141 PASS
+Failed / skipped                     0 / 0
+Coverage                             88%
+G1/G2 regression surface             PASS
+Mentor decision                      NEAR PASS (~96/100)
 ```
 
 ## Publicly reportable G3 capability
 
-The private implementation now contains the first complete source-grounding pipeline prototype:
+The private implementation contains the first end-to-end source-grounding pipeline:
 
 ```text
 Selected representation
 → immutable snapshot identity
 → deterministic parsing
-→ normalized sections/chunks
+→ versioned sections/chunks
 → typed claim candidate
-→ deterministic quote verification
-→ snapshot-pinned claim/evidence persistence
+→ character-exact quote verification
+→ snapshot-pinned claim/evidence
+→ extraction-run provenance
 ```
 
-Implemented capability includes:
+Verified capability now includes:
 
-- bounded PDF/HTML representation-retrieval architecture;
-- SHA-256 representation identity and local temporary caching;
-- immutable `DocumentSnapshot` integration;
-- deterministic PDF and academic-HTML parser abstractions;
-- section normalization and reference separation;
-- deterministic snapshot-pinned chunking;
-- a dedicated G3 extraction migration for chunks, claims and evidence;
-- provider-neutral typed LLM extraction schemas with deterministic CI mocks;
-- claim categories aligned to the project epistemic model;
-- deterministic quote-grounding logic;
-- all new machine-extracted claims defaulting to `UNASSESSED`;
-- malformed/encrypted representation handling;
-- PostgreSQL-backed regression validation.
+- bounded streamed PDF/HTML retrieval with incremental byte counting and SHA-256 hashing;
+- hard representation-size limits during transfer;
+- immutable `DocumentSnapshot` integration and source-consistency checks;
+- deterministic PDF / academic-HTML parsing and section normalization;
+- a controlled two-column PDF reading-order fixture;
+- parser-version-aware chunk lineage;
+- provider-neutral typed LLM extraction schemas with deterministic offline CI mocks;
+- persisted extraction-run provenance and same-configuration idempotency;
+- deterministic quote grounding independent of the proposing model;
+- ungrounded candidate quarantine so failed quotes do not create empirical evidence records;
+- all newly machine-extracted claims defaulting to `UNASSESSED`;
+- PostgreSQL-backed migration, concurrency and regression validation.
 
 ## Flagship epistemic rule
 
-G3 explicitly separates **grounding** from **scientific truth**.
+G3 separates **grounding** from **scientific truth**.
 
-A verified quote means:
+A verified quote means only that the source contains the statement. It does **not** establish that the statement is scientifically correct. Newly extracted claims therefore remain `UNASSESSED` until later evidence synthesis or human/scientific evaluation changes that status.
 
-> the source contains this statement.
+## Why G3 is not approved yet
 
-It does **not** mean:
+The remaining G3.2 work is deliberately narrow. Mentor review found several contract-level edge cases that still need closure despite the 141-test green suite:
 
-> the statement is scientifically correct.
-
-Therefore newly extracted claims remain `UNASSESSED` until later evidence synthesis or human/scientific evaluation changes that status.
-
-## Why G3 is still REVISE
-
-Green CI is necessary but not sufficient for this gate. The mentor review identified a focused set of integrity requirements that need stronger proof before approval:
-
-- representation-size enforcement must be truly bounded during transfer, not only after content is available;
-- `VERBATIM_MATCH` must remain character-exact;
-- parsing/extraction reruns must preserve historical provenance and avoid duplicate intelligence;
-- parser limitations, especially multi-column academic layouts, need a controlled acceptance fixture;
-- extraction provider/model/prompt configuration must remain reproducible in persisted provenance;
-- ungrounded candidates must not become grounded empirical evidence;
-- snapshot/source provenance must remain internally consistent.
+- leading/trailing whitespace must never allow a stored quote to receive `VERBATIM_MATCH` unless the persisted quote and source slice are character-identical;
+- configured LLM wall-clock timeout and output bounds must be enforced, not merely declared in settings;
+- forced extraction-rerun semantics must be coherent with same-configuration database idempotency;
+- explicit acceptance tests must prove parser-version A survives parser-version B and that model/prompt/extraction-version changes create distinct provenance without rewriting prior runs;
+- the legacy snapshot extraction-version field must have an explicit non-authoritative/latest-hint meaning, or stop being mutated.
 
 These are closure items, not a reset of G3.
+
+## Review progression
+
+```text
+G3 initial       134 / 134 PASS   → REVISE (~88/100)
+G3.1             141 / 141 PASS   → NEAR PASS (~96/100)
+G3.2             final micro-closure pending
+```
 
 ## Current gate state
 
@@ -83,10 +82,10 @@ These are closure items, not a reset of G3.
 | G0 | ✅ Approved |
 | G1 | ✅ Approved |
 | G2 | ✅ Approved |
-| G3 | 🛠 G3.1 integrity closure |
+| G3 | 🛠 G3.2 final micro-closure |
 | G4 | 🔒 Locked |
 
-The existing **134-test passing suite is now the protected G3.1 regression baseline**. G4 will not begin until the closure is re-tested in private PostgreSQL CI and receives final mentor approval.
+Green CI remains necessary but not sufficient for gate approval. G4 will not begin until the remaining contract/provenance edge cases are tested in private PostgreSQL CI and receive final mentor approval.
 
 ## Disclosure boundary
 
