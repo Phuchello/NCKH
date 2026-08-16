@@ -12,8 +12,8 @@ This page is the public milestone mirror for Intel OS / NCKH. It reports verifie
 | G1 — Database Foundation & Backend Scaffold | ✅ Approved |
 | Private-core transition | ✅ Validated |
 | G2 — Academic Ingestion & Connector Framework | ✅ Approved |
-| G3 — Full-Text Parsing & Quote-Grounded Extraction | 🛠 G3.1 closure after mentor review |
-| G4 | 🔒 Locked until G3 final approval |
+| G3 — Full-Text Parsing & Quote-Grounded Extraction | ✅ Approved |
+| G4 — Intelligence Lake & Personal Research Memory | 🚧 Active |
 
 The public repository remains an active showcase, verified-results surface, and research/publication hub. The authoritative G2+ implementation remains private.
 
@@ -72,10 +72,10 @@ After the split, the backend was revalidated rather than assuming migration pres
 
 ```text
 PostgreSQL 16.15 + pgvector       PASS
-Alembic lifecycle                PASS
-Private migration suite          83 / 83 PASS
-Coverage                         86%
-Original G1 regression surface   PASS
+Alembic lifecycle                 PASS
+Private migration suite           83 / 83 PASS
+Coverage                           86%
+Original G1 regression surface     PASS
 ```
 
 ---
@@ -115,9 +115,9 @@ Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
 
 ## G3 — Full-Text Parsing & Quote-Grounded Extraction
 
-**Implementation complete; first mentor decision: REVISE.**
+**Final decision: APPROVED.**
 
-G3 is the first gate that turns selected document representations into source-grounded research objects.
+G3 turns selected document representations into versioned, source-grounded research objects while keeping grounding separate from scientific truth.
 
 Public pipeline:
 
@@ -125,55 +125,73 @@ Public pipeline:
 Fetched representation
 → immutable snapshot identity
 → deterministic parsing
-→ normalized sections/chunks
+→ versioned sections/chunks
 → typed claim candidate
-→ deterministic quote verification
+→ character-exact quote verification
 → snapshot-pinned evidence
+→ immutable extraction-run provenance
 ```
 
-### Verified implementation checkpoint
+### Review progression
 
 ```text
-Private CI run                    31925479279
+G3 initial    134 / 134 PASS   → REVISE (~88/100)
+G3.1          141 / 141 PASS   → NEAR PASS (~96/100)
+G3.2          149 / 149 PASS   → NEAR PASS (~97/100)
+G3.3 final    156 / 156 PASS   → APPROVED (~99/100)
+```
+
+### Final verified G3 evidence
+
+```text
+Private checkpoint                f1379a909d24832446893f1f54afbaae8da288ab
+Private CI run                    31927755688
 PostgreSQL 16.15 + pgvector       PASS
-Alembic 0001 -> 0002 -> 0003      PASS
+Alembic 0001 -> 0004              PASS
 Downgrade base / second upgrade   PASS
-Full automated suite              134 / 134 PASS
+Full automated suite              156 / 156 PASS
 Failed / skipped                  0 / 0
-Coverage                          87%
-G1/G2 regressions                 PASS
-Mentor assessment                 ~88/100 — REVISE
+Coverage                          88%
+G1/G2 regression surface          PASS
+Mentor assessment                 ~99/100 — APPROVED
 ```
 
 ### Publicly reportable capability
 
-- bounded-representation retrieval architecture for selected PDF/HTML inputs;
-- immutable snapshot identity and content hashing;
-- deterministic PDF/HTML parser abstractions;
-- section normalization and reference separation;
-- deterministic snapshot-pinned chunking;
-- dedicated G3 extraction schema for chunks, claims and evidence;
-- provider-neutral typed LLM extraction interface with deterministic CI mocks;
-- deterministic quote verification;
-- new machine-extracted claims default to `UNASSESSED`;
-- malformed/encrypted representation failure paths;
-- PostgreSQL-backed end-to-end and regression testing.
+- true streamed PDF/HTML representation bounds and content hashing;
+- immutable snapshot/source provenance;
+- deterministic parser and controlled two-column fixture;
+- parser-version-aware chunk history;
+- provider-neutral typed extraction interface with deterministic CI mocks;
+- character-exact `VERBATIM_MATCH` quote grounding;
+- ungrounded-evidence quarantine;
+- immutable extraction-run provenance and same-config idempotency;
+- bounded extraction input, timeout, claim count, token budget, aggregate response size and reported token usage;
+- configuration-sensitive extraction fingerprints and PostgreSQL history coexistence;
+- all machine-extracted claims default to `UNASSESSED`.
 
-### Why G3.1 is required
+Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
 
-The mentor review deliberately tests stronger invariants than “CI is green.” Closure is focused on:
+---
 
-- true transfer-time representation size bounds;
-- strict character-exact `VERBATIM_MATCH` semantics;
-- idempotent and version-safe parse/extraction reruns;
-- controlled multi-column parser acceptance testing;
-- reproducible provider/model/prompt extraction provenance;
-- quarantine of ungrounded empirical evidence;
-- consistent snapshot/source provenance.
+## G4 — Intelligence Lake & Personal Research Memory
 
-**G4 remains locked.** The existing 134-test suite is the protected G3.1 regression baseline.
+**Status: AUTHORIZED / ACTIVE.**
 
-Full checkpoint: **[G3 Mentor Review Checkpoint](G3_REVIEW_REPORT.md)**.
+G4 moves the project from grounded extraction into durable memory/storage primitives. Publicly reportable target architecture is:
+
+```text
+Retained artifact bytes
+→ immutable snapshot storage pointer
+→ versioned semantic embeddings
+→ pgvector claim/chunk index
+→ user-authored research notes
+→ conservative claim relationships
+```
+
+G4 implementation remains private. Public updates will report only reviewed outcomes such as storage semantics, vector/index validation, deterministic test metrics, sanitized diagrams/screenshots, and known limitations.
+
+G4 explicitly does **not** yet implement research-gap mining, contradiction detection, opportunity/idea generation, idea lineage, final hybrid retrieval/RRF, synthesis, or frontend work.
 
 ---
 
