@@ -1,0 +1,47 @@
+Intel OS / NCKH Proprietary Source-Available License v1.0
+
+Copyright © 2026 Võ Trọng Phúc. All Rights Reserved.
+
+1. OWNERSHIP
+
+The software, source code, architecture, documentation, prompts, workflows, data models, research methods, scoring logic, designs, and other original material in this repository (collectively, the "Work") remain the exclusive copyrighted property of Võ Trọng Phúc unless a file or component expressly states otherwise.
+
+2. LIMITED PUBLIC ACCESS
+
+This repository is made publicly viewable for portfolio presentation, academic review, research discussion, evaluation, and demonstration.
+
+Subject to the GitHub Terms of Service and applicable law, no additional license is granted to use, copy, modify, adapt, translate, create derivative works from, distribute, sublicense, sell, commercialize, deploy, host, provide as a service, or otherwise exploit the Work.
+
+Any permission beyond viewing/evaluation requires prior written authorization from the copyright owner.
+
+3. GITHUB PLATFORM RIGHTS
+
+Nothing in this license attempts to revoke or restrict rights that must be granted to GitHub or other GitHub users under the GitHub Terms of Service as a consequence of publishing a public repository, including viewing and GitHub-provided forking functionality.
+
+Those platform rights do not constitute an open-source license and do not grant broader permission to exploit the Work outside the rights provided by GitHub's Terms of Service or applicable law.
+
+4. NO OPEN-SOURCE GRANT
+
+This Work is source-available and proprietary. It is not licensed under an OSI-approved open-source license. Access to source code does not imply permission to reuse, redistribute, modify, commercialize, or create derivative works.
+
+5. RESEARCH DATA AND PRIVATE ASSETS
+
+No rights are granted to any private research memory, unpublished datasets, experimental records, user data, model-training data, confidential prompts, credentials, or other assets that may be referenced by the project but are not intentionally licensed in this repository.
+
+6. THIRD-PARTY MATERIAL
+
+Third-party libraries, standards, papers, datasets, APIs, code, and other materials remain subject to their respective licenses, terms, and copyrights. This license applies only to original material for which the copyright owner has authority to license.
+
+7. TRADEMARKS AND PROJECT IDENTITY
+
+No permission is granted to use the project name, branding, logos, or author identity in a manner that suggests endorsement, affiliation, or an official derivative product.
+
+8. WARRANTY DISCLAIMER
+
+THE WORK IS PROVIDED FOR VIEWING AND EVALUATION "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, OR RELIABILITY.
+
+9. PERMISSION REQUESTS
+
+For licensing, collaboration, research reproduction, commercialization, or other permissions, contact the copyright owner through the repository owner's official GitHub account.
+
+This license is intentionally restrictive. If you need rights not expressly granted above, obtain written permission before using the Work.
