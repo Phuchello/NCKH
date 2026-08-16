@@ -1,160 +1,181 @@
 # Intel OS / NCKH Intelligence Platform
 
-> **A Long-Term Personal Research & Scientific Intelligence Operating System**
+> **A Personal Research & Scientific Intelligence Operating System**
 
-[![Status: Gate 0.2 Completed](https://img.shields.io/badge/Milestone-Gate%200.2%20Completed-success?style=flat-square)](docs/MILESTONES.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Architecture: Cloud-First Modular Monolith](https://img.shields.io/badge/Architecture-Cloud--First%20Modular%20Monolith-orange?style=flat-square)](ARCHITECTURE.md)
+[![Status: G1 Approved](https://img.shields.io/badge/Milestone-G1%20Approved-success?style=flat-square)](PROJECT_STATE.md)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
+[![Repository: Public Showcase](https://img.shields.io/badge/Repository-Public%20Showcase-blueviolet?style=flat-square)](docs/IP_POLICY.md)
 [![PostgreSQL + pgvector](https://img.shields.io/badge/Database-PostgreSQL%2016%2B%20%2B%20pgvector-blue?style=flat-square)](docs/DATA_MODEL.md)
+
+---
+
+## Licensing & Intellectual Property
+
+**This repository is publicly viewable but is not open source.**
+
+Intel OS / NCKH is **source-available and proprietary**. Copyright © 2026 Võ Trọng Phúc. All Rights Reserved.
+
+Public visibility is intended for portfolio presentation, academic review, research discussion, evaluation, and demonstration. No open-source license is granted. Rights provided by GitHub's Terms of Service for public repositories remain unaffected; broader reuse, modification, redistribution, deployment, commercialization, or derivative development requires prior written permission from the copyright owner.
+
+See:
+
+- [`LICENSE`](LICENSE) — controlling proprietary source-available license.
+- [`NOTICE.md`](NOTICE.md) — ownership and data notice.
+- [`docs/IP_POLICY.md`](docs/IP_POLICY.md) — public showcase / private core boundary.
+
+### Repository boundary
+
+```text
+PUBLIC: Phuchello/NCKH
+    vision • high-level architecture • public docs • demos • selected results
+
+PRIVATE CORE
+    proprietary G2+ implementation • research memory • scoring/reasoning internals
+    opportunity mining • private prompts • unpublished experiments • private data
+```
+
+G0/G1 history was already publicly disclosed. From **Gate 2 onward, new proprietary-core implementation is not to be developed in this public repository** until the private core repository is established.
 
 ---
 
 ## 1. Executive Overview
 
-**Intel OS / NCKH Intelligence Platform** is a dedicated research operating system designed to automate, structure, and accelerate scientific inquiry (Nghiên cứu Khoa học - NCKH).
+**Intel OS / NCKH Intelligence Platform** is a long-term research operating system for discovering, organizing, validating, connecting, and synthesizing scientific and technical knowledge into durable research memory.
 
-Unlike standard RSS feed readers, generic news scrapers, or ephemeral chat wrappers, Intel OS functions as a **durable intelligence multiplier**. It systematically discovers, ingests, verifies, connects, and synthesizes scientific discoveries into an evolving, permanent research memory.
+It is designed to go beyond an RSS reader, bookmark manager, or disposable chatbot session. The product vision is a continuously evolving intelligence environment that supports research discovery, evidence-grounded analysis, longitudinal knowledge memory, and research-opportunity exploration.
 
-### The Core Intelligence Loop
-
-```text
-Collect ──► Filter ──► Verify ──► Connect ──► Analyze ──► Remember ──► Synthesize ──► Act
-```
-
-1. **Collect**: Multi-provider discovery across arXiv, Crossref, Semantic Scholar, OpenAlex, and web feeds with canonical deduplication.
-2. **Filter**: Aggressive multi-tiered retention funnel (`DISCOVERED → INDEXED → RELEVANT → RETAINED → ARCHIVED`) to prevent storage bloat.
-3. **Verify**: Rigorous 4D epistemic extraction separating Grounding Status (`VERBATIM_MATCH`), Claim Type, Epistemic Status (default `UNASSESSED`), and Evidence Quality.
-4. **Connect**: Cross-paper entity resolution, claim-to-claim logic relationships, and scientific contradiction detection.
-5. **Analyze**: Multi-factor scoring (relevance, source credibility prior, evidence rigor, semantic distinctiveness).
-6. **Remember**: Structured persistence into long-lived personal research memory and opportunity banks.
-7. **Synthesize**: Provenance-constrained literature matrices, state-of-the-art briefings, and research handbooks.
-8. **Act**: Generating actionable research proposals and blueprints with snapshot-pinned Idea Lineage.
-
----
-
-## 2. Three Durable Intellectual Assets
-
-Intel OS explicitly decouples transient AI reasoning models from three permanent, high-value intellectual assets:
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                      INTEL OS INTELLECTUAL ASSETS                       │
-├──────────────────────────┬───────────────────────┬──────────────────────┤
-│    Intelligence Lake     │   Personal Research   │ Research Opportunity │
-│                          │        Memory         │        Memory        │
-├──────────────────────────┼───────────────────────┼──────────────────────┤
-│ • Discovered metadata    │ • Verified claims     │ • Research gaps      │
-│ • Multi-topic mappings   │ • Empirical evidence  │ • Contradictions     │
-│ • Versioned snapshots    │ • Claim relationships │ • Semantic distance  │
-│ • Selectively retained   │ • User notes & logs   │ • Idea lineage       │
-│   raw files (PDF/HTML)   │ • Hypotheses state    │ • Feasibility & cost │
-└──────────────────────────┴───────────────────────┴──────────────────────┘
-```
-
-1. **Intelligence Lake**: Indexes discovered source material across providers, manages many-to-many topic mappings (`document_topics`), representation versions (`document_snapshots`), and selectively retains raw evidence under a strict multi-tier retention policy.
-2. **Personal Research Memory**: The most valuable long-lived user asset. Contains grounded atomic claims, empirical evidence items, logic relationships, personal notes, experiment logs, and evolving scientific understanding—preserved independently of any specific LLM provider.
-3. **Research Opportunity Memory**: A first-class architectural engine managing research gaps, scientific contradictions, semantic distinctiveness signals, candidate hypotheses, feasibility evaluations, and complete **Idea Lineage**.
-
----
-
-## 3. Flagship Requirement: Snapshot-Pinned Idea Lineage
-
-A research idea must never exist in an opaque vacuum. Intel OS enforces a strict backward and forward provenance chain:
-
-$$\text{Idea} \longrightarrow \text{Opportunity} \longrightarrow \text{Gap / Contradiction} \longrightarrow \text{Claims} \longrightarrow \text{Evidence} \longrightarrow \text{Snapshots} \longrightarrow \text{Documents} \longrightarrow \text{Sources}$$
+### Core intelligence loop
 
 ```text
-Research Idea: "Adaptive Multi-Token Speculation for Resource-Constrained Edge LLMs"
-  ├── Research Gap: "Speculative decoding fails on latency-variable mobile NPU backends"
-  │     ├── Claim: "Draft model verification overhead exceeds speedup on heterogeneous NPUs"
-  │     │     └── Evidence: Table 2 - Latency Breakdown
-  │     │           └── Snapshot: arXiv v2 PDF (arXiv:2403.xxxxx)
-  │     └── Claim: "Fixed lookahead lengths cause pipeline stall under dynamic thermal throttling"
-  │           └── Evidence: Figure 5 - Thermal Profiles
-  │                 └── Snapshot: Camera-Ready PDF (ACM MobileSys 2024)
-  └── Contradiction:
-        ├── Source A Claim: Memory bandwidth is primary bottleneck (Snapshot: IEEE Micro 2024)
-        └── Source B Claim: Compute kernel dispatch latency dominates (Snapshot: MLSys 2024)
+Collect → Understand → Filter → Verify → Connect → Analyze → Remember → Synthesize
 ```
+
+The first application domain is scientific research / NCKH, with future support for technology intelligence, networking, AIoT, cloud/devops, cybersecurity, tools, and learning intelligence.
 
 ---
 
-## 4. Storage Principles & Tiering
+## 2. Durable Research Assets
 
-The authoritative system is **Cloud-First**. The developer's laptop is never treated as durable storage.
+The system treats AI models as replaceable reasoning engines. Long-lived value comes from structured, provenance-aware research assets:
 
-| Tier | Storage Technology | Role & Content |
-| :--- | :--- | :--- |
-| **Relational Core** | **PostgreSQL 16+** | 18 normalized tables: topics, sources, documents, snapshots, claims, evidence, relationships, gaps, opportunities, ideas, user notes, background job telemetry. |
-| **Vector Engine** | **pgvector** | Embeddings & semantic retrieval colocated with relational memory under a fixed **V1 768-dim Embedding Contract**. |
-| **Object Storage** | **S3-Compatible (Cloudflare R2)** | Selectively retained snapshot PDFs, HTML snapshots, extracted evidence figures, full raw source artifacts. |
-| **Local Laptop** | **Bounded Local Cache** | Source code, test fixtures, temporary parser buffers, bounded working sets (`MAX_LOCAL_CACHE_GB = 10G`). |
-| **External HDD** | **Cold Backup / Archive** | Periodic database dumps, cold archive datasets, historical raw dumps. *Never run active DB directly from USB.* |
+- **Intelligence Lake** — indexed source material and selectively retained evidence.
+- **Personal Research Memory** — claims, evidence, relationships, notes, analyses, and evolving understanding.
+- **Research Opportunity Memory** — gaps, contradictions, unresolved questions, hypotheses, opportunities, and idea lineage.
 
-### Multi-Tier Retention Funnel
+Private/user-specific instances of these assets are **not public-repository content**.
+
+---
+
+## 3. Provenance-First Principle
+
+A key product requirement is that important conclusions and research ideas remain traceable to evidence rather than existing as opaque AI output.
+
+Conceptually:
 
 ```text
-1,000,000 Discovered (Metadata / Fingerprint in PostgreSQL)
-       ↓
-  100,000 Indexed (Abstract, keywords, fast embeddings)
-       ↓
-   10,000 Relevant (Parsed clean text & document_snapshots)
-       ↓
-    1,000 Retained (Raw PDF/HTML evidence in S3 Object Storage)
-       ↓
-      100 Deep Archival (Periodic long-term backup)
+Idea
+  ↓
+Opportunity / Gap / Contradiction
+  ↓
+Finding / Claim
+  ↓
+Evidence
+  ↓
+Document Snapshot
+  ↓
+Logical Document
+  ↓
+Source / Provider Observation
 ```
 
----
-
-## 5. Model Strategy & Decoupling
-
-* **No Custom Model Training in Early Gates**: The platform prioritizes high-fidelity structured intelligence and reliable retrieval over premature model fine-tuning.
-* **LLMs as Replaceable Reasoning Engines**: Claude, Gemini, and OpenAI models are leveraged via structured input/output adapters.
-* **Versioned Embedding Contract**: Vector dimensions are fixed at 768 in V1 for schema consistency; upgrading dimensions follows an explicit table migration protocol.
+The exact private implementation may evolve independently of this public architectural description.
 
 ---
 
-## 6. Architecture & Tech Stack
+## 4. Storage Principles
 
-* **Backend**: Python 3.11+, FastAPI, SQLAlchemy 2.0 / asyncpg, Pydantic v2, pgvector.
-* **Frontend**: Next.js 15+ (App Router), TypeScript, Vanilla CSS design tokens.
-* **Database**: PostgreSQL 16+ with `pgvector` extension (18 normalized tables).
-* **Storage**: AWS S3 / Cloudflare R2 / MinIO (S3-compatible API).
-* **Job Execution**: Asynchronous idempotent worker tasks with 4-tier idempotency.
+The authoritative system is **cloud-first**. A developer laptop is treated as a working environment and bounded cache, not the authoritative research-memory store.
 
----
+| Layer | Intended role |
+| :--- | :--- |
+| **PostgreSQL 16+** | Structured metadata, provenance, jobs, and research-memory records |
+| **pgvector** | Semantic retrieval alongside relational data |
+| **S3-compatible object storage** | Selectively retained raw/large artifacts where redistribution/storage rights permit |
+| **Local SSD** | Code, fixtures, temporary processing, bounded cache |
+| **External HDD** | Optional cold backup/archive; never the live authoritative database |
 
-## 7. Documentation Index
-
-Detailed architectural specifications and engineering standards are organized under `/docs`:
-
-* [System Architecture Overview](ARCHITECTURE.md)
-* [Detailed Technical Architecture](docs/ARCHITECTURE_DETAILED.md)
-* [Relational & Vector Data Model (18 Tables)](docs/DATA_MODEL.md)
-* [Product Specification & Epics](docs/PRODUCT_SPEC.md)
-* [Ingestion & Processing Pipeline](docs/PIPELINE.md)
-* [Milestones Roadmap (G0–G10)](docs/MILESTONES.md)
-* [Security & Threat Mitigation Model](docs/SECURITY_MODEL.md)
-* [Multi-Factor Scoring Model](docs/SCORING_MODEL.md)
-* [Intelligence & Epistemic Ontology](docs/INTELLIGENCE_MODEL.md)
-* [Architecture Decision Records (ADRs)](DECISIONS.md)
-* [Project State & Safety Checkpoint](PROJECT_STATE.md)
-* [Agent Development Changelog](CHANGELOG_AGENT.md)
-* [Engineering Task Backlog](TODO.md)
+The system follows a retention funnel: discovery does not imply permanent full-text storage.
 
 ---
 
-## 8. AI Agent Governance Policy
+## 5. Model Strategy
 
-Engineering tasks on Intel OS are divided across specialized AI roles:
-* **Gemini / Antigravity**: Primary agent for architecture exploration, comprehensive documentation, scaffolding, routine backend/frontend development, unit/integration testing, API integrations, and UI workflows.
-* **Codex**: Reserved strictly for high-concurrency debugging, idempotency verification, transaction isolation audits, complex migrations, security-critical implementations, and final engineering audits.
+- No premature custom-LLM training.
+- External reasoning models remain replaceable.
+- Retrieval, structured memory, provenance, and evidence remain independent from any one model provider.
+- Specialized small models may be considered later only when enough high-quality labelled data exists for narrow repeatable tasks.
+
+---
+
+## 6. Current Engineering Baseline
+
+**Gate 1 is formally approved.** The verified public baseline includes:
+
+- Python / FastAPI backend foundation
+- SQLAlchemy 2.x async + asyncpg
+- PostgreSQL 16 + pgvector
+- gate-staged Alembic migrations
+- seven G1 foundation tables
+- provider-observation and snapshot provenance constraints
+- bounded local cache manager
+- health/status endpoints
+- PostgreSQL-backed integration tests
+- GitHub Actions CI with PostgreSQL 16 + pgvector
+
+The final G1 CI validation executed the PostgreSQL migration lifecycle and complete test suite successfully.
+
+**Gate 2 implementation is IP-gated:** the academic ingestion/reconciliation core will continue in a private repository, while this repository remains the public project/showcase surface.
+
+---
+
+## 7. Public Documentation Index
+
+- [Architecture Overview](ARCHITECTURE.md)
+- [Detailed Architecture](docs/ARCHITECTURE_DETAILED.md)
+- [Data Model](docs/DATA_MODEL.md)
+- [Product Specification](docs/PRODUCT_SPEC.md)
+- [Pipeline](docs/PIPELINE.md)
+- [Milestones](docs/MILESTONES.md)
+- [Security Model](docs/SECURITY_MODEL.md)
+- [Scoring Model](docs/SCORING_MODEL.md)
+- [Intelligence Model](docs/INTELLIGENCE_MODEL.md)
+- [Architecture Decisions](DECISIONS.md)
+- [Project State](PROJECT_STATE.md)
+- [Agent Changelog](CHANGELOG_AGENT.md)
+- [Backlog](TODO.md)
+- [IP & Repository Boundary Policy](docs/IP_POLICY.md)
+
+Some currently public architecture documents originated before the public/private boundary was adopted. Future public updates may intentionally become more abstract than the private implementation.
+
+---
+
+## 8. AI-Assisted Engineering Governance
+
+AI tools may assist development and review, but repository classification rules take precedence over convenience.
+
+- Routine implementation and iteration may be performed by general coding agents.
+- Deep architecture/scientific review may use stronger reasoning reviewers.
+- Security-, transaction-, migration-, and concurrency-critical work receives additional review when required.
+- **No development agent may publish private-core implementation merely because this showcase repository is public.**
 
 ---
 
 ## 9. Current Status
 
-* **Current Milestone**: **Gate 0.2 (G0.2) — Data-Integrity Hardening**
-* **Status**: **100% Completed (Ready for Mentor Re-Audit)**
-* **Active Branch**: `main`
+```text
+G0  Foundation & Architecture                  APPROVED
+G1  Database Foundation & Backend Scaffold    APPROVED
+G2  Academic Ingestion & Connector Framework  AUTHORIZED, PRIVATE-CORE HOLD
+```
+
+Next action: establish the private authoritative core repository, then resume G2 there. Public `Phuchello/NCKH` continues as the showcase/documentation surface.
