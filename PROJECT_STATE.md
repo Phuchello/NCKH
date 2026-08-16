@@ -7,8 +7,8 @@
 - **Private-core transition:** VALIDATED
 - **G2 — Academic Ingestion & Connector Framework:** APPROVED (~98/100)
 - **G3 — Full-Text Parsing & Quote-Grounded Extraction:** APPROVED (~99/100)
-- **G4 — Intelligence Lake & Personal Research Memory:** IMPLEMENTED; first mentor decision **REVISE (~84/100)**
-- **Current engineering action:** **G4.1 — Storage Consistency & Embedding Provenance Closure**
+- **G4 — Intelligence Lake & Personal Research Memory:** G4.1 **NEAR PASS (~95/100)**
+- **Current engineering action:** **G4.2 — Storage Read Bounds & Provenance Integrity Micro-Closure**
 - **G5 authorization:** **DENIED until G4 final approval**
 
 This repository is the **public showcase / verified-results surface**. Proprietary G2+ implementation remains in the private authoritative core and is disclosed here only at a safe level of detail.
@@ -28,49 +28,23 @@ Coverage                          88%
 Mentor decision                   APPROVED (~99/100)
 ```
 
-### G4 implementation / first mentor review
+### G4.1 reviewed checkpoint
 
 ```text
-Private CI run                    31936122041
+Private CI run                    31941431543
 PostgreSQL 16.15 + pgvector       PASS
-Alembic 0001 -> 0005              PASS
+Alembic 0001 -> 0006              PASS
 Downgrade base / second upgrade   PASS
-Full automated suite              184 / 184 PASS
+Full automated suite              215 / 215 PASS
 Failed / skipped                  0 / 0
-Coverage                          87%
-G1/G2/G3 regression surface       PASS
-Mentor decision                   REVISE (~84/100)
+Coverage                          88%
+Protected regression surface      PASS
+Mentor decision                   NEAR PASS (~95/100)
 ```
 
-The green G4 suite is valid evidence for the behaviors it exercises, but final approval is intentionally withheld until cross-store durability and embedding-history provenance are proven under failure/version-change cases.
+G4.1 resolved the major G4 storage/provenance blockers, including a concrete S3-compatible boundary, explicit cross-store compensation/reconciliation, immutable embedding history, exact source-text identity and adversarial PostgreSQL/storage testing.
 
----
-
-## Publicly reportable G4 capability
-
-At a disclosure-safe level, the private G4 implementation currently includes:
-
-- 768-dimensional semantic-vector storage for document chunks and claims;
-- PostgreSQL pgvector + HNSW cosine indexing with controlled integration tests;
-- deterministic offline embedding mocks for CI;
-- Personal Research Memory user-note persistence with bounded content and optional-link preservation;
-- conservative claim-to-claim relationship storage without automatic epistemic-status mutation;
-- artifact key safety, deterministic retained-artifact naming and signed-URL redaction;
-- retention promotion happy-path/idempotency plus hash/size/upload-failure checks;
-- full regression of approved G1–G3 behavior.
-
-The active G4.1 closure focuses on:
-
-1. concrete S3-compatible deployment adapter;
-2. upload-success / DB-commit-failure compensation or reconciliation semantics;
-3. version-preserving embedding provenance across model/config changes;
-4. exact source-text identity for every vector;
-5. response-cardinality and resource-bound enforcement;
-6. missing adversarial PostgreSQL/storage tests.
-
-See:
-- [`docs/G4_REVIEW_REPORT.md`](docs/G4_REVIEW_REPORT.md)
-- [`docs/PUBLIC_PROGRESS.md`](docs/PUBLIC_PROGRESS.md)
+Final G4 approval is intentionally withheld for a small G4.2 integrity closure covering true bounded object reads, stronger durable post-upload verification/reconciliation, and database-level consistency between embedding-provenance entity type and foreign-key target.
 
 ---
 
@@ -85,10 +59,10 @@ PUBLIC NCKH
     verified progress → metrics → demos → selected results → publications
 ```
 
-The public repository remains actively maintained at every major gate. Verified metrics, sanitized architecture updates, demos/screenshots, selected benchmarks, release notes, posters, papers and presentations are published only when they genuinely exist and pass disclosure review.
+The public repository remains actively maintained. Verified metrics, sanitized architecture updates, demos/screenshots, selected benchmarks, release notes, posters, papers and presentations are published only when those artifacts genuinely exist and pass disclosure review.
 
 ---
 
 ## Exact next action
 
-Complete **G4.1** in the private authoritative core while preserving the 184-test regression baseline, run PostgreSQL 16 + pgvector CI, and return for final G4 mentor review. **Do not begin G5 before G4 approval.**
+Complete **G4.2** in the private authoritative core while preserving the 215-test regression baseline, run PostgreSQL 16 + pgvector CI and return for final G4 mentor sign-off. **Do not begin G5 before G4 approval.**
