@@ -2,16 +2,13 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-Security%20S0-informational?style=flat-square)](PROJECT_STATE.md)
-[![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
-[![G3](https://img.shields.io/badge/G3-Approved-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
-[![G4](https://img.shields.io/badge/G4-Approved-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
-[![G5](https://img.shields.io/badge/G5-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![G6](https://img.shields.io/badge/G6-Approved-success?style=flat-square)](PROJECT_STATE.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-429%2F429%20passing-success?style=flat-square)](PROJECT_STATE.md)
-[![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](PROJECT_STATE.md)
-[![Security S0](https://img.shields.io/badge/Security%20S0-Active-blue?style=flat-square)](PROJECT_STATE.md)
+[![Milestone](https://img.shields.io/badge/Milestone-G9%20Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![G8](https://img.shields.io/badge/G8-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![G9](https://img.shields.io/badge/G9-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Private Verification](https://img.shields.io/badge/Private%20Verification-564%2F564%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Security S0](https://img.shields.io/badge/Security%20S0-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Core](https://img.shields.io/badge/Core-Private-black?style=flat-square)](#public-showcase--private-core)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
@@ -63,6 +60,9 @@ Academic / Technical Sources
             │
             ▼
    Living Research Outputs
+            │
+            ▼
+ Research Console / Learning Workbench
 ```
 
 Long-term provenance target:
@@ -74,6 +74,8 @@ Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot
 ---
 
 ## Current verified progress
+
+Intel OS has now passed the private engineering gates through **G9 — Reliability, Security, Calibration & Comparative Research-Workflow Benchmark**. The public repository intentionally reports only disclosure-safe milestone outcomes; the authoritative implementation and research memory remain private.
 
 ### G0 — Foundation & Architecture
 **Approved.** Established the modular-monolith direction, provenance-first data model, epistemic model, security principles, retention strategy, and gate-based engineering workflow.
@@ -158,12 +160,10 @@ Grounded claims / limitations / future work
 → exact snapshot-pinned backward lineage
 ```
 
-The final integrity boundary rejects semantically incorrect references even when individual UUIDs are real database objects. Idea lineage must remain tied to its true opportunity, supporting gap/contradiction, grounded claim, document and exact immutable snapshot. Provider attribution follows the source observation of that exact snapshot.
-
-Several distinctions remain explicit: contradiction candidates are not scientific refutations, semantic distinctiveness is not proof of novelty, system-inferred gaps are not author-stated limitations, generated ideas are candidates rather than validated conclusions, and automated scores remain provisional until later calibration.
+Several distinctions remain explicit: contradiction candidates are not scientific refutations, semantic distinctiveness is not proof of novelty, system-inferred gaps are not author-stated limitations, generated ideas are candidates rather than validated conclusions, and automated scores remain provisional until calibrated.
 
 ### G6 — Hybrid Retrieval & Citation-Grounded Research Synthesis
-**Approved after progressive retrieval, citation, model-input authority and verification-evidence hardening.**
+**Approved after retrieval, citation, model-input authority and verification-evidence hardening.**
 
 ```text
 PostgreSQL                       16.15
@@ -171,41 +171,69 @@ pgvector                         0.8.6
 Alembic                          0001 -> 0009
 Upgrade / downgrade / upgrade    PASS
 Private automated suite          429 / 429 PASS
-Failed / skipped                 0 / 0
 Statement coverage               90.3%
-Verification proof manifest      v1.2
 Verification categories          17 / 17 PASS
 Mentor decision                  APPROVED (~99/100)
 ```
 
-G6 turns the accumulated research memory into a trustworthy query and synthesis layer:
+G6 turns accumulated research memory into a query and synthesis layer with PostgreSQL lexical retrieval, pgvector semantic retrieval, deterministic fusion, bounded provenance-rich context, typed synthesis and deterministic citation validation.
+
+The core rule remains: **retrieval and generation do not create evidence**. Retrieval rank is relevance rather than truth; source text remains untrusted data; model-produced citations must resolve to exact evidence actually supplied in the bounded context.
+
+### Security S0 — Security & Privacy Assurance Baseline
+**Approved as a cross-cutting V1 maturity baseline.**
+
+S0 covers data/privacy, identity/access, AI/RAG boundaries, application/API risk, infrastructure/storage, software/AI supply chain, incident/recovery thinking and residual-risk tracking. Public reporting remains intentionally high-level; private threat paths and exploit detail stay in the authoritative core.
+
+S0 is an internal engineering assurance baseline, **not a security certification and not an absolute-security claim**.
+
+### G7 — Living Research Output Engine
+**Approved.** G7 turns grounded context into durable research outputs while preserving exact context identity, bibliography hydration, citation validation and output verification.
+
+Disclosure/privacy enforcement occurs before any approved provider gateway boundary; private or unapproved data paths fail closed rather than being repaired after dispatch.
+
+### G8 — Research Console & Learning Workbench
+**Approved.** G8 adds the human-facing Next.js research console around the existing provenance and output contracts.
+
+Publicly reportable capabilities include:
+
+- research dashboard and evidence exploration;
+- provenance/snapshot inspection;
+- research-memory notes;
+- Output Studio integration;
+- Learning Mode bound to the same authoritative context identity;
+- epistemic/provisional-status rendering;
+- same-origin BFF and CSRF boundary;
+- a synthetic/stateless **PUBLIC_DEMO** mode with no private backend requirement.
+
+The interface remains a workbench rather than the final V1 visual design. UX/UI, bilingual Vietnamese/English support and release polish are part of the remaining V1 hardening work.
+
+### G9 — Reliability, Security, Calibration & Comparative Research-Workflow Benchmark
+**Approved after replacing the initial benchmark with a real PostgreSQL-backed system benchmark and independent proof derivation.**
+
+Final disclosure-safe verification summary:
 
 ```text
-Research Query
-→ PostgreSQL lexical retrieval + pgvector semantic retrieval
-→ deterministic normalization / deduplication
-→ hybrid fusion
-→ provenance-rich bounded context
-→ typed synthesis
-→ deterministic citation validation
-→ source-traceable answer
+Private backend suite             564 / 564 PASS
+Failed / skipped                  0 / 0
+Statement coverage                88.7%
+PostgreSQL                        16.15
+pgvector                          0.8.6
+Alembic U/D/U                     PASS
+G9 proof                          G9-v1.1
+Mandatory G9 categories           13 / 13 PASS
+Current-gate security regression  10 / 10 PASS
 ```
 
-The flagship G6 rule is that **retrieval and generation do not create evidence**. Retrieval rank is relevance rather than truth, semantic similarity is not entailment, source text is untrusted data, and every model-produced source citation must resolve to an exact item that was actually supplied in the bounded retrieval context with matching snapshot/document provenance.
+G9 executes bounded real-system tasks across evidence discovery, provenance tracing, contradiction visibility, research-memory reuse, verified brief generation, disclosure/provider policy and restart/recovery. Retrieval calibration, deterministic tamper verification and student-scale resource measurements are included.
 
-The final G6 authority boundary additionally validates model-visible title, truncation state and contradiction-participant metadata before synthesis. Verification evidence uses explicit typed proof references rather than loose substring matching, preventing decoy test names from satisfying proof requirements.
-
-### Security S0 — Threat-Model & Security/Privacy Assurance Baseline
-**Active before G7.** Security is being treated as a cross-cutting engineering constraint rather than an end-of-project add-on.
-
-S0 establishes a private, evidence-oriented baseline for data/privacy, identity/access, AI/RAG boundaries, application/API risk, infrastructure/storage, software/AI supply chain, incident response and residual-risk tracking. Public reporting remains intentionally high-level; private threat paths and exploit detail stay in the authoritative core.
-
-S0 is an internal maturity baseline, not a security certification or an absolute-security claim.
+The automated conventional-workflow comparison is explicitly labeled **AUTOMATED_PROXY**, not human timing. The system does not claim to beat flat-file operations on raw milliseconds; the value being tested is structured provenance, evidence integrity, reusable research memory, recovery and privacy/security assurance. A real owner-run human benchmark remains a separate future acceptance activity.
 
 ---
 
 ## Engineering principles
 
+- **Purpose before technology.** A method must solve a real project problem and earn its complexity.
 - **Provenance before cleverness.** Important outputs should remain traceable to source evidence.
 - **Grounding is not truth.** Source presence and scientific validity remain separate dimensions.
 - **Retrieval rank is not truth.** Search scores represent relevance signals only.
@@ -214,7 +242,7 @@ S0 is an internal maturity baseline, not a security certification or an absolute
 - **Metadata first.** Discovering a paper does not imply permanently storing its raw file.
 - **Selective retention.** Raw artifacts are retained only when value, provenance, licensing, or research use justifies it.
 - **Historical reproducibility.** Model/config changes must not silently reinterpret past research-memory state.
-- **Cloud-first data, local-first development.** The laptop is not the authoritative research-memory store.
+- **Local-first development, portable data boundaries.** V1 remains operable at student scale without enterprise infrastructure.
 - **No premature custom-LLM training.** Retrieval and structured memory come first.
 - **Gate-based development.** Green CI is necessary, but not sufficient, for approval.
 
@@ -236,9 +264,9 @@ PUBLIC SHOWCASE
 ### Public by design
 - product vision and safe architecture;
 - verified milestone outcomes;
-- test/evaluation summaries;
+- disclosure-safe test/evaluation summaries;
 - sanitized screenshots and demos;
-- selected benchmarks;
+- selected benchmark conclusions;
 - papers, posters, presentations and intentionally released artifacts.
 
 ### Private by design
@@ -265,11 +293,13 @@ PUBLIC SHOWCASE
 | G4 | Intelligence Lake / memory storage & embeddings | ✅ Approved |
 | G5 | Research gaps / opportunities / idea lineage | ✅ Approved |
 | G6 | Hybrid retrieval & citation-grounded synthesis | ✅ Approved |
-| Security S0 | Threat-model & security/privacy assurance baseline | 🛠 Active |
-| G7 | Living handbook / research outputs | 🔒 Locked until Security S0 approval |
-| G8 | Research console / UX | Planned |
-| G9 | Reliability, security & benchmark audit | Planned |
-| G10 | Production release & archival | Planned |
+| Security S0 | Security/privacy assurance baseline | ✅ Approved |
+| G7 | Living research outputs | ✅ Approved |
+| G8 | Research console & learning workbench | ✅ Approved |
+| G9 | Reliability, calibration & comparative benchmark | ✅ Approved |
+| G10 | V1 release, UX/UI/i18n hardening & archival | ▶ Next |
+| V1 Acceptance | End-to-end owner acceptance and freeze | 🔒 After G10 |
+| V2 | Distributed / evolution research directions | 🔒 Locked until V1 |
 
 ---
 
