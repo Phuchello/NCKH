@@ -2,15 +2,16 @@
 
 > **A Personal Research & Scientific Intelligence Operating System**
 
-[![Milestone](https://img.shields.io/badge/Milestone-G6%20Hybrid%20Retrieval-informational?style=flat-square)](PROJECT_STATE.md)
+[![Milestone](https://img.shields.io/badge/Milestone-Security%20S0-informational?style=flat-square)](PROJECT_STATE.md)
 [![G1](https://img.shields.io/badge/G1-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
 [![G2](https://img.shields.io/badge/G2-Approved-success?style=flat-square)](docs/G2_FINAL_REPORT.md)
 [![G3](https://img.shields.io/badge/G3-Approved-success?style=flat-square)](docs/G3_REVIEW_REPORT.md)
 [![G4](https://img.shields.io/badge/G4-Approved-success?style=flat-square)](docs/G4_REVIEW_REPORT.md)
 [![G5](https://img.shields.io/badge/G5-Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![Private CI](https://img.shields.io/badge/Private%20CI-297%2F297%20passing-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![G6](https://img.shields.io/badge/G6-Active-blue?style=flat-square)](PROJECT_STATE.md)
+[![G6](https://img.shields.io/badge/G6-Approved-success?style=flat-square)](PROJECT_STATE.md)
+[![Private CI](https://img.shields.io/badge/Private%20CI-429%2F429%20passing-success?style=flat-square)](PROJECT_STATE.md)
+[![Database](https://img.shields.io/badge/PostgreSQL-16.15%20%2B%20pgvector-blue?style=flat-square)](PROJECT_STATE.md)
+[![Security S0](https://img.shields.io/badge/Security%20S0-Active-blue?style=flat-square)](PROJECT_STATE.md)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
 ---
@@ -162,7 +163,22 @@ The final integrity boundary rejects semantically incorrect references even when
 Several distinctions remain explicit: contradiction candidates are not scientific refutations, semantic distinctiveness is not proof of novelty, system-inferred gaps are not author-stated limitations, generated ideas are candidates rather than validated conclusions, and automated scores remain provisional until later calibration.
 
 ### G6 — Hybrid Retrieval & Citation-Grounded Research Synthesis
-**Active.** G6 turns the accumulated research memory into a trustworthy query and synthesis layer.
+**Approved after progressive retrieval, citation, model-input authority and verification-evidence hardening.**
+
+```text
+PostgreSQL                       16.15
+pgvector                         0.8.6
+Alembic                          0001 -> 0009
+Upgrade / downgrade / upgrade    PASS
+Private automated suite          429 / 429 PASS
+Failed / skipped                 0 / 0
+Statement coverage               90.3%
+Verification proof manifest      v1.2
+Verification categories          17 / 17 PASS
+Mentor decision                  APPROVED (~99/100)
+```
+
+G6 turns the accumulated research memory into a trustworthy query and synthesis layer:
 
 ```text
 Research Query
@@ -176,6 +192,15 @@ Research Query
 ```
 
 The flagship G6 rule is that **retrieval and generation do not create evidence**. Retrieval rank is relevance rather than truth, semantic similarity is not entailment, source text is untrusted data, and every model-produced source citation must resolve to an exact item that was actually supplied in the bounded retrieval context with matching snapshot/document provenance.
+
+The final G6 authority boundary additionally validates model-visible title, truncation state and contradiction-participant metadata before synthesis. Verification evidence uses explicit typed proof references rather than loose substring matching, preventing decoy test names from satisfying proof requirements.
+
+### Security S0 — Threat-Model & Security/Privacy Assurance Baseline
+**Active before G7.** Security is being treated as a cross-cutting engineering constraint rather than an end-of-project add-on.
+
+S0 establishes a private, evidence-oriented baseline for data/privacy, identity/access, AI/RAG boundaries, application/API risk, infrastructure/storage, software/AI supply chain, incident response and residual-risk tracking. Public reporting remains intentionally high-level; private threat paths and exploit detail stay in the authoritative core.
+
+S0 is an internal maturity baseline, not a security certification or an absolute-security claim.
 
 ---
 
@@ -222,7 +247,8 @@ PUBLIC SHOWCASE
 - private research memory and datasets;
 - raw retained artifacts not licensed for redistribution;
 - unpublished experiments and ideas;
-- sensitive prompts/rules and credentials.
+- sensitive prompts/rules and credentials;
+- detailed threat paths, exploit notes and private security findings.
 
 **Public does not mean open source.** See [`LICENSE`](LICENSE), [`NOTICE.md`](NOTICE.md), and [`docs/IP_POLICY.md`](docs/IP_POLICY.md).
 
@@ -238,8 +264,9 @@ PUBLIC SHOWCASE
 | G3 | Full-text parsing & quote-grounded extraction | ✅ Approved |
 | G4 | Intelligence Lake / memory storage & embeddings | ✅ Approved |
 | G5 | Research gaps / opportunities / idea lineage | ✅ Approved |
-| G6 | Hybrid retrieval & citation-grounded synthesis | 🛠 Active |
-| G7 | Living handbook / research outputs | 🔒 Locked until G6 approval |
+| G6 | Hybrid retrieval & citation-grounded synthesis | ✅ Approved |
+| Security S0 | Threat-model & security/privacy assurance baseline | 🛠 Active |
+| G7 | Living handbook / research outputs | 🔒 Locked until Security S0 approval |
 | G8 | Research console / UX | Planned |
 | G9 | Reliability, security & benchmark audit | Planned |
 | G10 | Production release & archival | Planned |
