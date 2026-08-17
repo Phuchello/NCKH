@@ -1,6 +1,6 @@
 # Intel OS / NCKH — Public Project State
 
-## Current gate
+## Current verified gate state
 
 - **G0 — Foundation & Architecture:** APPROVED
 - **G1 — Database Foundation & Backend Scaffold:** APPROVED (~96/100)
@@ -9,68 +9,65 @@
 - **G3 — Full-Text Parsing & Quote-Grounded Extraction:** APPROVED (~99/100)
 - **G4 — Intelligence Lake & Personal Research Memory:** APPROVED (~99/100)
 - **G5 — Research Opportunity Miner & Snapshot-Pinned Idea Lineage:** APPROVED (~98/100)
-- **G6 — Hybrid Retrieval & Citation-Grounded Research Synthesis:** **APPROVED (~99/100)**
-- **Current engineering action:** **Security S0 — Threat-Model & Security/Privacy Assurance Baseline**
-- **Security S0 authorization:** **ACTIVE**
-- **G7 authorization:** LOCKED until Security S0 mentor approval
+- **G6 — Hybrid Retrieval & Citation-Grounded Research Synthesis:** APPROVED (~99/100)
+- **Security S0 — Security/Privacy Assurance Baseline:** APPROVED
+- **G7 — Living Research Output Engine:** APPROVED (~99/100)
+- **G8 — Research Console & Learning Workbench:** APPROVED (~98–99/100)
+- **G9 — Reliability, Security, Calibration & Comparative Research-Workflow Benchmark:** APPROVED (~98–99/100)
+- **Current engineering action:** **G10 — V1 Release, UX/UI + Vietnamese/English i18n Hardening & Archival**
+- **V1 Acceptance:** LOCKED until G10 approval
+- **V2:** LOCKED until V1 acceptance/freeze
 
-This repository is the **public showcase / verified-results surface**. Proprietary G2+ implementation, private research memory, unpublished opportunities/ideas, exploit details, prompts/rules and credentials remain in the private authoritative core. Public reporting is intentionally limited to disclosure-safe architecture, verified outcomes, metrics, demos and research outputs.
+This repository is the **public showcase / verified-results surface**. Proprietary G2+ implementation, private research memory, unpublished opportunities/ideas, sensitive prompts/rules, exploit details and credentials remain in the private authoritative core.
 
 ---
 
-## Latest verified engineering evidence
+## Latest disclosure-safe verification snapshot
 
-### G6 final
+The latest accepted G9/G9.1 closure verifies the V1 private core through the reliability/calibration gate:
 
 ```text
-Private implementation CI         31994684252
+Private backend suite             564 / 564 PASS
+Failed / skipped                  0 / 0
+Statement coverage                88.7%
 PostgreSQL                        16.15
 pgvector                          0.8.6
-Alembic head                      0009_g6_retrieval_indices
-Upgrade / downgrade / upgrade    PASS
-Full automated suite              429 / 429 PASS
-Failed / skipped                  0 / 0
-Statement coverage                90.3%
-Verification proof manifest       v1.2
-Declared verification categories 17 / 17 PASS
-Mentor decision                   APPROVED (~99/100)
+Alembic U/D/U                     PASS
+G9 proof                          G9-v1.1
+Mandatory G9 categories           13 / 13 PASS
+Current-gate security regression  10 / 10 PASS
 ```
 
-At a disclosure-safe level, G6 now provides:
+The accepted G9 benchmark is a bounded **real PostgreSQL-backed system benchmark**, not a standalone toy script. Publicly reportable task coverage includes:
 
 ```text
-Research query
-→ PostgreSQL lexical retrieval + pgvector semantic retrieval
-→ deterministic normalization / hybrid fusion
-→ bounded provenance-rich context
-→ typed citation-grounded synthesis
-→ deterministic citation validation
-→ exact backward source paths
+Evidence discovery
+→ exact provenance tracing
+→ contradiction visibility without truth adjudication
+→ research-memory reuse
+→ verified Evidence Brief generation
+→ disclosure/provider-policy enforcement
+→ restart / recovery / reseed / tamper verification
 ```
 
-Key verified G6 properties include:
-
-- retrieval rank is treated as relevance, not scientific truth;
-- semantic similarity is not treated as entailment;
-- source content remains passive untrusted data rather than control instructions;
-- model-visible Claim/Chunk provenance is checked against authoritative document/snapshot state before synthesis;
-- fabricated citations and real-but-non-retrieved citations are rejected;
-- model-visible title/truncation/contradiction metadata is validated fail-closed before provider dispatch;
-- conflicting evidence can be surfaced only from the exact effective context without automatic epistemic adjudication;
-- material retrieval/synthesis behavior is versioned/fingerprinted;
-- verification evidence uses explicit typed proof references rather than loose substring matching.
-
-The verification pack is machine-derived from private CI and intentionally sanitized. Raw private tests, source code, research memory, unpublished ideas and credentials are not published through this showcase surface.
+The benchmark runner records raw results only and the verification layer derives proof independently. A small conventional-workflow comparison is explicitly labeled `AUTOMATED_PROXY`; it is not presented as human timing. Owner-run human acceptance remains separate.
 
 ---
 
-## Security S0 — active pre-G7 baseline
+## Human-facing V1 status
 
-Security is being treated as a cross-cutting engineering constraint rather than an end-of-project add-on. Before G7 output-generation work begins, the private core is establishing a focused threat-model and assurance baseline covering data/privacy, identity/access, AI/RAG boundaries, application/API risks, infrastructure/storage, software/AI supply chain, and operational recovery.
+G8 established the functional Research Console / Learning Workbench. The current interface is intentionally **not considered visually final**.
 
-Public reporting will expose only high-level verified security outcomes and residual-risk language where safe. Detailed threat paths, private architecture attack surfaces and exploit material remain private by default.
+G10 will harden the release experience with:
 
-Security S0 is **not** a claim of certification or absolute security. It is the baseline from which later deterministic security tests, CI assurance, adversarial benchmarks and independent review can be built.
+- iterative UI/UX review rather than one-shot cosmetic polish;
+- responsive layout, visual hierarchy, typography and spacing cleanup;
+- loading, empty, error and degraded-state UX;
+- beginner-readable onboarding and research-flow clarity;
+- **Vietnamese + English first-class interface support** with persisted language choice;
+- no automatic translation of paper titles, source quotes, citations, hashes, IDs or user research data;
+- preservation of G0–G9 provenance, citation and security invariants during UI work;
+- release/recovery/reproducibility and archival cleanup.
 
 ---
 
@@ -85,10 +82,12 @@ PUBLIC NCKH
     verified progress → metrics → demos → selected results → publications
 ```
 
-The public repository remains actively maintained. Verified metrics, sanitized architecture updates, demos/screenshots, selected benchmarks, release notes, posters, papers and presentations are published only when those artifacts genuinely exist and pass disclosure review.
+Public synchronization happens **after a gate is verified/approved**, not after every private implementation commit. This keeps the showcase current without leaking proprietary or unreviewed material.
 
 ---
 
 ## Exact next action
 
-Complete **Security S0 — Threat-Model & Security/Privacy Assurance Baseline** in the private authoritative core. **Do not begin G7 until Security S0 receives mentor approval.**
+Proceed to **G10 — V1 Release, UX/UI + VI/EN i18n Hardening & Archival** in the private authoritative core while preserving all approved G0–G9/S0 evidence and invariants.
+
+After G10 mentor approval, run the owner-facing V1 end-to-end acceptance flow before any V1.0 freeze/tag. V2 remains locked until that V1 acceptance is complete.
