@@ -1,12 +1,16 @@
-# Intel OS / NCKH — Public Progress & Verified Results
+# Intel OS — Public Progress & Verified Results
 
-This page is the disclosure-safe public milestone mirror for Intel OS / NCKH. It reports verified engineering outcomes and research-facing progress without publishing the proprietary private-core implementation, private research memory, unpublished ideas, sensitive prompts, or detailed security findings.
+This is the disclosure-safe milestone record for Intel OS. It reports verified outcomes without mirroring the proprietary private-core implementation, private research memory, unpublished ideas, sensitive prompts or detailed security findings.
+
+**Public demo preview:** https://intel-os-eight.vercel.app/
+
+The hosted demo uses synthetic/stateless public data and should not be interpreted as access to the private owner research environment.
 
 ---
 
 ## Current status
 
-| Gate / Item | Status |
+| Gate / Item | Public status |
 |---|---|
 | G0 — Foundation & Architecture | ✅ Approved |
 | G1 — Database Foundation & Backend Scaffold | ✅ Approved |
@@ -20,11 +24,11 @@ This page is the disclosure-safe public milestone mirror for Intel OS / NCKH. It
 | G7 — Living Research Output Engine | ✅ Approved (~99/100) |
 | G8 — Research Console & Learning Workbench | ✅ Approved (~98–99/100) |
 | G9 — Reliability, Calibration & Comparative Benchmark | ✅ Approved (~98–99/100) |
-| G10 — V1 Release / UX / i18n / Archival | ▶ Next |
-| V1 Acceptance | 🔒 After G10 |
-| V2 | 🔒 Locked until V1 |
+| G10 — V1 Release / UX / i18n / Recovery / Archival | 🔄 Private hardening / review |
+| V1 Acceptance | 🔒 After G10 approval |
+| V2 | 🔒 After V1 freeze |
 
-The public repository remains the project showcase, verified-results surface and future publication/demo hub. The authoritative G2+ source implementation remains private.
+The authoritative implementation and research state live in the private core. Public synchronization occurs only after disclosure review; an implementation commit or green CI run is not automatically a public milestone.
 
 ---
 
@@ -36,7 +40,7 @@ G0.1                    88/100 — NEAR PASS
 G0.2                    APPROVED
 ```
 
-Established the modular-monolith direction, provenance-first research data model, epistemic discipline, retention strategy, gate-based engineering process and the long-term separation between replaceable AI models and durable structured research memory.
+Established the modular-monolith direction, provenance-first data model, epistemic boundaries, retention strategy, gate-based engineering process and the separation between replaceable AI models and durable structured research memory.
 
 ---
 
@@ -50,6 +54,8 @@ Coverage                           91%
 Mentor assessment                  ~96/100 — APPROVED
 ```
 
+The foundational public implementation was created before the project moved its authoritative G2+ engineering into the private core. Historical Git commits remain part of the already-disclosed project history, but the current public branch no longer mirrors the live backend codebase.
+
 ---
 
 ## G2 — Academic Metadata Ingestion & Connector Framework
@@ -62,9 +68,9 @@ G2.2                    107 / 107 PASS  → NEAR PASS
 G2.3 final              111 / 111 PASS  → APPROVED (~98/100)
 ```
 
-Verified scope includes scholarly metadata ingestion, conservative identity reconciliation, provider provenance, bounded async networking, explicit job/transaction semantics and real PostgreSQL concurrency testing.
+Disclosure-safe scope includes scholarly metadata ingestion, conservative identity reconciliation, provider provenance, bounded async networking, explicit job/transaction semantics and real PostgreSQL concurrency testing.
 
-Full public report: **[G2 Final Gate Report](G2_FINAL_REPORT.md)**.
+The gate history matters: green tests were not enough when a concurrency/provenance edge case still survived review.
 
 ---
 
@@ -79,9 +85,9 @@ G3.2          149 / 149 PASS   → NEAR PASS (~97/100)
 G3.3 final    156 / 156 PASS   → APPROVED (~99/100)
 ```
 
-Verified scope includes streamed representation bounds, immutable snapshots, deterministic parsing, versioned chunks, provider-neutral extraction contracts, character-exact quote grounding, ungrounded-evidence quarantine and reproducible extraction history.
+Verified scope includes streamed representation bounds, versioned source snapshots, deterministic parsing, versioned chunks, provider-neutral extraction contracts, character-exact quote grounding, unsupported-evidence quarantine and reproducible extraction history.
 
-Full public report: **[G3 Final Gate Report](G3_REVIEW_REPORT.md)**.
+> **Grounding is not truth.** A verified quote proves that a source contains a statement; it does not prove the statement is scientifically correct.
 
 ---
 
@@ -96,13 +102,13 @@ G4.2         234 / 234 PASS   → NEAR PASS (~98/100)
 G4.3 final   243 / 243 PASS   → APPROVED (~99/100)
 ```
 
-Publicly reportable capability includes a bounded S3-compatible retained-artifact boundary, explicit cross-store compensation/reconciliation, immutable embedding provenance, pgvector/HNSW active projections, Personal Research Memory notes and conservative claim relationships.
+Publicly reportable capabilities include bounded retained-artifact storage, explicit cross-store compensation/reconciliation, versioned embedding provenance, pgvector/HNSW projections, Personal Research Memory notes and conservative claim relationships.
 
-Full report: **[G4 Final Gate Report](G4_REVIEW_REPORT.md)**.
+G4 is another example of the project rule that a large passing test suite does not automatically prove the intended semantics.
 
 ---
 
-## G5 — Research Opportunity Miner & Snapshot-Pinned Idea Lineage
+## G5 — Research Opportunity Miner & Idea Lineage
 
 **Final decision: APPROVED (~98/100).**
 
@@ -111,9 +117,9 @@ G5 initial     286 / 286 PASS   → REVISE (~91/100)
 G5.1 final     297 / 297 PASS   → APPROVED (~98/100)
 ```
 
-G5 establishes the first Research Opportunity Memory layer with source-grounded gap candidates, separately labeled system-inferred gaps, conservative contradiction candidates, research opportunities, candidate ideas and exact snapshot-pinned backward lineage.
+G5 establishes the Research Opportunity Memory layer with source-grounded gap candidates, separately labeled system-inferred gaps, conservative contradiction candidates, research opportunities, candidate ideas and exact snapshot-pinned backward lineage.
 
-Important public epistemic boundaries remain explicit:
+Public epistemic boundaries remain explicit:
 
 - contradiction candidate ≠ scientific refutation;
 - semantic distinctiveness ≠ novelty proof;
@@ -132,7 +138,7 @@ Private unpublished opportunities, idea text and experiment notes remain private
 ```text
 PostgreSQL                        16.15
 pgvector                          0.8.6
-Alembic                           0001 -> 0009
+Alembic                           0001 → 0009
 Upgrade / downgrade / upgrade     PASS
 Private automated suite           429 / 429 PASS
 Statement coverage                90.3%
@@ -151,7 +157,7 @@ Research Query
 → source-traceable answer
 ```
 
-G6 preserves the rule that retrieval and generation do not create evidence. Retrieval rank is relevance, not truth; semantic similarity is not entailment; source text is untrusted data; and model-produced citations must resolve to exact evidence actually present in the bounded context.
+Retrieval and generation do not create evidence. Retrieval rank is relevance rather than truth; semantic similarity is not entailment; source text is untrusted data; and generated citations must resolve to evidence that was actually supplied to the synthesis context.
 
 ---
 
@@ -159,9 +165,9 @@ G6 preserves the rule that retrieval and generation do not create evidence. Retr
 
 **Final decision: APPROVED as a cross-cutting V1 engineering baseline.**
 
-Publicly reportable coverage includes data/privacy, identity/access, AI/RAG boundaries, application/API risk, infrastructure/storage, software/AI supply chain, recovery/incident thinking and explicit residual-risk tracking.
+Disclosure-safe coverage includes data/privacy, identity/access, AI/RAG boundaries, application/API risk, infrastructure/storage, software/AI supply chain, recovery/incident thinking and explicit residual-risk tracking.
 
-The project does **not** claim security certification, perfect security or elimination of all residual risk. Detailed attack paths and private security evidence remain in the private core.
+S0 is an engineering assurance baseline, **not a security certification and not an absolute-security claim**. Detailed threat paths and private security evidence stay in the authoritative core.
 
 ---
 
@@ -169,21 +175,9 @@ The project does **not** claim security certification, perfect security or elimi
 
 **Final decision: APPROVED (~99/100).**
 
-G7 converts authoritative bounded research context into durable research outputs while preserving exact context identity, bibliography hydration, deterministic citation validation and output verification.
+G7 converts bounded research context into durable research outputs while preserving context identity, bibliography hydration, citation validation and output verification.
 
-The provider-data privacy boundary was hardened so classification and provider authorization occur before dispatch. Private or unapproved research context fails closed rather than being repaired after provider access.
-
-Public capability summary:
-
-```text
-Authoritative research context
-→ verified context identity
-→ output planning
-→ bounded synthesis
-→ citation / bibliography validation
-→ output verification
-→ durable research artifact
-```
+Disclosure/privacy enforcement occurs before approved provider boundaries; private or unapproved research context fails closed rather than being repaired after dispatch.
 
 ---
 
@@ -191,32 +185,29 @@ Authoritative research context
 
 **Final decision: APPROVED (~98–99/100).**
 
-G8 adds a human-facing Next.js workbench while preserving the already-approved data/provenance contracts.
+G8 adds the human-facing Next.js workbench while preserving approved provenance and security contracts.
 
 Disclosure-safe capabilities include:
 
 - dashboard and research health/status views;
-- search/evidence exploration;
-- exact document/snapshot/source provenance inspection;
+- evidence search/exploration;
+- document, version and source-provenance inspection;
 - research-memory notes;
-- Output Studio;
-- Learning Mode bound to the same authoritative context identity;
+- research output generation;
+- Learning Mode bound to the selected research context;
 - provisional/epistemic labels surfaced in the UI;
-- same-origin BFF + CSRF boundary;
-- server-only private bearer handling;
-- synthetic, stateless `PUBLIC_DEMO` mode with no private database/backend requirement.
+- same-origin application boundary for private operation;
+- synthetic/stateless `PUBLIC_DEMO` mode with no private database requirement.
 
-The current interface is functional but is not treated as the final visual design. G10 owns release UX/UI hardening and bilingual Vietnamese/English support.
+G10 owns the V1 release polish, bilingual VI/EN UX, reproducibility, recovery and archival readiness.
 
 ---
 
-## G9 — Reliability, Security, Calibration & Comparative Research-Workflow Benchmark
+## G9 — Reliability, Security, Calibration & Comparative Workflow Benchmark
 
 **Final decision: APPROVED (~98–99/100).**
 
-G9 was not accepted on its first green CI. The initial benchmark was rejected because the proof did not sufficiently demonstrate the actual Intel OS system path. The final accepted G9.1 benchmark uses real PostgreSQL-backed system paths and independent evidence derivation.
-
-Disclosure-safe final verification:
+G9 was not accepted on its first green CI. The initial benchmark was rejected because the proof did not sufficiently demonstrate the actual Intel OS system path. The final G9.1 closure uses a real PostgreSQL-backed system benchmark and independently derived evidence.
 
 ```text
 Private backend suite             564 / 564 PASS
@@ -230,86 +221,58 @@ Mandatory G9 categories           13 / 13 PASS
 Current-gate security regression  10 / 10 PASS
 ```
 
-Real-system benchmark tasks cover:
+Real-system benchmark tasks cover evidence discovery, provenance tracing, contradiction visibility without automatic truth adjudication, research-memory reuse, verified brief generation, disclosure/provider policy and restart/recovery/reseed/tamper behavior.
 
-- evidence discovery;
-- provenance tracing;
-- contradiction visibility without automatic truth adjudication;
-- research-memory reuse;
-- verified Evidence Brief generation;
-- disclosure/provider-policy enforcement;
-- restart/recovery/reseed/tamper behavior.
-
-Retrieval calibration on the bounded sanitized fixture recorded Recall@1/3/5 = `1.0/1.0/1.0`, MRR = `1.0`, duplicate-result rate = `0.0`, effective-context survival = `1.0`, and contradiction endpoint preservation = `1.0`. These values describe the deterministic G9 fixture only and are not claimed as universal model quality.
+The bounded sanitized retrieval fixture recorded Recall@1/3/5 = `1.0/1.0/1.0`, MRR = `1.0`, duplicate-result rate = `0.0`, effective-context survival = `1.0` and contradiction endpoint preservation = `1.0`. These values describe that deterministic fixture only and are **not** claimed as universal model quality.
 
 ### Comparative-workflow interpretation
 
-A small machine-measured `AUTOMATED_PROXY` baseline was used for selected A/B/E operations. Flat conventional operations are naturally much faster on raw milliseconds than Intel OS database/provenance processing. The project therefore does **not** claim that Intel OS exists to beat flat files on primitive lookup latency.
+A machine-measured `AUTOMATED_PROXY` baseline was used for selected operations. Flat conventional operations are naturally faster on raw milliseconds than Intel OS database/provenance processing.
 
-The research value under evaluation is instead:
+The project therefore does not claim that Intel OS exists to win primitive lookup latency. The research value under evaluation is instead:
 
 - exact provenance reconstruction;
-- citation and bibliography integrity;
+- citation/bibliography integrity;
 - reusable structured research memory;
 - explicit epistemic state;
 - controlled contradiction handling;
 - recovery/reproducibility;
 - privacy/security boundaries.
 
-A true owner-run human workflow benchmark remains intentionally separate from machine CI evidence and will not overwrite or relabel the machine results.
-
-### Student-scale practicality
-
-The accepted G9 fixture remained within a lightweight local PostgreSQL + pgvector stack. No Redis, Kafka, microservice mesh, new model training or enterprise orchestration was introduced merely to satisfy the gate.
+A true owner-run human workflow benchmark remains a separate acceptance activity and will not be relabeled as machine evidence.
 
 ---
 
-## Next: G10 — V1 Release & UX Hardening
+## G10 — V1 Release Hardening
 
-G10 is the next gate. Planned disclosure-safe focus includes:
+G10 is currently being completed in the private authoritative core. Public status remains **in progress** until Mentor review actually approves the gate.
 
-- release/reproducibility cleanup;
-- final local run and recovery experience;
-- UI/UX refinement through iterative review;
-- responsive/layout/typography/empty/loading/error-state cleanup;
-- **Vietnamese + English first-class interface support**;
-- preservation of source titles, quotes, citations, hashes and research data without unsafe automatic translation;
-- release/archive bookkeeping and V1 handoff preparation.
+Disclosure-safe focus includes:
 
-G10 approval will still be followed by an owner-facing V1 end-to-end acceptance pass before an Intel OS V1.0 freeze.
+- responsive VI/EN owner experience;
+- clearer research terminology;
+- loading/empty/error states;
+- explicit `PUBLIC_DEMO` / `PRIVATE_LOCAL` mode boundaries;
+- startup/runbook reproducibility;
+- dependency/release hardening;
+- backup/restore verification;
+- archival and release-candidate evidence.
 
----
+No G10 result should be treated as approved merely because a deployment exists or CI is green.
 
-## Review philosophy
-
-A gate is evaluated on more than implementation completeness:
-
-1. purpose fit and measurable usefulness;
-2. deterministic tests;
-3. production-dialect behavior;
-4. provenance/data-integrity invariants;
-5. concurrency/failure/recovery semantics;
-6. provider/model reproducibility;
-7. epistemic correctness;
-8. privacy/security boundaries;
-9. safe public disclosure.
-
-**Green CI is necessary, but not sufficient, for gate approval.**
+After G10 approval, a separate owner-facing V1 Acceptance flow must be completed before V1.0 freeze/tag.
 
 ---
 
-## Public reporting policy
+## Public / private synchronization rule
 
-The public repository reports milestone objective, safe architecture, verified test/evaluation summaries, known limitations, mentor decision, sanitized demos/screenshots, selected benchmark conclusions and research outputs when disclosure permits.
+```text
+PRIVATE CORE
+implementation → test → evidence → mentor review → disclosure review
+                                             │
+                                             ▼
+PUBLIC SHOWCASE
+verified progress → safe metrics → demo → selected results → publications
+```
 
-No fabricated benchmark, placeholder screenshot, unpublished research memory, credential, sensitive threat detail or private-core implementation is published merely for appearance.
-
-Public progress is synchronized after verified gate approval rather than after every private implementation commit.
-
----
-
-## Disclosure note
-
-This repository is **source-available/proprietary, not open source**. Public reporting keeps the project assessable while preserving its private core and research/IP boundary.
-
-See [`IP_POLICY.md`](IP_POLICY.md) and the root [`LICENSE`](../LICENSE).
+The public repository stays substantive, but it is intentionally not an installable mirror of the proprietary core.
