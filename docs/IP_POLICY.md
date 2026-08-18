@@ -1,98 +1,86 @@
-# Intel OS / NCKH — Intellectual Property & Repository Boundary Policy
+# Intel OS — Public / Private Repository Policy
 
 ## 1. Purpose
 
-Intel OS / NCKH is intended to remain **publicly assessable and professionally presentable** while preserving ownership and control over proprietary implementation, private research memory, unpublished research work, and strategically sensitive logic.
+Intel OS uses a **Public Showcase + Private Core** repository model.
 
-The project follows a **Public Showcase + Private Core** model.
+The goal is to keep the project visible and assessable for lecturers, researchers, recruiters, collaborators and future publications without turning the proprietary implementation, private research memory or unpublished research work into an open-source codebase.
 
-This policy is an engineering/repository governance rule. It is not a substitute for professional legal advice for patents, commercialization, university IP agreements, competitions, funding, or other high-value intellectual-property decisions.
+This is a repository-governance policy, not legal advice for patents, commercialization, university ownership or funding agreements.
 
 ---
 
-## 2. Repository model
+## 2. Repository roles
 
 ### Public Showcase — `Phuchello/NCKH`
 
-This repository is the project's **active public front page**, not an abandoned mirror.
+The public repository is the project's active front page and verified-results surface.
 
-Its role is to communicate:
+It may contain intentionally released material such as:
 
 - project vision and motivation;
-- high-level architecture;
-- milestone history and gate decisions;
-- verified test / reliability summaries;
-- public benchmarks and selected results;
-- screenshots and product demonstrations;
-- sanitized examples;
-- public API/interface documentation where disclosure is safe;
-- public research notes intentionally released;
-- papers, posters, presentations, preprints and published research outputs after disclosure review;
-- selected implementation artifacts explicitly approved for release.
+- disclosure-safe architecture;
+- verified milestone/gate history;
+- sanitized test and benchmark summaries;
+- synthetic screenshots and public demos;
+- known limitations that are safe to disclose;
+- public papers, posters, presentations and research outputs;
+- selected interface documentation or implementation samples when explicitly approved.
 
-The public repository should stay current as the private product evolves.
-
-At every major gate, the public repository should receive a **sanitized but substantive progress report** describing what was achieved, how it was verified, known limitations, and the current project status.
-
-The public repository is **source-available/proprietary, not open source**.
+The public repository should remain substantive and current, but it is **not an installable mirror of the private core**.
 
 ### Private Core — `Phuchello/NCKH-core-private`
 
-This repository is the authoritative implementation workspace for proprietary G2+ engineering.
+The private repository is the authoritative engineering workspace and source of truth for proprietary G2+ development.
 
-It includes by default:
+Private by default:
 
-- authoritative ingestion/reconciliation implementation;
-- proprietary ranking/scoring logic;
-- intelligence extraction orchestration;
-- private prompt libraries and internal reasoning policies;
-- Research Gap / Opportunity mining implementation;
-- idea-generation and idea-lineage internals;
-- private evaluation harnesses that expose decision logic;
-- production deployment configuration;
-- unreleased algorithms and research methods;
-- internal experiments and failed hypotheses;
+- current implementation and production internals;
+- schemas and migrations not intentionally released;
+- ingestion/reconciliation implementation;
+- proprietary ranking, scoring and reasoning logic;
+- prompt/orchestration rules;
+- private evaluation fixtures and detailed evidence;
+- detailed security attack paths and countermeasure implementation;
+- production/operational configuration;
+- Personal Research Memory and Research Opportunity Memory;
 - private datasets and derived corpora;
-- Personal Research Memory and user-specific intelligence data.
-
-The private repository is the engineering source of truth. The public repository is the communication/research showcase source of truth.
+- unpublished gaps, hypotheses, ideas, experiments and negative results;
+- credentials, tokens and secrets.
 
 ---
 
-## 3. Core publication principle
-
-The project must not choose between **visibility** and **ownership**. Instead:
+## 3. Publication flow
 
 ```text
 PRIVATE CORE
-    implement
-       ↓
-    test
-       ↓
-    mentor / technical review
-       ↓
-    disclosure classification
-       ↓
-    sanitize where required
-       ↓
+implement
+   ↓
+test
+   ↓
+evidence
+   ↓
+mentor / technical review
+   ↓
+disclosure review
+   ↓
+sanitize
+   ↓
 PUBLIC SHOWCASE
-    milestone report
-    verified metrics
-    architecture overview
-    screenshots / demo
-    selected benchmark results
-    publication artifacts
+verified progress
+architecture summary
+demo / screenshots
+selected results
+publications
 ```
 
-A feature being private does **not** mean its existence, capability, evaluation result, or safe high-level architecture should disappear from the public project narrative.
+A feature being private does **not** mean its existence or verified high-level outcome should disappear from the public project narrative.
 
-Conversely, a desire for a polished public repository does not justify publishing proprietary internals.
+Conversely, a polished public repository does not justify publishing proprietary internals.
 
 ---
 
-## 4. Disclosure classification
-
-Every substantial artifact should be classified before publication.
+## 4. Disclosure classes
 
 ### PUBLIC
 
@@ -101,158 +89,111 @@ Safe/intended for release, for example:
 - README/product description;
 - high-level diagrams;
 - roadmap and milestone status;
-- sanitized test/CI summaries;
-- screenshots and demos;
-- public research outputs;
-- sanitized benchmark summaries;
-- published methodology already intentionally disclosed;
-- public-facing API contracts;
-- selected examples that do not expose proprietary core logic.
+- sanitized CI/test summaries;
+- synthetic screenshots/demos;
+- published research outputs;
+- disclosure-safe benchmark conclusions;
+- selected examples that do not reveal proprietary core logic.
 
 ### PRIVATE
 
-Not intended for public release by default:
+Keep private by default:
 
-- Research Memory;
-- user notes;
-- unpublished research gaps and hypotheses;
-- proprietary prompt chains;
-- internal scoring weights/rules when strategically sensitive;
-- unreleased algorithms;
-- credentials and secrets;
-- private datasets;
-- licensed/copyrighted source corpora that cannot be redistributed;
-- internal evaluation data that exposes proprietary logic;
-- production deployment details;
-- commercial strategy.
+- user/research memory;
+- unpublished gaps, ideas, hypotheses and experiments;
+- proprietary prompts and orchestration;
+- scoring weights/rules and competitive implementation logic;
+- credentials/secrets;
+- private datasets or licensed corpora;
+- internal evaluation data exposing proprietary decision logic;
+- production operational details.
 
 ### REVIEW BEFORE PUBLICATION
 
-Artifacts requiring explicit disclosure review:
+Requires explicit review:
 
-- novel algorithms;
-- potentially patentable methods;
-- detailed research methodology before filing/publication decisions;
+- potentially novel or patentable methods;
+- detailed methodology before publication/IP decisions;
 - unpublished experimental results;
 - model-training datasets;
-- competitive product logic;
 - data-source licensing edge cases;
-- architecture details that substantially reveal private implementation.
+- architecture detail that would materially reveal private implementation.
+
+If publication safety is uncertain, keep the artifact private until reviewed.
 
 ---
 
-## 5. Public milestone reporting standard
+## 5. Public milestone standard
 
-For each major Gate / release, the public showcase should publish, when safe:
+For each major approved gate or release, the public showcase should publish as much of the following as is safe and meaningful:
 
-1. milestone objective;
+1. milestone purpose;
 2. capabilities completed;
 3. high-level architecture impact;
-4. verified test / CI result;
-5. benchmark or experiment result where meaningful;
+4. verified test/CI results;
+5. benchmark or experiment results where appropriate;
 6. known limitations;
-7. mentor/gate decision;
-8. screenshots or demo artifacts when real output exists;
-9. public research outputs / publication links;
-10. disclosure note for intentionally private implementation.
+7. Mentor/gate decision;
+8. synthetic screenshots/demo artifacts where available;
+9. public research/publication links;
+10. a disclosure note for intentionally private implementation.
 
-Reports should be specific enough for lecturers, researchers, recruiters, collaborators, or reviewers to evaluate the work.
+Do not publish vague claims such as “advanced AI system complete” without evidence.
 
-Do not use vague claims such as "advanced AI system complete" without verifiable supporting results.
+Do not fabricate screenshots, benchmarks, user counts, production-scale claims or research results to improve presentation.
 
-Do not fabricate screenshots, benchmarks, user numbers, production-scale claims, or research results merely to make the public repository look polished.
-
-Public progress is maintained in [`PUBLIC_PROGRESS.md`](PUBLIC_PROGRESS.md).
+The current disclosure-safe milestone record is [Public Progress & Verified Results](PUBLIC_PROGRESS.md).
 
 ---
 
-## 6. Research publication / patent-safety gate
+## 6. Data and research safety
 
-Before publicly releasing a potentially novel technical contribution, ask:
+Never commit to the public showcase:
 
-1. Is this already intentionally published in a paper/preprint/thesis?
-2. Could this be patentable or commercially valuable?
-3. Is there a university, supervisor, sponsor, competition, or funding agreement affecting ownership?
-4. Would disclosure destroy trade-secret value?
-5. Are third-party datasets, papers, code, or licenses involved?
-6. Is detailed release necessary now, or can a high-level result be published instead?
-
-If patent or commercialization potential is material, detailed public disclosure should pause for appropriate IP review.
-
----
-
-## 7. Research data policy
-
-The public repository must not contain the authoritative research dataset or intelligence memory.
-
-### Never commit
-
-- API keys/tokens/passwords;
-- database dumps containing research memory;
-- private notes;
-- licensed PDFs or bulk copyrighted corpora without redistribution rights;
+- API keys, passwords or tokens;
+- production `.env` files;
+- database dumps containing private research memory;
+- private notes or user history;
 - unpublished experiment datasets unless explicitly approved;
-- production environment files;
-- local caches;
-- private embeddings or derived datasets when strategically sensitive.
+- licensed full-text corpora without redistribution rights;
+- private embeddings/derived datasets when strategically sensitive;
+- local caches or production operational artifacts.
 
-### Public datasets
-
-Any dataset intentionally released publicly should have:
-
-- clear provenance;
-- redistribution-rights review;
-- privacy review where applicable;
-- dedicated dataset terms/license where appropriate;
-- a versioned release rather than an accidental working-directory dump.
+Any dataset intentionally released publicly should have provenance, redistribution-rights review, privacy review where applicable and a deliberate versioned release.
 
 ---
 
-## 8. Agent governance
+## 7. Research / IP precaution
 
-All development/review agents must follow:
+Before publishing a potentially novel technical contribution, ask:
 
-> **Never infer that a file is safe to publish merely because the public showcase exists.**
+1. Is it already intentionally published in a paper, preprint or thesis?
+2. Could it be patentable or commercially valuable?
+3. Is a university, supervisor, sponsor, competition or funding agreement relevant?
+4. Would disclosure destroy useful trade-secret value?
+5. Are third-party data/code/licensing obligations involved?
+6. Is detailed release necessary, or is a high-level result sufficient?
 
-For G2+ work, agents must identify whether a task belongs to private engineering or public reporting before writing files.
-
-### Private engineering
-
-Gemini / Antigravity, Claude Opus, Codex, or other development agents work in the private core when implementing proprietary functionality.
-
-### Public reporting
-
-After a gate or meaningful milestone, an explicit disclosure/reporting step updates `Phuchello/NCKH` with safe:
-
-- status;
-- verified metrics;
-- architecture summary;
-- demo/research artifacts;
-- known limitations.
-
-No agent should allow the public showcase to drift several gates behind the private implementation.
+If patent/commercialization potential is material, detailed disclosure should pause for appropriate IP review.
 
 ---
 
-## 9. Third-party rights
+## 8. Historical disclosure rule
 
-Project ownership does not override third-party licenses or copyrights.
+G0/G1 and an early G2 implementation were previously visible in the public repository.
 
-Before redistributing code, papers, datasets, figures, standards text, or model artifacts, verify the applicable terms.
-
-A proprietary project may use open-source dependencies while those components remain governed by their original licenses and obligations.
+That history is treated as already disclosed and is **not rewritten or falsely described as never public**. The current branch may remove old working-tree files for clarity and boundary hygiene while Git history remains intact.
 
 ---
 
-## 10. Current decision
+## 9. Current operating rule
 
-Effective 2026-08-16:
+As of the current V1 hardening phase:
 
-- `Phuchello/NCKH` is the **active public showcase / verified-results / research-publication repository**.
-- `Phuchello/NCKH-core-private` is the **authoritative private implementation repository**.
-- The public repository is **not open source**.
-- G0/G1 and an earlier accidentally public G2 commit must be treated as historically disclosed; history is not rewritten to imply otherwise.
-- Current G2 implementation lives in the private core and is under mentor review.
-- The public repository must continue to receive professional, substantive milestone reports as private development progresses.
+- `Phuchello/NCKH-core-private` remains the authoritative implementation repository;
+- `Phuchello/NCKH` remains the active public showcase;
+- public milestone status remains at the last actually approved/disclosed gate until the next disclosure review;
+- G10/V1 hardening work is not automatically public just because a deployment or CI run exists;
+- the public repository is proprietary and **not open source**.
 
-See the root [`LICENSE`](../LICENSE), [`NOTICE.md`](../NOTICE.md), and [`PUBLIC_PROGRESS.md`](PUBLIC_PROGRESS.md).
+See [LICENSE](../LICENSE), [NOTICE.md](../NOTICE.md), [Architecture Overview](../ARCHITECTURE.md) and [Public Progress & Verified Results](PUBLIC_PROGRESS.md).
