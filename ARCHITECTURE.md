@@ -2,7 +2,7 @@
 
 This document describes the **disclosure-safe architecture** of Intel OS. It intentionally omits proprietary implementation details, internal scoring/reasoning rules, private schemas, operational secrets and detailed security paths.
 
-For project status and measured results, see [Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md).
+For current status and measured results, see [Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md).
 
 ---
 
@@ -45,8 +45,8 @@ flowchart TB
 The authoritative long-lived research asset. At a public level, it contains concepts such as:
 
 - scholarly/source identity;
-- versioned document snapshots;
-- grounded evidence and extracted claims;
+- versioned and immutable document snapshots;
+- grounded evidence and structured claims;
 - explicit epistemic state;
 - research notes and experiment records;
 - contradiction/gap/opportunity/idea entities;
@@ -71,14 +71,15 @@ A strong retrieval score or grounded answer is still **not automatically scienti
 
 The user-facing layer supports:
 
-- dashboard/status views;
+- Research Intelligence command-center views;
 - evidence search and exploration;
 - document/source/version inspection;
 - provenance and idea-lineage exploration;
 - personal research memory;
-- output generation;
+- controlled output generation;
 - Learning Mode;
-- Research Intelligence views.
+- contextual research inspection;
+- bilingual Vietnamese / English presentation.
 
 The UI is a presentation/workflow layer. It does not become the authority merely because something is rendered on screen.
 
@@ -86,29 +87,29 @@ The UI is a presentation/workflow layer. It does not become the authority merely
 
 ## 3. Provenance-first research model
 
-Intel OS aims to preserve an inspectable chain such as:
+Intel OS preserves direct source/evidence provenance separately from higher-level research intelligence.
+
+A bounded direct evidence chain can look like:
 
 ```text
-Idea
-  ↓
-Opportunity
-  ↓
-Gap / Contradiction
-  ↓
-Claim
-  ↓
-Evidence
-  ↓
-Snapshot / Source Version
-  ↓
 Document
   ↓
-Source / Provider Observation
+Immutable Snapshot / Source Version
+  ↓
+Claim
 ```
 
-This provides a durable answer to *why* an idea or output exists and what research context it depended on.
+Higher-level research relationships may extend through contradictions, gaps, opportunities, ideas and outputs **only when the corresponding relationship is explicitly supported by system state**.
 
-Important distinction:
+This distinction matters. A gap appearing in the same research context does not automatically mean a claim caused, surfaced or supports that gap.
+
+Longer research lineage may include relationships such as:
+
+```text
+Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot → Document → Source
+```
+
+but this is a conceptual lineage target, not permission to infer missing edges.
 
 > **Grounding proves source presence, not scientific correctness.**
 
@@ -118,13 +119,13 @@ A quote can be reproduced exactly while the scientific claim itself remains unce
 
 ## 4. High-level technical shape
 
-V1 follows a **modular-monolith** strategy rather than premature microservices.
+V1 follows a **cloud-first modular-monolith** strategy rather than premature microservices.
 
 ```mermaid
 flowchart LR
     S[Research sources] --> I[Ingestion / parsing]
     I --> P[(PostgreSQL + pgvector)]
-    I --> O[Selective object storage boundary]
+    I --> O[Selective object-storage boundary]
     P --> R[Retrieval / intelligence / synthesis]
     O --> R
     R --> A[FastAPI application boundary]
@@ -146,7 +147,7 @@ Technology remains subordinate to purpose. A component is added only when it ear
 
 ---
 
-## 5. Two deployment modes
+## 5. PUBLIC_DEMO and PRIVATE_LOCAL
 
 ### PUBLIC_DEMO
 
@@ -158,7 +159,10 @@ Properties:
 - no owner credentials;
 - synthetic/demo-safe data only;
 - disclosure-safe behavior;
-- suitable for the public hosted preview.
+- deterministic bounded fixture for public evaluation;
+- suitable for the hosted public preview.
+
+The production public demo deliberately exposes a small evidence context rather than pretending to be a live scientific knowledge base.
 
 ### PRIVATE_LOCAL
 
@@ -169,13 +173,45 @@ Properties:
 - private research context;
 - protected backend/data boundary;
 - persistent owner research memory;
+- private retained artifacts and research state;
 - not remotely exposed by the public demo.
 
-The two modes are intentionally explicit so that a public deployment cannot silently masquerade as the private authoritative research environment.
+The modes are explicit so that a hosted demo cannot silently masquerade as the private authoritative research environment.
 
 ---
 
-## 6. Epistemic boundaries
+## 6. V1.0.3 Research Workbench composition
+
+The current public workbench is organized as a research command center rather than a generic KPI dashboard.
+
+```text
+Research object / query
+        ↓
+Knowledge Landscape / Provenance Canvas
+        ↓
+selected object + relevant path emphasis
+        ↓
+Contextual Inspector
+        ↓
+real bounded actions
+```
+
+Disclosure-safe interface concepts include:
+
+- asymmetric command-center composition;
+- Knowledge Landscape / Provenance interaction;
+- direct path emphasis for supported lineage;
+- contextual object inspection;
+- command/search surface for real routes/actions;
+- mobile contextual sheet with keyboard focus management;
+- `prefers-reduced-motion` handling;
+- Vietnamese-first UI with coherent English mode.
+
+Locale switching is presentation-only: it must not change document identity, context identity, graph relationships or machine epistemic state.
+
+---
+
+## 7. Epistemic boundaries
 
 Intel OS keeps several concepts deliberately separate:
 
@@ -195,13 +231,17 @@ scientific novelty
 system-generated gap / opportunity
         ≠
 author-stated fact
+
+co-presence in one research context
+        ≠
+a proven relationship
 ```
 
 This distinction is part of the architecture, not merely UI wording.
 
 ---
 
-## 7. Reliability and release philosophy
+## 8. Reliability, recovery and release philosophy
 
 Intel OS uses gate-based development:
 
@@ -219,20 +259,50 @@ approval or revision
 
 A green CI run is required but cannot approve a gate by itself. Evidence must actually measure the claim it is being used to support.
 
-Release hardening also includes reproducibility, owner-facing usability, recovery/backup thinking, public/private disclosure boundaries and archival readiness.
+The completed V1 release path also verifies:
+
+- PostgreSQL migration lifecycle;
+- deterministic startup/reproducibility probes;
+- native backup + disposable restore proof;
+- security regression packs;
+- release-manifest integrity;
+- owner-facing acceptance;
+- final release-identity verification.
+
+The current V1.0.3 patch changes the user-facing workbench and localization while intentionally preserving the approved backend/research-core boundaries.
 
 ---
 
-## 8. Public/private architecture boundary
+## 9. V1 → V2 evolution boundary
 
-The public repository intentionally publishes only enough architecture for meaningful academic, portfolio and engineering evaluation.
+V1 answers primarily:
+
+> **What do we know, where did it come from, and can we reuse it safely?**
+
+A future V2 direction is the **Distributed Research Data Fabric**, intended to add location awareness for research assets and compute while preserving one coherent intelligence layer.
+
+Conceptually:
+
+```text
+V1: understand knowledge
+V2: understand where research assets and compute live
+V3: coordinate intelligence across locations
+```
+
+V2 is a planned direction, **not a claim about the current production system**.
+
+---
+
+## 10. Public/private architecture boundary
+
+The public repository intentionally publishes enough architecture for meaningful academic, portfolio and engineering evaluation without becoming an installable mirror of the proprietary core.
 
 Detailed items remain private by default, including:
 
 - live schemas and migrations beyond intentionally disclosed history;
 - proprietary scoring/ranking implementation;
 - prompt/orchestration internals;
-- private evaluation fixtures;
+- private evaluation fixtures and detailed evidence;
 - detailed security attack paths and countermeasure implementation;
 - production operational configuration;
 - private datasets and Research Memory;

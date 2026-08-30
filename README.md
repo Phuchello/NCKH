@@ -1,39 +1,75 @@
 # Intel OS — Research Intelligence Operating System
 
-> **A provenance-aware research intelligence platform for building durable, reusable research memory.**
+> **A provenance-aware research intelligence platform for building durable, reusable research memory.**  
+> *Hệ thống trí tuệ nghiên cứu giúp biến tài liệu rời rạc thành nền tri thức có nguồn gốc, có thể kiểm tra và tái sử dụng lâu dài.*
 
-[![Public Milestone](https://img.shields.io/badge/Public%20Milestone-G9%20Approved-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
-[![V1](https://img.shields.io/badge/V1-Hardening%20in%20Progress-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Public Milestone](https://img.shields.io/badge/Public%20Milestone-V1.0.3-success?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![V1](https://img.shields.io/badge/V1-Frozen%20%2B%20Verified-blue?style=flat-square)](docs/PUBLIC_PROGRESS.md)
+[![Demo](https://img.shields.io/badge/PUBLIC__DEMO-Live-orange?style=flat-square)](https://intel-os-eight.vercel.app/)
 [![Private Core](https://img.shields.io/badge/Core-Private-black?style=flat-square)](#public-showcase--private-core)
 [![License](https://img.shields.io/badge/License-Proprietary-red?style=flat-square)](LICENSE)
 
-**PUBLIC_DEMO preview:** https://intel-os-eight.vercel.app/
+**Live PUBLIC_DEMO:** https://intel-os-eight.vercel.app/
 
-> The hosted demo is a synthetic/stateless public preview. It does not expose the private research database, credentials, unpublished research memory, or proprietary core implementation.
+> The hosted demo is **synthetic and stateless**. It does not expose the private research database, unpublished research memory, credentials, proprietary implementation, or private evaluation artifacts.
 
 ---
 
 ## What is Intel OS?
 
-Intel OS is a long-term personal research system for turning fragmented papers, technical sources, notes, evidence, and future research artifacts into a structured knowledge foundation that can be searched, inspected, reused, and synthesized without losing provenance.
-
-It is designed around one core idea:
+Intel OS is a long-term personal research system for turning fragmented papers, technical sources, notes, evidence, and future research artifacts into a structured knowledge foundation that can be searched, inspected, reused, and synthesized **without losing provenance**.
 
 ```text
 fragmented research assets
         ↓
 collect + normalize + verify
         ↓
-source-grounded research memory
+versioned evidence + provenance
         ↓
-connect claims, evidence, gaps and ideas
+durable research memory
         ↓
-retrieve + synthesize with provenance
+connect claims, contradictions, gaps and ideas
+        ↓
+retrieve + synthesize with traceable context
         ↓
 reusable research outputs and future projects
 ```
 
-Intel OS is **not** intended to be a generic chatbot, bookmark manager, one-shot paper summarizer, or an excuse to train a custom model when structured memory and retrieval solve the problem better.
+Intel OS is **not** a generic chatbot, bookmark manager, one-shot paper summarizer, or an excuse to train a custom model when structured memory and retrieval solve the problem better.
+
+---
+
+## Current public milestone — V1.0.3
+
+V1 is frozen and verified. The current disclosure-safe public milestone mirrors the approved **V1.0.3 Design Level 2 UI Patch** running in production PUBLIC_DEMO.
+
+### What V1 establishes
+
+- provenance-aware ingestion and immutable source snapshots;
+- character-exact evidence grounding and structured claims;
+- durable Personal Research Memory;
+- contradiction, gap, opportunity and idea lineage;
+- hybrid lexical + semantic retrieval;
+- citation-grounded synthesis;
+- Living Research Output Engine;
+- Research Console / Learning Workbench;
+- explicit `PUBLIC_DEMO` / `PRIVATE_LOCAL` boundaries;
+- security, recovery, reproducibility and release verification;
+- Vietnamese-first owner UI with coherent English mode.
+
+### V1.0.3 interface refinement
+
+The latest public UI adds a warm beige–orange **Research Intelligence command center** with:
+
+- a Knowledge Landscape / Provenance canvas;
+- truthful `Document → Snapshot → Claim` provenance emphasis;
+- research gaps displayed separately as provisional intelligence signals;
+- contextual inspection on desktop;
+- an accessible contextual bottom sheet on mobile;
+- keyboard focus management and `Ctrl/Cmd + K` actions;
+- bilingual VI/EN presentation without changing research identity or epistemic state.
+
+The visible product generation label remains **V1.0**. `v1.0.3` is a post-freeze interface/release patch, not a new research-core generation.
 
 ---
 
@@ -43,10 +79,10 @@ Research work tends to fragment across PDFs, browser tabs, notes, spreadsheets, 
 
 - what source a statement came from;
 - which version of the source was used;
-- what evidence supports the statement;
-- what is still uncertain or contested;
-- what ideas, gaps and experiments were derived from that evidence;
-- how a future output can be traced back to its research context.
+- what exact evidence supports it;
+- what is still uncertain, provisional or contested;
+- what ideas, gaps and experiments were derived from that context;
+- how a future output can be traced back to the research state that produced it.
 
 Intel OS treats that accumulated structure as the durable asset. AI models remain replaceable reasoning engines rather than the system of record.
 
@@ -56,17 +92,17 @@ Intel OS treats that accumulated structure as the durable asset. AI models remai
 
 ### 1. Gold Knowledge Core
 
-The long-lived research foundation: source identity, document versions/snapshots, evidence, claims, notes, contradictions, gaps, opportunities, ideas and provenance relationships.
+The long-lived research foundation: source identity, immutable/versioned snapshots, evidence, claims, notes, contradictions, gaps, opportunities, ideas and provenance relationships.
 
 ### 2. Research Intelligence Layer
 
 Retrieval, comparison, contradiction visibility, gap/opportunity surfacing and grounded synthesis operate on the knowledge core.
 
-**Grounding is not truth.** A source containing a statement does not automatically make that statement scientifically correct.
+> **Grounding is not truth.** A source containing a statement does not automatically make that statement scientifically correct.
 
 ### 3. Research Workbench
 
-The human-facing layer for exploring evidence, inspecting provenance, managing research memory, learning from selected evidence and creating research outputs.
+The human-facing layer for exploring evidence, inspecting provenance, reusing research memory, learning from selected context and creating research outputs.
 
 ---
 
@@ -99,37 +135,33 @@ Retrieval / Synthesis   Gaps / Contradictions
        Reusable Research Outputs
 ```
 
-Long-term provenance target:
-
-```text
-Idea → Opportunity → Gap / Contradiction → Claim → Evidence → Snapshot → Document → Source
-```
+The system also preserves longer research lineage where available, while keeping inferred relationships distinct from source-grounded provenance.
 
 ---
 
 ## Public demo
 
-The public deployment demonstrates the owner-facing Research Console with synthetic data only.
+The public deployment demonstrates the owner-facing Research Console with **synthetic data only**.
 
 Publicly demonstrable surfaces include:
 
-- research dashboard;
+- Research Intelligence command center;
 - evidence exploration;
-- document/version inspection;
-- provenance and idea-lineage views;
-- research-memory interaction in demo-safe form;
-- research output generation with disclosure boundaries;
+- document and immutable-snapshot inspection;
+- provenance / lineage views;
+- demo-safe research-memory interaction;
+- controlled research-output generation;
 - Learning Mode;
 - Research Intelligence views;
 - Vietnamese / English interface support.
 
-The public demo is intentionally separated from `PRIVATE_LOCAL`, which is the private owner workflow backed by the authoritative research environment.
+The public demo is intentionally separated from `PRIVATE_LOCAL`, the authoritative private owner workflow backed by persistent research memory.
 
 ---
 
 ## Verified engineering progress
 
-The public milestone mirror currently reports verified private-core outcomes through **G9**. G10/V1 hardening is still under private review and is **not** presented here as approved until the gate is actually closed.
+All V1 gates are now approved and the release path is complete.
 
 | Gate | Focus | Public status |
 |---|---|---|
@@ -144,25 +176,33 @@ The public milestone mirror currently reports verified private-core outcomes thr
 | G7 | Living Research Output Engine | ✅ Approved |
 | G8 | Research Console & Learning Workbench | ✅ Approved |
 | G9 | Reliability, calibration & workflow benchmark | ✅ Approved |
-| G10 | V1 release / UX / i18n / recovery / archival | 🔄 Private hardening |
-| V1 Acceptance | Owner end-to-end acceptance | 🔒 After G10 |
-| V2 | Evolution / distributed research directions | 🔒 After V1 |
+| G10 | V1 release / UX / i18n / recovery / archival | ✅ Approved |
+| V1 Acceptance | Owner end-to-end acceptance | ✅ Approved |
+| V1 Final Verification | Release evidence + identity closure | ✅ Approved |
+| V1.0 | Canonical application freeze | ✅ Released |
+| V1.0.3 | Design Level 2 UI patch | ✅ Released / Production |
+| V2 | Distributed Research Data Fabric direction | 🔒 Planned, not started |
 
-Disclosure-safe G9 verification snapshot:
+Disclosure-safe verification snapshot for the current V1 release line:
 
 ```text
-Private backend suite             564 / 564 PASS
-Failed / skipped                  0 / 0
-Statement coverage                88.7%
-PostgreSQL                        16.15
-pgvector                          0.8.6
-Alembic U/D/U                     PASS
-G9 proof                          G9-v1.1
-Mandatory G9 categories           13 / 13 PASS
-Current-gate security regression  10 / 10 PASS
+Private backend suite              589 / 589 PASS
+PostgreSQL                         16.15
+pgvector                           0.8.6
+Alembic upgrade/downgrade/upgrade  PASS
+Frontend unit suite                PASS
+Owner Playwright journey           PASS
+Security regression                PASS
+G10 recovery / startup proof       PASS
+V1 Acceptance evidence             PASS
+V1 Final Verification evidence     PASS
+Post-merge release CI              33315205533 — SUCCESS
+Production PUBLIC_DEMO health      200 OK
 ```
 
-See **[Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md)** for the gate history and interpretation of these numbers.
+These numbers are engineering verification results, **not claims of scientific correctness, production-scale usage, or universal model quality**.
+
+See **[Public Progress & Verified Results](docs/PUBLIC_PROGRESS.md)** for the full gate history and interpretation.
 
 ---
 
@@ -196,23 +236,23 @@ vision → architecture → verified progress → demo → selected results
 ### Public by design
 
 - project vision and motivation;
-- high-level architecture;
+- disclosure-safe architecture;
 - verified milestone outcomes;
-- disclosure-safe metrics and benchmark summaries;
-- synthetic screenshots and demos;
-- selected public research outputs and publications.
+- safe CI/test/benchmark summaries;
+- synthetic demo behavior;
+- intentionally released publications and research artifacts.
 
 ### Private by design
 
 - authoritative G2+ implementation;
-- schemas/migrations and production internals not intentionally released;
+- live schemas/migrations and production internals not intentionally released;
 - proprietary ranking, scoring, reconciliation and reasoning logic;
 - detailed security/threat paths;
-- private research memory, datasets and raw retained artifacts;
+- private research memory, datasets and retained artifacts;
 - unpublished gaps, experiments, hypotheses and ideas;
 - credentials, prompts and operational configuration.
 
-The earlier public Git history contains foundational implementation that was already disclosed before the private-core transition. The current public branch intentionally does not mirror the live proprietary codebase.
+The earlier public Git history contains foundational implementation that was disclosed before the private-core transition. The current public branch intentionally does **not** mirror the live proprietary codebase.
 
 **Public does not mean open source.** See [LICENSE](LICENSE), [NOTICE.md](NOTICE.md) and [IP / Disclosure Policy](docs/IP_POLICY.md).
 
@@ -226,7 +266,7 @@ The earlier public Git history contains foundational implementation that was alr
 - **[License](LICENSE)** — proprietary source-available terms.
 - **[Notice](NOTICE.md)** — ownership and public-access notice.
 
-The repository is deliberately kept compact. Detailed engineering state, agent logs, TODOs, migrations, security internals and scoring implementation live only in the private authoritative core.
+The repository is deliberately compact. Detailed engineering state, agent logs, TODOs, migrations, security internals, prompts, private evidence and scoring implementation remain in the private authoritative core.
 
 ---
 
