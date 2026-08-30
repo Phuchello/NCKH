@@ -188,12 +188,17 @@ That history is treated as already disclosed and is **not rewritten or falsely d
 
 ## 9. Current operating rule
 
-As of the current V1 hardening phase:
+As of the approved **V1.0.3** public milestone:
 
 - `Phuchello/NCKH-core-private` remains the authoritative implementation repository;
-- `Phuchello/NCKH` remains the active public showcase;
-- public milestone status remains at the last actually approved/disclosed gate until the next disclosure review;
-- G10/V1 hardening work is not automatically public just because a deployment or CI run exists;
-- the public repository is proprietary and **not open source**.
+- `Phuchello/NCKH` remains the active public showcase and disclosure-safe front page;
+- V1.0 is the canonical product generation; later `v1.0.x` releases are post-freeze patches rather than new research-core generations;
+- the hosted `PUBLIC_DEMO` may expose approved synthetic/stateless UI behavior and sanitized product outcomes;
+- the hosted demo must not expose private research memory, credentials, proprietary implementation, private evidence packs or unpublished research state;
+- verified high-level outcomes may be mirrored publicly only after explicit disclosure review;
+- future V2/V3 concepts may be discussed as roadmap directions but must not be presented as implemented production capability;
+- the public repository remains proprietary and **not open source**.
+
+A successful private CI run, merge or deployment does not by itself authorize public disclosure. The disclosure review remains a separate gate.
 
 See [LICENSE](../LICENSE), [NOTICE.md](../NOTICE.md), [Architecture Overview](../ARCHITECTURE.md) and [Public Progress & Verified Results](PUBLIC_PROGRESS.md).
